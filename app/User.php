@@ -10,9 +10,6 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    const ROLE_EMPLOYER = 1;
-    const ROLE_CLIENT = 2;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -39,4 +36,32 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->roles()->get()->contains(Role::where('name', 'admin')->first());
+    }
+
+    public function isEmployer()
+    {
+        return $this->roles()->get()->contains(Role::where('name', 'employer')->first());
+    }
+
+    public function isClient()
+    {
+        return $this->roles()->get()->contains(Role::where('name', 'client')->first());
+    }
+
+    public function profile()
+    {
+        if ($this->isEmployer()) {
+            return $this->hasOne(Employer::class);
+        }
+        else return null;
+    }
 }
