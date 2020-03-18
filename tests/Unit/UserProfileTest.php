@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Employer;
 use App\User;
 use App\Role;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -65,6 +66,8 @@ class UserProfileTest extends TestCase
         ]);
 
         $this->assertInstanceOf(Employer::class, $profile);
+
+        $this->assertEquals(Str::slug('AlleOLX Polska'), $profile->slug);
 
         $this->assertEquals('AlleOLX Polska', $user->profile()->first()->name);
     }

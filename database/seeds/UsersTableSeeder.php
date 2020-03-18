@@ -35,9 +35,9 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $em2 = User::create([
-            'name' => 'em2',
-            'email' => 'em2@int.pl',
-            'password' => Hash::make("em")
+            'name' => 'sanium',
+            'email' => 'sanium@test.pl',
+            'password' => Hash::make("sanium")
         ]);
 
         $cl = User::create([

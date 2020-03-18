@@ -17,6 +17,7 @@ class CreateEmployersTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('name');
+            $table->string('slug');
             $table->timestamps();
         });
     }
