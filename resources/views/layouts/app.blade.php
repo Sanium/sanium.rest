@@ -35,23 +35,35 @@
             @else
                 <ul class="right hide-on-med-and-down">
                     <li>
-                        <a href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                           document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
                     </li>
-                    <li><a href="{{ route('employer.show') }}">{{ __(Auth::user()->name) }}</a></li>
+                    <li><a class="dropdown-trigger no-autoinit"  href="#" data-target='dropdown1' >{{ Auth::user()->name }}</a></li>
+
+                        <ul id="dropdown1" class='dropdown-content'>
+                            <li>
+                                <a href="{{ route('employer.show', Auth::user()->profile()->first()) }}"><i class="material-icons">person</i>Profile</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('employer.edit', Auth::user()->profile()->first()) }}"><i class="material-icons">settings</i>Edit profile</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();">
+                                    <i class="material-icons">exit_to_app</i>{{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+
                 </ul>
                 <ul id="nav-mobile" class="sidenav">
                     <li>
-                        <a href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                           document.getElementById('logout-form').submit();">
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
 

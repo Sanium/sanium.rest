@@ -42,6 +42,7 @@ class User extends Authenticatable
         parent::boot();
 
         static::created(function (User $user) {
+            // TODO exception: roles not found
             $user->roles()->attach(Role::where('name', 'employer')->first());
             $user->profile()->create([
                 'name' => $user->name
