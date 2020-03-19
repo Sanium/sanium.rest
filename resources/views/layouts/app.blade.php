@@ -21,7 +21,7 @@
 </head>
 <body>
     <nav class="amber" role="navigation">
-        <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
+        <div class="nav-wrapper container"><a id="logo-container" href="{{ route('home') }}" class="brand-logo">Logo</a>
             @guest
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
