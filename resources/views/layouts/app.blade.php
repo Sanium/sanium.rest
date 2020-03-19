@@ -45,6 +45,7 @@
                             @csrf
                         </form>
                     </li>
+                    <li><a href="{{ route('employer.show') }}">{{ __(Auth::user()->name) }}</a></li>
                 </ul>
                 <ul id="nav-mobile" class="sidenav">
                     <li>
