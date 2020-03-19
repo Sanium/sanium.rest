@@ -21,4 +21,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/employer', 'EmployerController');
+Route::resource('/employer', 'EmployerController')->except('create', 'store');

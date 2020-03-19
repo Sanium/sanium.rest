@@ -23,27 +23,6 @@ class EmployerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Employer  $employer
@@ -62,7 +41,8 @@ class EmployerController extends Controller
      */
     public function edit(Employer $employer)
     {
-        //
+        // TODO autoryzacja
+        return view('profile.employer.edit', ['employer' => $employer]);
     }
 
     /**
@@ -74,7 +54,14 @@ class EmployerController extends Controller
      */
     public function update(Request $request, Employer $employer)
     {
-        //
+        // TODO autoryzacja
+        $attr = $request->validate([
+            'name' => ['string', 'required'],
+        ]);
+
+        $employer->update($attr);
+
+        return redirect(route('employer.show', $employer));
     }
 
     /**
@@ -85,6 +72,6 @@ class EmployerController extends Controller
      */
     public function destroy(Employer $employer)
     {
-        //
+        // TODO autoryzacja
     }
 }
