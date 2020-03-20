@@ -62,9 +62,15 @@
                 </ul>
                 <ul id="nav-mobile" class="sidenav">
                     <li>
+                        <a class="black-text" href="{{ route('employer.show', Auth::user()->profile()->first()) }}"><i class="material-icons">person</i>Profile</a>
+                    </li>
+                    <li>
+                        <a class="black-text" href="{{ route('employer.edit', Auth::user()->profile()->first()) }}"><i class="material-icons">settings</i>Edit profile</a>
+                    </li>
+                    <li>
                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                            <i class="material-icons">exit_to_app</i>{{ __('Logout') }}
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
