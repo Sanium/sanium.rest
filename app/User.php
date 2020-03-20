@@ -48,6 +48,10 @@ class User extends Authenticatable
                 'name' => $user->name
             ]);
         });
+
+        static::deleting(function (User $user) {
+            $user->profile()->first()->delete();
+        });
     }
 
     public function roles()
