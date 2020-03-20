@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row center">
+        <div class="center-align">
             <div class="col m12">
                 <div class="card">
                     <h4>{{ __('Register') }}</h4>
