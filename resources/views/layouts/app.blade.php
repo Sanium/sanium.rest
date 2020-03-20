@@ -41,13 +41,13 @@
 
                         <ul id="dropdown1" class='dropdown-content'>
                             <li>
-                                <a href="{{ route('employer.show', Auth::user()->profile()->first()) }}"><i class="material-icons">person</i>Profile</a>
+                                <a class="black-text" href="{{ route('employer.show', Auth::user()->profile()->first()) }}"><i class="material-icons">person</i>Profile</a>
                             </li>
                             <li>
-                                <a href="{{ route('employer.edit', Auth::user()->profile()->first()) }}"><i class="material-icons">settings</i>Edit profile</a>
+                                <a class="black-text" href="{{ route('employer.edit', Auth::user()->profile()->first()) }}"><i class="material-icons">settings</i>Edit profile</a>
                             </li>
                             <li>
-                                <a href="{{ route('logout') }}"
+                                <a class="black-text" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">
                                     <i class="material-icons">exit_to_app</i>{{ __('Logout') }}
