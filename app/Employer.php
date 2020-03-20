@@ -5,6 +5,28 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
+/**
+ * App\Employer
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string $name
+ * @property string $slug
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer findSimilarSlugs($attribute, $config, $slug)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Employer extends Model
 {
     use Sluggable;

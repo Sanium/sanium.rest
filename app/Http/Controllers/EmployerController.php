@@ -9,7 +9,7 @@ class EmployerController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware(['auth'])->except(['show']);
+        $this->middleware(['auth'])->except(['show', 'index']);
     }
 
     /**
@@ -36,25 +36,27 @@ class EmployerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Employer  $employer
+     * @param \App\Employer $employer
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Employer $employer)
     {
-        // TODO autoryzacja
+        $this->authorize('update', $employer);
         return view('profile.employer.edit', ['employer' => $employer]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Employer  $employer
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Employer $employer
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Employer $employer)
     {
-        // TODO autoryzacja
+        $this->authorize('update', $employer);
         $attr = $request->validate([
             'name' => ['string', 'required'],
         ]);
@@ -67,11 +69,12 @@ class EmployerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Employer  $employer
-     * @return \Illuminate\Http\Response
+     * @param \App\Employer $employer
+     * @return void
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Employer $employer)
     {
-        // TODO autoryzacja
+        $this->authorize('delete', $employer);
     }
 }
