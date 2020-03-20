@@ -74,7 +74,10 @@ class User extends Authenticatable
             // TODO exception: roles not found
             $user->roles()->attach(Role::where('name', 'employer')->first());
             $user->profile()->create([
-                'name' => $user->name
+                'name' => $user->name,
+                'size' => 0,
+                'website' => 'localhost',
+                'logo' => 'path_to_logo'
             ]);
         });
 
