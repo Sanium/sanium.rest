@@ -8,7 +8,7 @@ require('./bootstrap');
 
 document.addEventListener('DOMContentLoaded', function () {
     let elems = document.querySelectorAll('.dropdown-trigger');
-    let instances = M.Dropdown.init(elems, {
+    let instances = window.M.Dropdown.init(elems, {
         'coverTrigger': false,
         'alignment': 'right',
         'constrainWidth': false

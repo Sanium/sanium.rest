@@ -86,5 +86,18 @@
     <main>
         @yield('content')
     </main>
+    <script>
+        (function(window, document){
+            document.addEventListener('DOMContentLoaded', function () {
+                let status = "";
+                @if ( session('status') )
+                    status = "{{ session('status') }}";
+                @endif
+                if ("" !== status) {
+                    window.M.toast({html: status})
+                }
+            });
+        })(window, document);
+    </script>
 </body>
 </html>
