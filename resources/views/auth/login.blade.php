@@ -24,14 +24,17 @@
                                            class="validate @error('password') invalid @enderror" name="password"
                                            required autocomplete="current-password">
                                     <label for="password">{{ __('Password') }}</label>
-
-                                    @if ($errors->any())
+                                </div>
+                            </div>
+                            @if ($errors->any())
+                                <div class="row">
+                                    <div class="col s12 center-align input-field">
                                         <span class="red-text" role="alert">
                                             @foreach($errors->all() as $error) {{ $error }} @endforeach
                                         </span>
-                                    @endif
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                             <div class="row">
                                 <div class="col s6">
                                     <label>
