@@ -15,6 +15,7 @@ class CreateOffersTable extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id')->unsigned();
             $table->string('name');
             $table->longText('description');
             $table->string('disclaimer');
@@ -25,8 +26,8 @@ class CreateOffersTable extends Migration
             $table->integer('currency_id')->unsigned()->nullable();
             $table->string('city');
             $table->string('street');
-            $table->boolean('remote')->nullable();
-            $table->text('tech-stack')->nullable()->comment('Stored as JSON');
+            $table->boolean('remote')->default(false);
+            $table->text('tech_stack')->nullable()->comment('Stored as JSON');
             $table->integer('tech_id')->unsigned();
             $table->string('contact');
             $table->timestamp('expires_at');
