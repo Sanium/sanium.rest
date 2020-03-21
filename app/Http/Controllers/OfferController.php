@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 
 class OfferController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware('verified')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -49,7 +55,9 @@ class OfferController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attr = $request->validate($this->rules());
+
+        auth()->user()->offers()->create($attr);
     }
 
     /**
@@ -83,7 +91,9 @@ class OfferController extends Controller
      */
     public function update(Request $request, Offer $offer)
     {
-        //
+        $attr = $request->validate($this->rules());
+
+        $offer->update($attr);
     }
 
     /**
@@ -95,5 +105,26 @@ class OfferController extends Controller
     public function destroy(Offer $offer)
     {
         //
+    }
+
+    private function rules()
+    {
+        return [
+            'name' => 'required',
+            'description' => 'required',
+            'disclaimer' => 'required',
+            'exp_id' => 'nullable',
+            'emp_id' => 'nullable',
+            'salary_from' => 'nullable',
+            'salary_to' => 'nullable',
+            'currency_id' => 'nullable',
+            'city' => 'required',
+            'street' => 'required',
+            'remote' => 'nullable',
+            'tech_stack' => 'nullable',
+            'tech_id' => 'required',
+            'contact' => 'required',
+            'expires_at' => 'date',
+        ];
     }
 }

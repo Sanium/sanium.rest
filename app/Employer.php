@@ -26,6 +26,12 @@ use Cviebrock\EloquentSluggable\Sluggable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereUserId($value)
  * @mixin \Eloquent
+ * @property int $size
+ * @property string $website
+ * @property string $logo
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereLogo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereWebsite($value)
  */
 class Employer extends Model
 {
