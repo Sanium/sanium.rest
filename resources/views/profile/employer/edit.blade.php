@@ -11,7 +11,7 @@
                             @csrf
                             @method('PATCH')
                             <label for="name">Name</label>
-                            <input type="text" name="name" id="name" value="{{ old('name') ?? $employer->name  }}" required>
+                            <input type="text" name="name" id="name"  value="{{ old('name') ?? $employer->name  }}" required>
                             <button type="submit">Submit</button>
                         </form>
                     </div>
