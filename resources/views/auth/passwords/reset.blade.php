@@ -9,6 +9,7 @@
                         <span class="card-title">{{ __('Reset Password') }}</span>
                         <form method="POST" action="{{ route('password.update') }}">
                             @csrf
+                            <input type="hidden" name="token" value="{{ $token }}">
                             <div class="row">
                                 <div class="col s12 input-field">
                                     <i class="material-icons prefix">mail</i>
@@ -46,8 +47,8 @@
                             </div>
                             <div class="row">
                                 <div class="col s12 center-align row">
-                                    <button class="col s12 btn waves-effect waves-light" type="submit"
-                                            name="action">{{ __('Register') }}
+                                    <button class="col s12 btn waves-effect waves-light" type="submit">
+                                        {{ __('Reset Password') }}
                                         <i class="material-icons right">send</i>
                                     </button>
                                 </div>
