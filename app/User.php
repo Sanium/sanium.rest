@@ -34,6 +34,8 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Offer[] $offers
+ * @property-read int|null $offers_count
  */
 class User extends Authenticatable
 {
@@ -74,7 +76,10 @@ class User extends Authenticatable
             // TODO exception: roles not found
             $user->roles()->attach(Role::where('name', 'employer')->first());
             $user->profile()->create([
-                'name' => $user->name
+                'name' => $user->name,
+                'size' => 0,
+                'website' => 'localhost',
+                'logo' => 'path_to_logo'
             ]);
         });
 
@@ -99,5 +104,10 @@ class User extends Authenticatable
             return $this->hasOne(Employer::class);
         }
         else return null;
+    }
+
+    public function offers()
+    {
+        return $this->hasMany('App\Offer', 'user_id', 'id');
     }
 }
