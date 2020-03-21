@@ -1,6 +1,8 @@
 const M = require('materialize-css');
 
-M.AutoInit();
+window.M = M;
+
+window.M.AutoInit();
 
 
 
