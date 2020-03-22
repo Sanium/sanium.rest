@@ -16,16 +16,29 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title">Your offers</span>
-                    <table>
-                        <tr>
-                            <td>No.</td>
-                            <td>Title</td>
-                            <td>Operations</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                        </tr>
+                    <table class="highlight">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Title</th>
+                                <th class="right-align">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach( $offers as $offer )
+                                <tr>
+                                    <td>{{ $offer->id }}</td>
+                                    <td>{{ $offer->name }}</td>
+                                    <td class="right-align">
+                                        <a class="waves-effect waves-light btn btn-small" href="#!"><i class="material-icons">edit</i></a>
+                                        <a class="waves-effect waves-light btn btn-small light-blue" href="#!"><i class="material-icons">refresh</i></a>
+                                        <a class="waves-effect waves-light btn btn-small red" href="#!"><i class="material-icons">delete</i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     </table>
+                    {{ $offers->links('components.pagination') }}
                 </div>
             </div>
         </div>

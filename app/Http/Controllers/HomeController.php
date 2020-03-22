@@ -23,7 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $offers = auth()->user()->offers()->get();
+        //$user->offers()->create(['name' => 'JS Dev ', 'description'=>'d', 'disclaimer' => 'dis', 'city'=>'c', 'street'=>'s', 'tech_id' => 1, 'contact' => 'c', 'expires_at' => ' 2020-03-27 00:40:26']);
+
+        $offers = auth()->user()->offers()->paginate(10);
         return view('dashboard', ['offers' => $offers]);
     }
 }
