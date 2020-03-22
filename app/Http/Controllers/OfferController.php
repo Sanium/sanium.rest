@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Currency;
 use App\Employment;
 use App\Experience;
+use App\Http\Resources\OfferResource;
 use App\Offer;
 use App\Technologies;
 use Illuminate\Http\Request;
@@ -24,8 +25,7 @@ class OfferController extends Controller
      */
     public function index()
     {
-        $offers = Offer::all();
-        dd($offers);
+        return OfferResource::collection(Offer::paginate(10));
     }
 
     /**
@@ -64,11 +64,11 @@ class OfferController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Offer  $offer
-     * @return \Illuminate\Http\Response
+     * @return OfferResource|\Illuminate\Http\Response
      */
     public function show(Offer $offer)
     {
-        dd($offer);
+        return new OfferResource($offer);
     }
 
     /**
