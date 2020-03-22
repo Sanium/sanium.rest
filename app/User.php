@@ -107,6 +107,9 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         else return null;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function offers()
     {
         return $this->hasMany('App\Offer', 'user_id', 'id');
