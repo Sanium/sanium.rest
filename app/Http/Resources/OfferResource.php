@@ -6,9 +6,30 @@ use App\Currency;
 use App\User;
 use App\Employment;
 use App\Experience;
-use App\Technologies;
+use App\Technology;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property int id
+ * @property string name
+ * @property string description
+ * @property string disclaimer
+ * @property string|null salary_from
+ * @property string|null salary_to
+ * @property string city
+ * @property string|null street
+ * @property boolean remote
+ * @property string|null tech_stack
+ * @property string contact
+ * @property string|null website
+ * @property mixed expires_at
+ * @property mixed created_at
+ * @property mixed updated_at
+ * @property int|null exp_id
+ * @property int|null emp_id
+ * @property int|null currency_id
+ * @property int user_id
+ */
 class OfferResource extends JsonResource
 {
     /**
@@ -28,8 +49,8 @@ class OfferResource extends JsonResource
         $currency = Currency::find($this->currency_id);
         if (null !== $currency) { $currency = $currency->name; }
 
-        $technologie = Technologies::find($this->tech_id);
-        if (null !== $technologie) { $technologie = $technologie->name; }
+        $technology = Technology::find($this->tech_id);
+        if (null !== $technology) { $technology = $technology->name; }
 
         $employer = User::findOrFail($this->user_id)->profile()->first();
         $employer = new EmployerResource($employer);
@@ -48,8 +69,9 @@ class OfferResource extends JsonResource
             'street' => $this->street,
             'remote' => $this->remote,
             'tech_stack' => json_decode($this->tech_stack),
-            'technologie' => $technologie,
+            'technology' => $technology,
             'contact' => $this->contact,
+            'website' => $this->website,
             'expires_at' => $this->expires_at,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

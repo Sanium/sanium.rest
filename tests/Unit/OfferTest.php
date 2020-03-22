@@ -7,7 +7,7 @@ use App\Employment;
 use App\Experience;
 use App\Offer;
 use App\Role;
-use App\Technologies;
+use App\Technology;
 use App\User;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Tests\TestCase;
@@ -55,11 +55,11 @@ class OfferTest extends TestCase
      */
     private $contract;
     /**
-     * @var Technologies|\Illuminate\Database\Eloquent\Model
+     * @var Technology|\Illuminate\Database\Eloquent\Model
      */
     private $js;
     /**
-     * @var Technologies|\Illuminate\Database\Eloquent\Model
+     * @var Technology|\Illuminate\Database\Eloquent\Model
      */
     private $php;
     /**
@@ -94,8 +94,8 @@ class OfferTest extends TestCase
         $this->mid = Experience::create(['name' => 'Mid']);
         $this->senior = Experience::create(['name' => 'Senior']);
 
-        $this->js = Technologies::create(['name' => 'JS']);
-        $this->php = Technologies::create(['name' => 'PHP']);
+        $this->js = Technology::create(['name' => 'JS']);
+        $this->php = Technology::create(['name' => 'PHP']);
 
         $this->attr = [
             'name' => 'Junior JS Dev',

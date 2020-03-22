@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $tech_stack Stored as JSON
  * @property int $tech_id
  * @property string $contact
+ * @property string $website
  * @property string $expires_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -49,12 +50,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|\App\Offer whereTechStack($value)
  * @method static Builder|\App\Offer whereUpdatedAt($value)
  * @method static Builder|\App\Offer whereUserId($value)
+ * @method static Builder|\App\Offer whereWebsite($value)
  * @mixin \Eloquent
  * @property-read \App\Currency $currency
  * @property-read \App\Employment $employment
  * @property-read \App\Experience $experience
- * @property-read \App\Technologies $technologies
+ * @property-read \App\Technology $technology
  * @property-read \App\User $user
+ * @property-read \App\Technology $technologies
  */
 class Offer extends Model
 {
@@ -62,7 +65,7 @@ class Offer extends Model
 
     public function technologies()
     {
-        return $this->hasOne('App\Technologies', 'id', 'tech_id');
+        return $this->hasOne('App\Technology', 'id', 'tech_id');
     }
 
     public function experience()

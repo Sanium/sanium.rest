@@ -7,7 +7,7 @@ use App\Employment;
 use App\Experience;
 use App\Http\Resources\OfferResource;
 use App\Offer;
-use App\Technologies;
+use App\Technology;
 use Illuminate\Http\Request;
 
 class OfferController extends Controller
@@ -38,7 +38,7 @@ class OfferController extends Controller
         $exp = Experience::all();
         $emp = Employment::all();
         $cur = Currency::all();
-        $tech = Technologies::all();
+        $tech = Technology::all();
         return view('offer.create', [
             'experiences' => $exp,
             'employments' => $emp,
