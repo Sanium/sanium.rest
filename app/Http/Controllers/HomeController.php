@@ -23,11 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
-    }
-
-    public function api()
-    {
-        return response()->json();
+        $offers = auth()->user()->offers()->get();
+        return view('dashboard', ['offers' => $offers]);
     }
 }
