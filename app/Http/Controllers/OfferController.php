@@ -58,7 +58,21 @@ class OfferController extends Controller
             });
         }
 
-        return OfferResource::collection($offers->paginate(10));
+        $cities = Offer::select('city')->groupBy('city')->pluck('city')->all();
+        $exps = Experience::select('name')->pluck('name')->all();
+        $techs = Technology::select('name')->pluck('name')->all();
+        $max_salary = Offer::selectRaw('MAX(salary_to) as max_salary')->pluck('max_salary')->first();
+        $min_salary = Offer::selectRaw('MIN(salary_from) as min_salary')->pluck('min_salary')->first();
+
+        return OfferResource::collection($offers->paginate(10))->additional([
+            'filters' => [
+                'cities' => $cities,
+                'exp' => $exps,
+                'tech' => $techs,
+                'min_salary' => $min_salary,
+                'max_salary' => $max_salary,
+            ]
+        ]);
     }
 
     /**
