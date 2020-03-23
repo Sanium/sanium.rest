@@ -1,11 +1,8 @@
-const JQuery = require('jquery');
-const M = require('materialize-css');
-const dropify = require('dropify');
+window.jQuery = require('jquery');
+window.$ = window.jQuery;
 
-window.JQuery = JQuery;
-window.$ = JQuery;
-window.M = M;
-window.dropify = dropify;
-
+require('materialize-css');
+require('dropify');
+require('summernote/dist/summernote-lite.min');
 
 

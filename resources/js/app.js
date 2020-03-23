@@ -1,18 +1,24 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require('./bootstrap');
 
-window.M.AutoInit();
-
 document.addEventListener('DOMContentLoaded', function () {
-    let elems = document.querySelectorAll('.dropdown-trigger');
-    let instances = window.M.Dropdown.init(elems, {
-        'coverTrigger': false,
+    M.AutoInit();
+    $('.dropdown-trigger').dropdown({
         'alignment': 'right',
-        'constrainWidth': false
+        'constrainWidth': false,
+        'coverTrigger': false,
+    });
+
+    $('#summernote').summernote({
+        placeholder: 'Description',
+        tabsize: 2,
+        height: 120,
+        toolbar: [
+            ['style', ['style']],
+            ['misc', ['undo', 'redo']],
+            ['font', ['bold', 'underline', 'italic', 'clear', 'fontname', 'fontsize']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link']],
+            ['view', ['codeview', 'help']]
+        ]
     });
 });

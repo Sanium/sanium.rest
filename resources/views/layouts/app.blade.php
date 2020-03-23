@@ -18,16 +18,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    <!-- Summernote -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-lite.min.js"></script>
-
 </head>
 <body>
     <nav class="amber" role="navigation">
-        <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">{{config('app.name')}}</a>
+        <div class="nav-wrapper container">
+            <a id="logo-container" href="/" class="brand-logo">{{config('app.name')}}</a>
             @guest
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
@@ -100,7 +95,7 @@
                     status = "{{ session('status') }}";
                 @endif
                 if ("" !== status) {
-                    window.M.toast({html: status})
+                    M.toast({html: status})
                 }
             });
         })(window, document);
