@@ -6,12 +6,32 @@
             <div class="col s12">
                 <div class="card">
                     <div class="row card-content">
-                        <div>
-                            <div class="col s6 m6 l6 xl6">
-                                <span class="card-title">Hello {{ auth()->user()->profile()->first()->name }}!</span>
+                        <div class="valign-wrapper">
+                            <div class="col">
+                                <img name="company-logo" class="responsive-img circle" width="60"
+                                     src="{{auth()->user()->profile()->first()->logo}}">
                             </div>
-                            <div class="col s6 m6 l6 xl6 right-align">
-                                <a class="waves-effect waves-light btn" href="{{route('offers.create')}}"> {{'Add New Offer'}} </a>
+                            <div class="col">
+                                <p class="small">Hello</p>
+                                <span class="card-title"> {{ auth()->user()->profile()->first()->name }}!</span>
+                            </div>
+                            <div class="col"></div>
+                            <div class="col"></div>
+                            <div class="col">
+                                <p class="small">Company size</p>
+                                <span class="card-title">{{ auth()->user()->profile()->first()->size }}</span>
+
+                            </div>
+                            <div class="col"></div>
+                            <div class="col"></div>
+                            <div class="col">
+                                <p class="small">Website</p>
+                                <span
+                                    class="card-title ">
+                                        <a
+                                            target="_blank" href="{{ auth()->user()->profile()->first()->website }}">{{ auth()->user()->profile()->first()->website }}
+                                        </a>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -22,7 +42,15 @@
             <div class="col s12">
                 <div class="card">
                     <div class="card-content">
-                        <span class="card-title">Your offers</span>
+                        <div class="row">
+                            <div class="col s6">
+                                <span class="card-title left-align">Your offers</span>
+                            </div>
+                            <div class="col s6 right-align">
+                                <a class="waves-effect waves-light btn"
+                                   href="{{route('offers.create')}}">{{'Add New Offer'}}</a>
+                            </div>
+                        </div>
                         <table class="highlight">
                             <thead>
                             <tr>
