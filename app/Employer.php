@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 /**
  * App\Employer
@@ -71,5 +73,30 @@ class Employer extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function getImage()
+    {
+        if(is_null($this->logo)) {
+            return asset('storage/defaults/user.jpg');
+        }
+        else return asset($this->logo);
+    }
+
+    public function setImage(Request $request)
+    {
+        if ($request->has('logo')) {
+            $filename = $request->file('logo')->getFilename();
+            $employerUID = $this->user_id . $this->slug;
+            $imagePath = '/storage/' . $request->file('logo')->storeAs('profile', "$employerUID-$filename", 'public');
+            $image = Image::make(public_path($imagePath))->fit(env('AVATAR_SIZE', 300));
+            unlink(substr($imagePath, 1));
+            $jpg = Image::canvas(env('AVATAR_SIZE', 300), env('AVATAR_SIZE', 300), '#ffffff');
+            $jpg->insert($image);
+            $imagePath = 'storage/profile/' . $image->filename . '.jpg';
+            $jpg->save($imagePath);
+            $this->logo = '/'.$imagePath;
+            $this->save();
+        }
     }
 }

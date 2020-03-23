@@ -18,6 +18,9 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "materialize-css": "^1.0.0-rc.2"
+        "dropify": "^0.2.2",
+        "jquery": "^3.4.1",
+        "materialize-css": "^1.0.0-rc.2",
+        "summernote": "^0.8.16"
     }
 }

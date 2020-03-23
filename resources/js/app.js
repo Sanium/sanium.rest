@@ -6,6 +6,8 @@
 
 require('./bootstrap');
 
+window.M.AutoInit();
+
 document.addEventListener('DOMContentLoaded', function () {
     let elems = document.querySelectorAll('.dropdown-trigger');
     let instances = window.M.Dropdown.init(elems, {
