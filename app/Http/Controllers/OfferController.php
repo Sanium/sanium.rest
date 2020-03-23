@@ -7,6 +7,7 @@ use App\Currency;
 use App\Employment;
 use App\Experience;
 use App\Technology;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Http\Resources\OfferResource;
 use Illuminate\Database\Query\Builder;
@@ -100,6 +101,7 @@ class OfferController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store(Request $request)
     {
@@ -127,11 +129,18 @@ class OfferController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param Request $request
      * @param \App\Offer $offer
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
-    public function edit(Offer $offer)
+    public function edit(Request $request, Offer $offer)
     {
+        try {
+        $this->authorize('update', $offer);
+    } catch (AuthorizationException $e) {
+        $request->session()->flash('status', $e->getMessage());
+        return redirect(route('home'));
+    }
         $exp = Experience::all();
         $emp = Employment::all();
         $cur = Currency::all();
@@ -152,9 +161,16 @@ class OfferController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param \App\Offer $offer
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Offer $offer)
     {
+        try {
+            $this->authorize('update', $offer);
+        } catch (AuthorizationException $e) {
+            $request->session()->flash('status', $e->getMessage());
+            return redirect(route('home'));
+        }
         $attr = $request->validate($this->rules());
         $attr['remote'] = $request->has('remote') && $request->input('remote') ? true : false;
 
@@ -168,13 +184,23 @@ class OfferController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param \App\Offer $offer
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Exception
      */
-    public function destroy(Offer $offer)
+    public function destroy(Request $request, Offer $offer)
     {
-        $offer->delete();
+        try {
+            $this->authorize('delete', $offer);
+            $offer_name = $offer->name;
+            $offer->delete();
+            $request->session()->flash('status', "Offer $offer_name has been removed.");
+        } catch (\Exception $e) {
+            $request->session()->flash('status', $e->getMessage());
+        } finally {
+            return redirect(route('home'));
+        }
     }
 
     private function rules()
