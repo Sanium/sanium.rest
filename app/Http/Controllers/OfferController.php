@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Offer;
 use App\Currency;
 use App\Employment;
 use App\Experience;
-use App\Http\Resources\OfferResource;
-use App\Offer;
 use App\Technology;
 use Illuminate\Http\Request;
+use App\Http\Resources\OfferResource;
+use Illuminate\Database\Query\Builder;
 
 class OfferController extends Controller
 {
@@ -28,31 +29,33 @@ class OfferController extends Controller
     {
         $offers = Offer::select('*');
 
-        $tech_slug = $request->query('tech');
-        if ($tech_slug) {
-            $tech = Technology::where('slug', $tech_slug)->first();
+        if ($request->has('tech')) {
+            $tech = Technology::where('slug', $request->query('tech'))->first();
             if ($tech) {
                 $offers->where('tech_id', $tech->id);
             }
         }
 
-        $exp_slug = $request->query('exp');
-        if ($exp_slug) {
-            $exp = Experience::where('slug', $exp_slug)->first();
+        if ($request->has('exp')) {
+            $exp = Experience::where('slug', $request->query('exp'))->first();
             if ($exp) {
                 $offers->where('exp_id', $exp->id);
             }
         }
 
-        $city = $request->query('city');
-        if ($city) {
-            $offers->where('city_slug', $city);
+        if ($request->has('city')) {
+            $offers->where('city_slug', $request->query('city'));
         }
 
-        $salary_from = $request->query('from');
-        $salary_to = $request->query('to');
-        if($salary_from && $salary_to) {
-            $offers->whereBetween('salary_from', [$salary_from, $salary_to])->orWhereBetween('salary_to', [$salary_from, $salary_to]);
+        if ($request->has('from') && $request->has('to')) {
+            $salary_from = (int)$request->query('from');
+            $salary_to = (int)$request->query('to');
+            $offers->where(function ($query) use ($salary_from, $salary_to) {
+                /** @var Builder $query */
+                $query
+                    ->whereBetween('salary_from', [$salary_from, $salary_to])
+                    ->orWhereBetween('salary_to', [$salary_from, $salary_to]);
+            });
         }
 
         return OfferResource::collection($offers->paginate(10));
@@ -81,7 +84,7 @@ class OfferController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
@@ -99,7 +102,7 @@ class OfferController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Offer  $offer
+     * @param \App\Offer $offer
      * @return OfferResource|\Illuminate\Http\Response
      */
     public function show(Offer $offer)
@@ -110,7 +113,7 @@ class OfferController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Offer  $offer
+     * @param \App\Offer $offer
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function edit(Offer $offer)
@@ -132,8 +135,8 @@ class OfferController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Offer  $offer
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Offer $offer
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, Offer $offer)
@@ -151,7 +154,7 @@ class OfferController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Offer  $offer
+     * @param \App\Offer $offer
      * @return \Illuminate\Http\Response
      */
     public function destroy(Offer $offer)
