@@ -78,9 +78,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
             $user->roles()->attach(Role::where('name', 'employer')->first());
             $user->profile()->create([
                 'name' => $user->name,
-                'size' => 0,
-                'website' => 'localhost',
-                'logo' => 'path_to_logo'
             ]);
         });
 
