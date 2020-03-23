@@ -170,10 +170,11 @@ class OfferController extends Controller
      *
      * @param \App\Offer $offer
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Offer $offer)
     {
-        //
+        $offer->delete();
     }
 
     private function rules()

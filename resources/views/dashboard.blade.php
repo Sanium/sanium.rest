@@ -69,8 +69,13 @@
                                            href="{{ route('offers.edit', $offer) }}">
                                             <i class="material-icons">edit</i>
                                         </a>
-                                        <a class="waves-effect waves-light btn btn-small red" title="Remove this offer" href="#!">
+                                        <a class="waves-effect waves-light btn btn-small red" title="Remove this offer" href="#!"
+                                           onclick="event.preventDefault();document.getElementById('deleteOffer').submit();">
                                             <i class="material-icons">delete</i>
+                                            <form id="deleteOffer" action="{{ route('offers.destroy', $offer) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
                                         </a>
                                     </td>
                                 </tr>
