@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employer;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 
 class EmployerController extends Controller
@@ -37,13 +38,18 @@ class EmployerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param Request $request
      * @param \App\Employer $employer
-     * @return \Illuminate\Http\Response
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
-    public function edit(Employer $employer)
+    public function edit(Request $request, Employer $employer)
     {
-        $this->authorize('update', $employer);
+        try {
+            $this->authorize('update', $employer);
+        } catch (AuthorizationException $e) {
+            $request->session()->flash('status', $e->getMessage());
+            return redirect(route('home'));
+        }
         return view('profile.employer.edit', ['employer' => $employer]);
     }
 
@@ -53,11 +59,15 @@ class EmployerController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param \App\Employer $employer
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
-     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Employer $employer)
     {
-        $this->authorize('update', $employer);
+        try {
+            $this->authorize('update', $employer);
+        } catch (AuthorizationException $e) {
+            $request->session()->flash('status', $e->getMessage());
+            return redirect(route('home'));
+        }
         $attr = $request->validate($this->rules());
         $employer->update($attr);
         $employer->setLogo($request);
@@ -68,13 +78,20 @@ class EmployerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param Request $request
      * @param \App\Employer $employer
-     * @return void
-     * @throws \Illuminate\Auth\Access\AuthorizationException
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroy(Employer $employer)
+    public function destroy(Request $request, Employer $employer)
     {
-        $this->authorize('delete', $employer);
+        try {
+            $this->authorize('delete', $employer);
+            $employer->delete();
+        } catch (\Exception $e) {
+            $request->session()->flash('status', $e->getMessage());
+        } finally {
+            return redirect(route('home'));
+        }
     }
 
     private function rules() {
