@@ -60,7 +60,7 @@ class EmployerController extends Controller
         $this->authorize('update', $employer);
         $attr = $request->validate($this->rules());
         $employer->update($attr);
-        $employer->setImage($request);
+        $employer->setLogo($request);
 
         return redirect(route('home'));
     }

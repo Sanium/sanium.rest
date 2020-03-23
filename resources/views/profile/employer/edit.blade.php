@@ -16,7 +16,7 @@
                             <div class="row center-align">
                                 <div class="col s12">
                                     <input type="file" name="logo" class="dropify" data-height="80"
-                                           data-default-file="{{ $employer->getImage() }}" data-show-remove="false"/>
+                                           data-default-file="{{ $employer->getLogo() }}" data-show-remove="false"/>
                                 </div>
                             </div>
                             <div class="row">
