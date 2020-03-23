@@ -89,6 +89,7 @@ class OfferController extends Controller
         $attr = $request->validate($this->rules());
 
         $offer = auth()->user()->offers()->create($attr);
+        $attr['remote'] = $request->has('remote') && $request->input('remote') ? true : false;
 
         $request->session()->flash('status', "Offer $offer->name created");
 
@@ -138,6 +139,7 @@ class OfferController extends Controller
     public function update(Request $request, Offer $offer)
     {
         $attr = $request->validate($this->rules());
+        $attr['remote'] = $request->has('remote') && $request->input('remote') ? true : false;
 
         $offer->update($attr);
 
@@ -170,7 +172,6 @@ class OfferController extends Controller
             'currency_id' => 'nullable',
             'city' => 'required',
             'street' => 'required',
-            'remote' => 'nullable',
             'tech_stack' => 'nullable',
             'tech_id' => 'required',
             'contact' => 'required',

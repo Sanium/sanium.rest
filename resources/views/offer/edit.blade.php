@@ -18,8 +18,10 @@
                             <div class="row">
                                 <div class="input-field col s4">
                                     <select name="tech_id" id="technologies" required>
-                                        @foreach($technologies as $technologie)
-                                            <option value="{{ $technologie->id }}">{{ $technologie->name }}</option>
+                                        @foreach($technologies as $technology)
+                                            <option value="{{ $technology->id }}"
+                                                @if ( $edit && $technology->id == $offer->tech_id ) selected @endif
+                                            >{{ $technology->name }}</option>
                                         @endforeach
                                     </select>
                                     <label for="technologies">{{ __('Technologies') }}</label>
@@ -27,7 +29,9 @@
                                 <div class="input-field col s4">
                                     <select name="exp_id" id="experience">
                                         @foreach($experiences as $experience)
-                                            <option value="{{ $experience->id }}">{{ $experience->name }}</option>
+                                            <option value="{{ $experience->id }}"
+                                                @if ( $edit && $experience->id == $offer->exp_id ) selected @endif
+                                            >{{ $experience->name }}</option>
                                         @endforeach
                                     </select>
                                     <label for="experience">{{ __('Experience') }}</label>
@@ -35,7 +39,9 @@
                                 <div class="input-field col s4">
                                     <select name="emp_id" id="employment">
                                         @foreach($employments as $employment)
-                                            <option value="{{ $employment->id }}">{{ $employment->name }}</option>
+                                            <option value="{{ $employment->id }}"
+                                                @if ( $edit && $employment->id == $offer->emp_id ) selected @endif
+                                            >{{ $employment->name }}</option>
                                         @endforeach
                                     </select>
                                     <label for="employment">{{ __('Employment') }}</label>
@@ -53,7 +59,9 @@
                                 <div class="input-field col s4">
                                     <select name="currency_id" id="currency">
                                         @foreach($currencies as $currency)
-                                            <option value="{{ $currency->id }}">{{ $currency->name }}</option>
+                                            <option value="{{ $currency->id }}"
+                                                @if ( $edit && $currency->id == $offer->currency_id ) selected @endif
+                                            >{{ $currency->name }}</option>
                                         @endforeach
                                     </select>
                                     <label for="currency">{{ __('Currency') }}</label>
@@ -76,7 +84,7 @@
                             <div class="row">
                                 <div class="input-field col s12">
                                     <label for="summernote">Description*</label>
-                                    <textarea name="description" id="summernote">{{! old('description') ?? $edit ? $offer->description : null }}</textarea>
+                                    <textarea name="description" id="summernote">{!! old('description') ?? $offer->description ?? '' !!}</textarea>
                                 </div>
                             </div>
                             <div class="row">
