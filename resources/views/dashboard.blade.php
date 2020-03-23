@@ -9,17 +9,17 @@
                         <div class="valign-wrapper">
                             <div class="col">
                                 <img name="company-logo" class="responsive-img circle" width="60"
-                                     src="{{auth()->user()->profile()->first()->logo}}">
+                                     src="{{ $employer->getLogo() }}">
                             </div>
                             <div class="col">
                                 <p class="small">Hello</p>
-                                <span class="card-title"> {{ auth()->user()->profile()->first()->name }}!</span>
+                                <span class="card-title"><b>{{ $employer->name }}</b></span>
                             </div>
                             <div class="col"></div>
                             <div class="col"></div>
                             <div class="col">
                                 <p class="small">Company size</p>
-                                <span class="card-title">{{ auth()->user()->profile()->first()->size }}</span>
+                                <span class="card-title"><b>{{ $employer->size }}</b></span>
 
                             </div>
                             <div class="col"></div>
@@ -29,7 +29,7 @@
                                 <span
                                     class="card-title ">
                                         <a
-                                            target="_blank" href="{{ auth()->user()->profile()->first()->website }}">{{ auth()->user()->profile()->first()->website }}
+                                            target="_blank" href="{{ $employer->website }}">{{ $employer->website }}
                                         </a>
                                 </span>
                             </div>
@@ -65,12 +65,16 @@
                                     <td>{{ $offer->id }}</td>
                                     <td>{{ $offer->name }}</td>
                                     <td class="right-align">
-                                        <a class="waves-effect waves-light btn btn-small" href="#!"><i
-                                                class="material-icons">edit</i></a>
-                                        <a class="waves-effect waves-light btn btn-small light-blue" href="#!"><i
-                                                class="material-icons">refresh</i></a>
-                                        <a class="waves-effect waves-light btn btn-small red" href="#!"><i
-                                                class="material-icons">delete</i></a>
+                                        <a class="waves-effect waves-light btn btn-small" title="Edit this offer"
+                                           href="{{ route('offers.edit', $offer) }}">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        <a class="waves-effect waves-light btn btn-small light-blue" href="#!" title="Refresh this offer">
+                                            <i class="material-icons">refresh</i>
+                                        </a>
+                                        <a class="waves-effect waves-light btn btn-small red" title="Remove this offer" href="#!">
+                                            <i class="material-icons">delete</i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach

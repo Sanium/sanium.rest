@@ -75,7 +75,7 @@ class Employer extends Model
         return 'slug';
     }
 
-    public function getImage()
+    public function getLogo()
     {
         if(is_null($this->logo)) {
             return asset('storage/defaults/user.jpg');
@@ -83,11 +83,11 @@ class Employer extends Model
         else return asset($this->logo);
     }
 
-    public function setImage(Request $request)
+    public function setLogo(Request $request)
     {
         if ($request->has('logo')) {
-            $filename = $request->file('logo')->getFilename();
-            $employerUID = $this->user_id . $this->slug;
+            $filename = $request->file('logo')->getClientOriginalName();
+            $employerUID = $this->user_id . '-' . $this->slug;
             $imagePath = '/storage/' . $request->file('logo')->storeAs('profile', "$employerUID-$filename", 'public');
             $image = Image::make(public_path($imagePath))->fit(env('AVATAR_SIZE', 300));
             unlink(substr($imagePath, 1));

@@ -20,7 +20,7 @@ class EmployerResource extends JsonResource
             'slug' => $this->slug,
             'size' => $this->size,
             'website' => $this->website,
-            'logo' => $this->logo,
+            'logo' => $this->getLogo(),
             'link' => route('employer.show', $this->slug),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
