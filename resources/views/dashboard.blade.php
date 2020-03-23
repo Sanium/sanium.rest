@@ -63,7 +63,7 @@
                             @foreach( $offers as $offer )
                                 <tr>
                                     <td>{{ $offer->id }}</td>
-                                    <td>{{ $offer->name }}</td>
+                                    <td><a href="/#/details/{{$offer->id}}">{{ $offer->name }}</a></td>
                                     <td class="right-align">
                                         <a class="waves-effect waves-light btn btn-small" title="Edit this offer"
                                            href="{{ route('offers.edit', $offer) }}">
