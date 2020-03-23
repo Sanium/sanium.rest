@@ -149,8 +149,8 @@ class OfferTest extends TestCase
     /** @test */
     public function offer_has_one_technology()
     {
-        $this->assertInstanceOf(HasOne::class, $this->offer->technologies());
-        $this->assertEquals($this->js->name, $this->offer->technologies()->first()->name);
+        $this->assertInstanceOf(HasOne::class, $this->offer->technology());
+        $this->assertEquals($this->js->name, $this->offer->technology()->first()->name);
     }
 
     /** @test */

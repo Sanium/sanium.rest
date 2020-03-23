@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 /**
  * App\Currency
@@ -22,5 +23,22 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Currency extends Model
 {
+    use Sluggable;
+
     protected $guarded = [];
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name',
+                'onUpdate' => true
+            ]
+        ];
+    }
 }

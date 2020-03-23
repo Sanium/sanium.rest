@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * App\Offer
@@ -58,12 +59,27 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Technology $technology
  * @property-read \App\User $user
  * @property-read \App\Technology $technologies
+ * @property string $city_slug
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereCitySlug($value)
  */
 class Offer extends Model
 {
     protected $guarded = [];
 
-    public function technologies()
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function (Offer $offer) {
+            $offer->city_slug = Str::slug($offer->city);
+        });
+
+        static::updated(function (Offer $offer) {
+            $offer->city_slug = Str::slug($offer->city);
+        });
+    }
+
+    public function technology()
     {
         return $this->hasOne('App\Technology', 'id', 'tech_id');
     }

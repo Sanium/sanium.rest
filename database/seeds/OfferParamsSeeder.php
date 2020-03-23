@@ -6,7 +6,7 @@ use App\Experience;
 use App\Technology;
 use Illuminate\Database\Seeder;
 
-class OfferSeeder extends Seeder
+class OfferParamsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,11 @@ class OfferSeeder extends Seeder
      */
     public function run()
     {
+        Currency::truncate();
+        Employment::truncate();
+        Experience::truncate();
+        Technology::truncate();
+
         $this->pln = Currency::create(['name' => 'PLN']);
         $this->eur = Currency::create(['name' => 'EUR']);
 

@@ -15,17 +15,47 @@ class OfferController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
-        $this->middleware('verified')->except(['index', 'show']);
+        $this->middleware('verified')->except(['index', 'show', 'edit']);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        return OfferResource::collection(Offer::paginate(10));
+        $offers = Offer::select('*');
+
+        $tech_slug = $request->query('tech');
+        if ($tech_slug) {
+            $tech = Technology::where('slug', $tech_slug)->first();
+            if ($tech) {
+                $offers->where('tech_id', $tech->id);
+            }
+        }
+
+        $exp_slug = $request->query('exp');
+        if ($exp_slug) {
+            $exp = Experience::where('slug', $exp_slug)->first();
+            if ($exp) {
+                $offers->where('exp_id', $exp->id);
+            }
+        }
+
+        $city = $request->query('city');
+        if ($city) {
+            $offers->where('city_slug', $city);
+        }
+
+        $salary_from = $request->query('from');
+        $salary_to = $request->query('to');
+        if($salary_from && $salary_to) {
+            $offers->whereBetween('salary_from', [$salary_from, $salary_to])->orWhereBetween('salary_to', [$salary_from, $salary_to]);
+        }
+
+        return OfferResource::collection($offers->paginate(10));
     }
 
     /**
