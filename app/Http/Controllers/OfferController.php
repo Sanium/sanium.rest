@@ -69,11 +69,12 @@ class OfferController extends Controller
         $emp = Employment::all();
         $cur = Currency::all();
         $tech = Technology::all();
-        return view('offer.create', [
+        return view('offer.edit', [
             'experiences' => $exp,
             'employments' => $emp,
             'currencies' => $cur,
             'technologies' => $tech,
+            'edit' => false,
         ]);
     }
 
@@ -109,11 +110,22 @@ class OfferController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Offer  $offer
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function edit(Offer $offer)
     {
-        //
+        $exp = Experience::all();
+        $emp = Employment::all();
+        $cur = Currency::all();
+        $tech = Technology::all();
+        return view('offer.edit', [
+            'experiences' => $exp,
+            'employments' => $emp,
+            'currencies' => $cur,
+            'technologies' => $tech,
+            'edit' => true,
+            'offer' => $offer,
+        ]);
     }
 
     /**
@@ -121,13 +133,17 @@ class OfferController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Offer  $offer
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, Offer $offer)
     {
         $attr = $request->validate($this->rules());
 
         $offer->update($attr);
+
+        $request->session()->flash('status', "Offer $offer->name updated");
+
+        return redirect(route('home'));
     }
 
     /**
