@@ -70,11 +70,11 @@ class Offer extends Model
     {
         parent::boot();
 
-        static::created(function (Offer $offer) {
+        static::creating(function (Offer $offer) {
             $offer->city_slug = Str::slug($offer->city);
         });
 
-        static::updated(function (Offer $offer) {
+        static::updating(function (Offer $offer) {
             $offer->city_slug = Str::slug($offer->city);
         });
     }

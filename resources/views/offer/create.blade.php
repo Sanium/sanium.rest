@@ -84,7 +84,7 @@
                                     <label for="city">{{ __('City') }}*</label>
                                 </div>
                                 <div class="input-field col s4">
-                                    <input class="validate" name="street" id="street" type="text">
+                                    <input class="validate" name="street" id="street" type="text" required>
                                     <label for="street">{{ __('Street') }}</label>
                                 </div>
                                 <div class="input-field col s3">

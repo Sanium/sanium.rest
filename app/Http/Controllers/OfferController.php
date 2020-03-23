@@ -81,13 +81,17 @@ class OfferController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
         $attr = $request->validate($this->rules());
 
-        auth()->user()->offers()->create($attr);
+        $offer = auth()->user()->offers()->create($attr);
+
+        $request->session()->flash('status', "Offer $offer->name created");
+
+        return redirect(route('home', $offer));
     }
 
     /**
@@ -154,6 +158,7 @@ class OfferController extends Controller
             'tech_stack' => 'nullable',
             'tech_id' => 'required',
             'contact' => 'required',
+            'webiste' => 'nullable',
             'expires_at' => 'date',
         ];
     }
