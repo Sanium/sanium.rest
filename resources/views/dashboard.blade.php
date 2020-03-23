@@ -18,13 +18,15 @@
                             <div class="col"></div>
                             <div class="col"></div>
                             <div class="col">
+                                @isset($employer->size)
                                 <p class="small">Company size</p>
                                 <span class="card-title"><b>{{ $employer->size }}</b></span>
-
+                                @endisset
                             </div>
                             <div class="col"></div>
                             <div class="col"></div>
                             <div class="col">
+                                @isset($employer->website)
                                 <p class="small">Website</p>
                                 <span
                                     class="card-title ">
@@ -32,6 +34,7 @@
                                             target="_blank" href="{{ $employer->website }}">{{ $employer->website }}
                                         </a>
                                 </span>
+                                @endisset
                             </div>
                         </div>
                     </div>
