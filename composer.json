@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
-        "ext-json": "^1.7",
+        "ext-json": "*",
         "barryvdh/laravel-ide-helper": "^2.6",
         "cviebrock/eloquent-sluggable": "^7.0",
         "doctrine/dbal": "^2.10",

@@ -69,9 +69,6 @@
                                            href="{{ route('offers.edit', $offer) }}">
                                             <i class="material-icons">edit</i>
                                         </a>
-                                        <a class="waves-effect waves-light btn btn-small light-blue" href="#!" title="Refresh this offer">
-                                            <i class="material-icons">refresh</i>
-                                        </a>
                                         <a class="waves-effect waves-light btn btn-small red" title="Remove this offer" href="#!">
                                             <i class="material-icons">delete</i>
                                         </a>
