@@ -52,19 +52,17 @@ class EmployerController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Employer $employer
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update(Request $request, Employer $employer)
     {
         $this->authorize('update', $employer);
-        $attr = $request->validate([
-            'name' => ['string', 'required'],
-        ]);
-
+        $attr = $request->validate($this->rules());
         $employer->update($attr);
+        $employer->setImage($request);
 
-        return redirect(route('employer.show', $employer));
+        return redirect(route('home'));
     }
 
     /**
@@ -77,5 +75,13 @@ class EmployerController extends Controller
     public function destroy(Employer $employer)
     {
         $this->authorize('delete', $employer);
+    }
+
+    private function rules() {
+        return [
+            'name' => 'string|required',
+            'size' => 'integer|required',
+            'website' => 'url|required'
+        ];
     }
 }

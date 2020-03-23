@@ -10,13 +10,13 @@
                             <span class="card-title center-align">{{ __('Edit profile') }}</span>
                         </div>
                         <form action="{{ route('employer.update', $employer) }}" method="POST"
-                              enctype="multipart/form-data">
+                              enctype="multipart/form-data" id="editProfile">
                             @csrf
                             @method('PATCH')
                             <div class="row center-align">
-                                <div class="col s4 offset-s4">
-                                    <img name="logo" id="logo" class="circle responsive-img"
-                                         src="https://cdn.discordapp.com/attachments/651907741765468160/691385617988190288/0cd.png">
+                                <div class="col s12">
+                                    <input type="file" name="logo" class="dropify" data-height="80"
+                                           data-default-file="{{ $employer->getImage() }}" data-show-remove="false"/>
                                 </div>
                             </div>
                             <div class="row">
@@ -47,5 +47,15 @@
             </div>
         </div>
     </div>
-
+    <script>
+        (function () {
+            document.addEventListener('DOMContentLoaded', function () {
+                $('.dropify').dropify({
+                    tpl: {
+                        filename: '',
+                    }
+                });
+            });
+        })(window, document);
+    </script>
 @endsection
