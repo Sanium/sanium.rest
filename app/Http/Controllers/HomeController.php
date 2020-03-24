@@ -13,7 +13,17 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('welcome');
+    }
+
+    /**
+     * Show the home page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function welcome()
+    {
+        return view('welcome');
     }
 
     /**
