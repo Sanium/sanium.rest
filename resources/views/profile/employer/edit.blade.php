@@ -21,19 +21,40 @@
                             </div>
                             <div class="row">
                                 <label for="name">Name</label>
-                                <input type="text" name="name" id="name" value="{{ old('name') ?? $employer->name  }}"
+                                <input class="validate @error('name') invalid @enderror" type="text" name="name" id="name" value="{{ old('name') ?? $employer->name  }}"
                                        required>
+
+                                @error('name')
+                                <span class="helper-text red-text" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
                             </div>
                             <div class="row">
-                                <label for="name">Website</label>
-                                <input type="text" name="website" id="website"
+                                <label for="website">Website</label>
+                                <input class="validate @error('website') invalid @enderror" type="text" name="website" id="website"
                                        value="{{ old('website') ?? $employer->website  }}"
                                        required>
+
+                                @error('website')
+                                <span class="helper-text red-text" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
                             </div>
                             <div class="row">
-                                <label for="name">Size of company</label>
-                                <input type="text" name="size" id="size" value="{{ old('size') ?? $employer->size  }}"
+                                <label for="size">Size of company</label>
+                                <input class="validate @error('website') invalid @enderror" type="text" name="size" id="size" value="{{ old('size') ?? $employer->size  }}"
                                        required>
+
+                                @error('size')
+                                <span class="helper-text red-text" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
                             </div>
                             <div class="row">
                                 <button class="col s12 btn waves-effect waves-light" type="submit"
