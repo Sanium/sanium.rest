@@ -206,20 +206,20 @@ class OfferController extends Controller
     private function rules()
     {
         return [
-            'name' => 'required',
-            'description' => 'required',
-            'disclaimer' => 'required',
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'disclaimer' => 'required|string',
             'exp_id' => 'nullable',
             'emp_id' => 'nullable',
-            'salary_from' => 'nullable',
-            'salary_to' => 'nullable',
+            'salary_from' => 'nullable|integer',
+            'salary_to' => 'nullable|integer',
             'currency_id' => 'nullable',
-            'city' => 'required',
-            'street' => 'required',
+            'city' => 'required|string',
+            'street' => 'required|string',
             'tech_stack' => 'nullable',
             'tech_id' => 'required',
-            'contact' => 'required',
-            'website' => 'nullable',
+            'contact' => 'required|string',
+            'website' => 'nullable|string',
             'expires_at' => 'date',
         ];
     }
