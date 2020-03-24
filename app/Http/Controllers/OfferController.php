@@ -219,7 +219,7 @@ class OfferController extends Controller
             'tech_stack' => 'nullable',
             'tech_id' => 'required',
             'contact' => 'required',
-            'webiste' => 'nullable',
+            'website' => 'nullable',
             'expires_at' => 'date',
         ];
     }
