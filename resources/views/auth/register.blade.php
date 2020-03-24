@@ -19,7 +19,7 @@
                                     @error('name')
                                     <span class="helper-text red-text" role="alert">
                                     <strong>{{ $message }}</strong>
-                                </span>
+                                    </span>
                                     @enderror
 
                                 </div>

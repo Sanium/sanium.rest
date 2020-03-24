@@ -63,7 +63,7 @@
                 </ul>
                 <ul id="nav-mobile" class="sidenav">
                     <li>
-                        <a class="black-text" href="{{ route('employer.show', Auth::user()->profile()->first()) }}"><i class="material-icons">person</i>Profile</a>
+                        <a class="black-text" href="{{ route('home') }}"><i class="material-icons">home</i>Dashboard</a>
                     </li>
                     <li>
                         <a class="black-text" href="{{ route('employer.edit', Auth::user()->profile()->first()) }}"><i class="material-icons">settings</i>Edit profile</a>
