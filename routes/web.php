@@ -13,13 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes(['verify' => true]);
-
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::resource('/employer', 'EmployerController')->except('create', 'store');
 Route::resource('/offers', 'OfferController')->except('index', 'show');
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@welcome')->name('welcome');
