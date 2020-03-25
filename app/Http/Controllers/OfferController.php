@@ -93,6 +93,7 @@ class OfferController extends Controller
             'currencies' => $cur,
             'technologies' => $tech,
             'edit' => false,
+            'offer' => [],
         ]);
     }
 

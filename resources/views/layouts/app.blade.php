@@ -18,8 +18,17 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script defer>
+        (function(window, document){
+            document.addEventListener('DOMContentLoaded', function () {
+                @if ( session('status') )
+                    M.toast({html: "{{ session('status') }}"});
+                @endif
+            });
+        })(window, document);
+    </script>
 </head>
-<body>
+<body class="grey lighten-4">
     <nav class="amber" role="navigation">
         <div class="nav-wrapper container">
             <a id="logo-container" href="/" class="brand-logo">{{config('app.name')}}</a>
@@ -83,22 +92,9 @@
             @endguest
         </div>
     </nav>
-
-    <main>
+    <main style="margin: 2rem 0;">
         @yield('content')
     </main>
-    <script>
-        (function(window, document){
-            document.addEventListener('DOMContentLoaded', function () {
-                let status = "";
-                @if ( session('status') )
-                    status = "{{ session('status') }}";
-                @endif
-                if ("" !== status) {
-                    M.toast({html: status})
-                }
-            });
-        })(window, document);
-    </script>
+
 </body>
 </html>
