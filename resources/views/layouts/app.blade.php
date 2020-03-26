@@ -7,94 +7,39 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>
+        @section('title')
+            {{ config('app.name', 'Sanium') }}
+        @show
+    </title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script defer>
-        (function(window, document){
+        (function (window, document) {
             document.addEventListener('DOMContentLoaded', function () {
                 @if ( session('status') )
-                    M.toast({html: "{{ session('status') }}"});
+                M.toast({html: "{{ session('status') }}"});
                 @endif
             });
         })(window, document);
     </script>
+    @yield('javascript')
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('styles')
 </head>
 <body class="grey lighten-4">
-    <nav class="amber" role="navigation">
-        <div class="nav-wrapper container">
-            <a id="logo-container" href="/" class="brand-logo">{{config('app.name')}}</a>
-            @guest
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                    <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
-                </ul>
-                <ul id="nav-mobile" class="sidenav">
-                    <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                    <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
-                </ul>
-                <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            @else
-                <ul class="right hide-on-med-and-down">
-                    <li>
-
-                    </li>
-                    <li><a class="dropdown-trigger no-autoinit"  href="#" data-target='dropdown1' >{{ Auth::user()->name }}</a></li>
-
-                        <ul id="dropdown1" class='dropdown-content'>
-                            <li>
-                                <a class="black-text" href="{{ route('home') }}"><i class="material-icons">home</i>Dashboard</a>
-                            </li>
-                            <li>
-                                <a class="black-text" href="{{ route('employer.edit', Auth::user()->profile()->first()) }}"><i class="material-icons">settings</i>Edit profile</a>
-                            </li>
-                            <li>
-                                <a class="black-text" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                           document.getElementById('logout-form').submit();">
-                                    <i class="material-icons">exit_to_app</i>{{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            </li>
-                        </ul>
-
-                </ul>
-                <ul id="nav-mobile" class="sidenav">
-                    <li>
-                        <a class="black-text" href="{{ route('home') }}"><i class="material-icons">home</i>Dashboard</a>
-                    </li>
-                    <li>
-                        <a class="black-text" href="{{ route('employer.edit', Auth::user()->profile()->first()) }}"><i class="material-icons">settings</i>Edit profile</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();">
-                            <i class="material-icons">exit_to_app</i>{{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </li>
-                </ul>
-                <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            @endguest
-        </div>
-    </nav>
+    @include('components.navbar')
     <main style="margin: 2rem 0;">
         @yield('content')
     </main>
-
 </body>
 </html>
+
+

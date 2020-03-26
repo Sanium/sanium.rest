@@ -1,9 +1,13 @@
 @extends('layouts.app')
 
+@section('title')
+    {{  $edit ? 'Update offer' : 'Create offer' }} - @parent
+@endsection
+
 @section('content')
     <div class="container">
         <form action="{{ $edit ? route('offers.update', $offer) : route('offers.store') }}"
-              method="POST" enctype="multipart/form-data" class="card z-depth-4">
+              method="POST" enctype="multipart/form-data" class="card">
             <div class="card-content">
                 <header class="card-title row">
                     <div class="col s12">
