@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes(['verify' => true]);
-Route::resource('/employer', 'EmployerController')->except('create', 'store');
+Route::resource('/employer', 'EmployerController')->except('index', 'show');
 Route::resource('/offers', 'OfferController')->except('index', 'show');
-Route::resource('/admin', 'AdminController');
+Route::get('/admin', 'AdminController@dashboard')->name('admin.dashboard');
+Route::delete('/admin/e/{employer}', 'AdminController@destroyEmployer')->name('admin.destroy.employer');
+Route::delete('/admin/o/{offer}', 'AdminController@destroyOffer')->name('admin.destroy.offer');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@welcome')->name('welcome');

@@ -46,6 +46,10 @@ class Employer extends Model implements ProfileInterface
         parent::boot();
 
         static::deleting(function (Employer $employer) {
+            $all_offers = $employer->user()->first()->offers()->get();
+            foreach ($all_offers as $offer) {
+                $offer->delete();
+            }
             $employer->user()->delete();
         });
     }

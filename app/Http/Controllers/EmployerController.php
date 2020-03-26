@@ -10,29 +10,23 @@ class EmployerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth'])->except(['show', 'index']);
-        $this->middleware(['verified'])->except(['show', 'index', 'edit']);
+        $this->middleware(['auth']);
+        $this->middleware(['verified'])->except(['create', 'store']);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function create()
     {
-        dd(Employer::all());
+        return view('profile.employer.create');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Employer  $employer
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Employer $employer)
+    public function store(Request $request)
     {
-        dd($employer);
+        $attr = $request->validate($this->rules());
+        /** @var Employer $employer */
+        $employer = auth()->user()->profile()->create($attr);
+        $employer->setLogo($request);
+
+        return redirect(route('home'));
     }
 
     /**
@@ -86,7 +80,9 @@ class EmployerController extends Controller
     {
         try {
             $this->authorize('delete', $employer);
+            $name = $employer->name;
             $employer->delete();
+            $request->session()->flash('status', "Employer $name has been removed.");
         } catch (\Exception $e) {
             $request->session()->flash('status', $e->getMessage());
         } finally {
