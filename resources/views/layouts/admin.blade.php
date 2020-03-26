@@ -33,7 +33,8 @@
         </nav>
         <ul class="sidenav sidenav-fixed">
             <li class="admin_logo">Admin panel</li>
-            <li><a href="#!"><i class="material-icons">dashboard</i>Dashboard</a></li>
+            <li><a href="{{ route('admin.dashboard') }}"><i class="material-icons">developer_board</i>Dashboard</a></li>
+            <li><a href="{{ route('admin.properties') }}"><i class="material-icons">developer_mode</i>Offers properties</a></li>
         </ul>
     </header>
     <main style="margin-left: 300px;">

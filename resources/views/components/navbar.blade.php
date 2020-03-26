@@ -4,7 +4,7 @@
         ['route' => route('register'), 'name' => __('Register')],
     ];
     $admin_links = [
-        ['route' => route('admin.dashboard'), 'name' => __('Admin panel'), 'icon' => 'dashboard'],
+        ['route' => route('admin.dashboard'), 'name' => __('Admin panel'), 'icon' => 'developer_board'],
     ];
     if (!!!auth()->guest() && null !== auth()->user()->profile()->first()) {
         $employer_links = [

@@ -3,12 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Admin;
+use App\Currency;
 use App\Employer;
+use App\Employment;
+use App\Experience;
 use App\Offer;
+use App\Technology;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function dashboard(Request $request)
     {
         /** TODO
@@ -23,6 +32,20 @@ class AdminController extends Controller
             'offer_count' => $offer_count,
             'latest_employers' => $latest_employers,
             'latest_offers' => $latest_offers,
+        ]);
+    }
+
+    public function properties()
+    {
+        $exp = Experience::all();
+        $emp = Employment::all();
+        $cur = Currency::all();
+        $tech = Technology::all();
+        return view('admin.properties', [
+            'experiences' => $exp,
+            'employments' => $emp,
+            'currencies' => $cur,
+            'technologies' => $tech,
         ]);
     }
 
