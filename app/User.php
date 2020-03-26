@@ -96,9 +96,16 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return $this->roles()->get()->contains(Role::where('name', 'employer')->first());
     }
 
+    public function isAdmin()
+    {
+        return $this->roles()->get()->contains(Role::where('name', 'admin')->first());
+    }
+
     public function profile()
     {
-        if ($this->isEmployer()) {
+        if ($this->isAdmin()) {
+            return $this->hasOne(Admin::class);
+        } elseif ($this->isEmployer()) {
             return $this->hasOne(Employer::class);
         }
         else return null;

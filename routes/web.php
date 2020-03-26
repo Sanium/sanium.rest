@@ -16,5 +16,6 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(['verify' => true]);
 Route::resource('/employer', 'EmployerController')->except('create', 'store');
 Route::resource('/offers', 'OfferController')->except('index', 'show');
+Route::resource('/admin', 'AdminController');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@welcome')->name('welcome');
