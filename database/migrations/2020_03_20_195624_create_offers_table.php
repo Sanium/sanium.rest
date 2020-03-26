@@ -25,11 +25,13 @@ class CreateOffersTable extends Migration
             $table->integer('salary_to')->unsigned()->nullable();
             $table->integer('currency_id')->unsigned()->nullable();
             $table->string('city');
+            $table->string('city_slug');
             $table->string('street');
             $table->boolean('remote')->default(false);
             $table->text('tech_stack')->nullable()->comment('Stored as JSON');
             $table->integer('tech_id')->unsigned();
             $table->string('contact');
+            $table->string('website')->nullable();
             $table->timestamp('expires_at');
             $table->timestamps();
         });

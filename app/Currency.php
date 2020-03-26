@@ -20,6 +20,9 @@ use Cviebrock\EloquentSluggable\Sluggable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Currency whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Currency whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $slug
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Currency findSimilarSlugs($attribute, $config, $slug)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Currency whereSlug($value)
  */
 class Currency extends Model
 {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ProfileInterface;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -29,16 +30,23 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return \Illuminate\Contracts\Support\Renderable|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function index()
     {
         //$user->offers()->create(['name' => 'JS Dev ', 'description'=>'d', 'disclaimer' => 'dis', 'city'=>'c', 'street'=>'s', 'tech_id' => 1, 'contact' => 'c', 'expires_at' => ' 2020-03-27 00:40:26']);
-        $employer = auth()->user()->profile()->first();
-        $offers = auth()->user()->offers()->paginate(10);
-        return view('dashboard', [
-            'offers' => $offers,
-            'employer' => $employer,
-        ]);
+
+        /** @var ProfileInterface $profile */
+        $profile = auth()->user()->profile()->first();
+        if (auth()->user()->isEmployer()) {
+            $offers = auth()->user()->offers()->paginate(10);
+            return view('dashboard', [
+                'offers' => $offers,
+                'employer' => $profile,
+            ]);
+        } else {
+            return redirect(route('welcome'));
+        }
+
     }
 }

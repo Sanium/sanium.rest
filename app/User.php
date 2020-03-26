@@ -2,10 +2,10 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * App\User
@@ -73,14 +73,6 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         parent::boot();
 
-        static::created(function (User $user) {
-            // TODO exception: roles not found
-            $user->roles()->attach(Role::where('name', 'employer')->first());
-            $user->profile()->create([
-                'name' => $user->name,
-            ]);
-        });
-
         static::deleting(function (User $user) {
             $user->profile()->first()->delete();
         });
@@ -117,5 +109,26 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     public function offers()
     {
         return $this->hasMany('App\Offer', 'user_id', 'id');
+    }
+
+    static public function createWithRole($attr) {
+        if (array_key_exists('role', $attr)) {
+            if (null === $attr['role']) {
+                return false;
+            } elseif (is_numeric($attr['role'])) {
+                $role_id = $attr['role'];
+                unset($attr['role']);
+                $user = User::create($attr);
+                $user->roles()->attach(Role::findOrFail($role_id)->first());
+            } else {
+                $role_name = $attr['role'];
+                unset($attr['role']);
+                $user = User::create($attr);
+                $user->roles()->attach(Role::where('name', $role_name)->firstOrFail());
+            }
+        } else {
+            return User::create($attr);
+        }
+        return $user;
     }
 }
