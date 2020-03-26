@@ -2,70 +2,72 @@
 
 namespace Tests\Unit;
 
-use App\Employer;
-use App\User;
+use App\Admin;
 use App\Role;
-use Illuminate\Support\Str;
+use App\User;
 use Tests\TestCase;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UserProfileTest extends TestCase
+class UserAdminTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
     private $emRole;
+    private $adminRole;
 
     public function setUp(): void
     {
         parent::setUp();
 
         $this->emRole = Role::create(['name' => 'employer']);
+        $this->adminRole = Role::create(['name' => 'admin']);
     }
 
     public function create_user()
     {
-        return User::create([
+        /** @var User $user */
+        $user = User::createWithRole([
             'name' => 'baloo',
             'email' => 'baloo@baloo.baloo',
-            'password' => 'baloo'
+            'password' => 'baloo',
+            'role' => 'admin'
         ]);
+        $profile_attr = [
+            'name' => $user->name,
+        ];
+        $user->profile()->create($profile_attr);
+
+        return $user;
     }
 
     /** @test */
     public function it_can_create_user()
     {
         /** @var User $user */
-        $user = $this->create_user();
+        $user = User::createWithRole([
+            'name' => 'baloo',
+            'email' => 'baloo@baloo.baloo',
+            'password' => 'baloo',
+            'role' => 'admin'
+        ]);
+        $profile_attr = [
+            'name' => $user->name,
+        ];
+        $user->profile()->create($profile_attr);
+
 
         $this->assertInstanceOf(User::class, $user);
         $this->assertInstanceOf(Role::class, $user->roles()->first());
-        $this->assertTrue($user->isEmployer());
-        $this->assertInstanceOf(Employer::class, $user->profile()->first());
-        /** @var Employer $profile */
+        $this->assertTrue($user->isAdmin());
+        $this->assertFalse($user->isEmployer());
+        /** @var Admin $profile */
         $profile = $user->profile()->first();
+        $this->assertInstanceOf(Admin::class, $profile);
         $this->assertEquals('baloo', $user->name);
         $this->assertEquals('baloo@baloo.baloo', $user->email);
-        $this->assertEquals(Str::slug('baloo'), $profile->slug);
-
-
-    }
-
-    /** @test */
-    public function it_can_update_user()
-    {
-        /** @var User $user */
-        $user = $this->create_user();
-
-        $new_user_attr = [
-            'name' => 'baloo2',
-            'email' => 'baloo2@baloo2.baloo2',
-        ];
-
-        $user->update($new_user_attr);
-
-        $this->assertEquals($new_user_attr['name'], $user->name);
-        $this->assertEquals($new_user_attr['email'], $user->email);
+        $this->assertEquals(Str::slug($profile_attr['name']), $profile->slug);
     }
 
     /** @test */
@@ -78,7 +80,7 @@ class UserProfileTest extends TestCase
             'name' => 'BALOO CORP'
         ];
 
-        /** @var Employer $profile */
+        /** @var Admin $profile */
         $profile = $user->profile()->first();
         $profile->update($new_profile_attr);
 

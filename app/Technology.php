@@ -20,6 +20,9 @@ use Cviebrock\EloquentSluggable\Sluggable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $slug
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology findSimilarSlugs($attribute, $config, $slug)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology whereSlug($value)
  */
 class Technology extends Model
 {

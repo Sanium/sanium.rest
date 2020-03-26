@@ -35,7 +35,7 @@ use Intervention\Image\Facades\Image;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereSize($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereWebsite($value)
  */
-class Employer extends Model
+class Employer extends Model implements ProfileInterface
 {
     use Sluggable;
 

@@ -20,6 +20,9 @@ use Cviebrock\EloquentSluggable\Sluggable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Experience whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Experience whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $slug
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Experience findSimilarSlugs($attribute, $config, $slug)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Experience whereSlug($value)
  */
 class Experience extends Model
 {
