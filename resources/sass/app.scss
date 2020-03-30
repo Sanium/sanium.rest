@@ -1,12 +1,15 @@
 // Variables
 @import 'variables';
 
-// Materialize
-@import '~materialize-css/dist/css/materialize.min.css';
+@import '~@fortawesome/fontawesome-free';
 
-@import '~dropify/dist/css/dropify.min.css';
+@import '~bootstrap';
 
-@import '~summernote/dist/summernote-lite.min.css';
+@import './../mdbootstrap/css/mdb.min.css';
+
+@import '~dropify/dist/css/dropify.css';
+
+@import '~summernote/dist/summernote-bs4.css';
 
 @import 'typography';
 

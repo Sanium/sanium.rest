@@ -1,8 +1,11 @@
 window.jQuery = require('jquery');
 window.$ = window.jQuery;
 
-require('materialize-css');
+require('popper.js');
+require('bootstrap');
+require('chart.js');
+require('./../mdbootstrap/js/mdb.min.js');
 require('dropify');
-require('summernote/dist/summernote-lite.min');
+require('summernote');
 
 

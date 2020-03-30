@@ -1,16 +1,6 @@
 require('./bootstrap');
 
 document.addEventListener('DOMContentLoaded', function () {
-    M.AutoInit();
-    $('.dropdown-trigger').dropdown({
-        'alignment': 'right',
-        'constrainWidth': false,
-        'coverTrigger': false,
-    });
-    $('select').formSelect('', {
-        'constrainWidth': true,
-        'coverTrigger': false,
-    });
 
     // summernote config
     const summernote_config = {
