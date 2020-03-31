@@ -210,7 +210,7 @@ class OfferController extends Controller
         return [
             'name' => 'required|string',
             'description' => 'required|string',
-            'disclaimer' => 'required|string',
+            'disclaimer' => 'nullable|string',
             'exp_id' => 'nullable',
             'emp_id' => 'nullable',
             'salary_from' => 'nullable|integer',

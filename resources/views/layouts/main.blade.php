@@ -19,7 +19,7 @@
         (function (window, document) {
             document.addEventListener('DOMContentLoaded', function () {
                 @if ( session('status') )
-                M.toast({html: "{{ session('status') }}"});
+                    toastr["info"]("{{ session('status') }}");
                 @endif
             });
         })(window, document);
