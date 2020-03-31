@@ -5,19 +5,10 @@
 
 @import '~bootstrap';
 
-@import './../mdbootstrap/css/mdb.min.css';
+@import './../mdbootstrap/scss/mdb-pro';
 
 @import '~dropify/dist/css/dropify.css';
 
 @import '~summernote/dist/summernote-bs4.css';
 
-@import 'typography';
-
-.admin_logo {
-    font-size: 2.1rem;
-    line-height: 64px !important;
-    height: 64px;
-    text-align: center;
-}
-
-
+@import 'helper';

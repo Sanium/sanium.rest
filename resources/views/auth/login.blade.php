@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid d-flex justify-content-center align-items-center" style="height: calc(100vh - 56px)">
+    <div class="container-fluid d-flex justify-content-center align-items-center full-height" >
         <div class="card card-cascade narrower w-100" style="max-width: 450px;">
             <div class="view view-cascade gradient-card-header blue-gradient">
                 <h2 class="card-header-title mb-3">{{ __('Sign in') }}</h2>
