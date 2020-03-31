@@ -17,6 +17,7 @@ class OfferController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware('registered')->except(['index', 'show']);
         $this->middleware('verified')->except(['index', 'show', 'edit']);
     }
 
@@ -194,13 +195,13 @@ class OfferController extends Controller
     {
         try {
             $this->authorize('delete', $offer);
-            $offer_name = $offer->name;
+            $name = $offer->name;
             $offer->delete();
-            $request->session()->flash('status', "Offer $offer_name has been removed.");
+            $request->session()->flash('status', "Offer $name has been removed.");
         } catch (\Exception $e) {
             $request->session()->flash('status', $e->getMessage());
         } finally {
-            return redirect(route('home'));
+            return redirect(route('admin.dashboard'));
         }
     }
 

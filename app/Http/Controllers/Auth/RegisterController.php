@@ -64,15 +64,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        return User::createWithRole([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role' => 'employer'
         ]);
     }
 
     protected function redirectTo()
     {
-        return route('employer.edit', auth()->user()->profile()->first());
+        return route('employer.create');
     }
 }

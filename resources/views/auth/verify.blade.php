@@ -23,7 +23,7 @@
                             </form>
 
                             <p class="small">
-                            @if (session('resent') or true)
+                            @if ( session('resent'))
                                     {{ __('A fresh verification link has been sent to your email address.') }}
                             @endif
                                 &nbsp;

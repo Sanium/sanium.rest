@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('title')
-    Edit profile - @parent
+    Create profile - @parent
 @endsection
 
 @section('javascript')
-<script>
+<script defer>
     (function () {
         document.addEventListener('DOMContentLoaded', function () {
             $('.dropify').dropify({
@@ -20,7 +20,7 @@
 
 @section('content')
     <div class="container" style="display: flex; justify-content: center">
-        <form action="{{ route('employer.update', $employer) }}" method="POST"
+        <form action="{{ route('employer.store') }}" method="POST"
               enctype="multipart/form-data" id="editProfile" class="card" style="max-width: 600px;">
             <div class="card-content left-align">
                 <div class="row">
@@ -28,20 +28,16 @@
                 </div>
 
                 @csrf
-                @method('PATCH')
                 <div class="row">
                     <div class="col s12">
-                        <input type="file" name="logo" class="dropify" data-height="120"
-                               data-default-file="{{ $employer->getLogo() }}"
-                               data-show-remove="false" data-show-errors="true"
-                               data-errors-position="outside" />
+                        <input type="file" name="logo" class="dropify" data-height="120" data-show-remove="false"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12">
                         <label for="name">Name</label>
                         <input class="validate @error('name') invalid @enderror" type="text" name="name" id="name"
-                               value="{{ old('name') ?? $employer->name  }}"
+                               value="{{ old('name') ?? auth()->user()->name }}"
                                required>
 
                         @error('name')
@@ -53,7 +49,7 @@
                     <div class="col s12 m6">
                         <label for="website">Website</label>
                         <input class="validate @error('website') invalid @enderror" type="text" name="website" id="website"
-                               value="{{ old('website') ?? $employer->website  }}"
+                               value="{{ old('website') }}"
                                required>
 
                         @error('website')
@@ -65,7 +61,7 @@
                     <div class="col s12 m6">
                         <label for="size">Size of company</label>
                         <input class="validate @error('size') invalid @enderror" type="text" name="size" id="size"
-                               value="{{ old('size') ?? $employer->size  }}"
+                               value="{{ old('size') }}"
                                required>
 
                         @error('size')
@@ -78,7 +74,7 @@
             </div>
             <div class="card-action right-align">
                 <button class="btn waves-effect waves-light" type="submit" name="action">
-                    {{ __('Update') }}
+                    {{ __('Create profile') }}
                 </button>
             </div>
         </form>

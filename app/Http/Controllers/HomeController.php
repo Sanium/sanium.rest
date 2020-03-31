@@ -15,6 +15,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except('welcome');
+        $this->middleware('registered')->except('welcome');
     }
 
     /**
@@ -45,8 +46,7 @@ class HomeController extends Controller
                 'employer' => $profile,
             ]);
         } else {
-            return redirect(route('welcome'));
+            return redirect(route('admin.dashboard'));
         }
-
     }
 }
