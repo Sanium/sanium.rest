@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -50,9 +51,11 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'max:191'],
+            'company-name' => ['required', 'string', 'max:191'],
+            'company-size' => ['required', 'integer'],
+            'company-website' => ['required', 'url'],
         ]);
     }
 
@@ -64,16 +67,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::createWithRole([
-            'name' => $data['name'],
+        $user = User::createWithRole([
+            'name' => Str::slug($data['company-name']),
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role' => 'employer'
         ]);
+        $user->profile()->create([
+            'name' => $data['company-name'],
+            'size' => $data['company-size'],
+            'website' => $data['company-website']
+        ]);
+        return $user;
     }
 
     protected function redirectTo()
     {
-        return route('employer.create');
+        return route('home');
     }
 }
