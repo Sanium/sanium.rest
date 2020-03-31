@@ -5,6 +5,7 @@
     <main>
         @yield('content')
     </main>
+    @yield('body-javascript')
 @endsection
 
 

@@ -17,7 +17,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script defer>
         (function (window, document) {
-            document.addEventListener('DOMContentLoaded', function () {
+            window.addEventListener('load', function () {
                 @if ( session('status') )
                     toastr["info"]("{{ session('status') }}");
                 @endif

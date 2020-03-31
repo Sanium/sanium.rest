@@ -1,6 +1,6 @@
 require('./bootstrap');
 
-document.addEventListener('DOMContentLoaded', function () {
+window.addEventListener('load', function () {
 
     // summernote config
     const summernote_config = {

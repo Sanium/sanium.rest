@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('javascript')
-    @include('imports.js')
+{{--    @include('imports.js')--}}
 @endsection
 
 @section('styles')
-    @include('imports.css')
+{{--    @include('imports.css')--}}
 @endsection
 
 @section('content')

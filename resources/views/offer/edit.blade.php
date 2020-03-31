@@ -8,7 +8,7 @@
     <script src="{{ asset('js/material-select.min.js') }}" defer></script>
     <script defer>
         (function () {
-            document.addEventListener('DOMContentLoaded', function () {
+            window.addEventListener('load', function () {
                 $('.mdb-select').materialSelect();
             });
         })(window, document);
