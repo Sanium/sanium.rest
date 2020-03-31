@@ -19,7 +19,7 @@
 
 @section('main.content')
     <nav class="navbar navbar-expand light-blue navbar-dark">
-        <div class="container d-flex justify-content-start">
+        <div class="container-fluid d-flex justify-content-start px-xl-5">
             <!-- SideNav slide-out button -->
             <a href="#" data-activates="slide-out" class="text-white button-collapse mr-3"><i
                     class="fas fa-bars"></i></a>
@@ -27,17 +27,32 @@
         </div>
     </nav>
     <!-- Sidebar navigation -->
-    <div id="slide-out" class="side-nav light-blue">
+    <div id="slide-out" class="side-nav side-nav-light white white-skin">
         <ul class="custom-scrollbar">
             <!-- Logo -->
             <li>
                 <div class="logo-wrapper d-flex justify-content-center align-items-center">
-                    <h2 class="display-4">Sanium</h2>
+                    <h2 class="display-4 text-dark">Sanium</h2>
                 </div>
             </li>
             <!--/. Logo -->
+            <!--Social-->
+            <li>
+                <ul class="social">
+                    <li>
+                        <a href="{{ route('logout') }}" class="" onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();" title="{{ __('Logout') }}">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
+                    </li>
+                </ul>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </li>
 
 
+            <!--/Social-->
             <!-- Side navigation links -->
             <li>
                 <ul class="collapsible collapsible-accordion">
@@ -52,12 +67,11 @@
                             Offer properties
                         </a>
                     </li>
-
                 </ul>
             </li>
             <!--/. Side navigation links -->
         </ul>
-        <div class="sidenav-bg rgba-blue-strong"></div>
+        <div class="sidenav-bg"></div>
     </div>
     <!--/. Sidebar navigation -->
 

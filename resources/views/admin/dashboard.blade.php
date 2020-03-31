@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="container-fluid">
-        <section class="row m-5">
+    <div class="container-fluid px-0">
+        <section class="row mx-0 mx-xl-5 mt-5">
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="media white z-depth-1 rounded">
                     <i class="fas fa-users fa-lg blue z-depth-1 p-4 rounded-left text-white mr-3"></i>
@@ -44,8 +44,8 @@
             </div>
         </section>
 
-        <section class="row">
-            <div class="col-12 col-lg-6 pb-4 pb-lg-0">
+        <section class="row mx-0 mx-xl-5 mt-5">
+            <div class="col-12 col-xl-5 pb-4 pb-xl-0">
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title d-flex justify-content-between align-items-center">
@@ -65,8 +65,8 @@
                                 <tr>
                                     <td class="align-middle"><img class="img-fluid z-depth-1 rounded-circle" style="max-height: 48px"
                                              src="{{ $employer->getLogo() }}" alt=""></td>
-                                    <td class="align-middle"><span class="h4 font-weight-normal">{{ $employer->name }}</span></td>
-                                    <td class="align-middle"><span class="h4 font-weight-normal">{{ $employer->user()->first()->offers()->count() }}</span></td>
+                                    <td class="align-middle">{{ $employer->name }}</td>
+                                    <td class="align-middle">{{ $employer->user()->first()->offers()->count() }}</td>
                                     <td class="align-middle">
                                         <div class="d-flex justify-content-end">
                                         <a class="btn-floating btn-danger"
@@ -90,7 +90,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-lg-6">
+            <div class="col-12 col-xl-7">
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title d-flex justify-content-between align-items-center">
@@ -108,9 +108,9 @@
                             <tbody class="table-hover">
                             @foreach( $latest_offers as $offer)
                                 <tr>
-                                    <td class="align-middle"><span class="h4 font-weight-normal"><a href="/#/details/{{ $offer->id }}">{{ $offer->name }}</a></span></td>
-                                    <td class="align-middle"><span class="h4 font-weight-normal">{{ $offer->user()->first()->profile()->first()->name }}</span></td>
-                                    <td class="align-middle"><span class="h4 font-weight-normal">{{ $offer->created_at->diffForHumans() }}</span></td>
+                                    <td class="align-middle"><a href="/#/details/{{ $offer->id }}">{{ $offer->name }}</a></td>
+                                    <td class="align-middle">{{ $offer->user()->first()->profile()->first()->name }}</td>
+                                    <td class="align-middle">{{ $offer->created_at->diffForHumans() }}</td>
                                     <td class="align-middle">
                                         <div class="d-flex justify-content-end">
                                             <a class="btn-floating btn-default mr-2" title="Edit this offer"
