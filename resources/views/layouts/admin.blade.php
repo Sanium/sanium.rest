@@ -4,40 +4,64 @@
     Admin Dashboard - @parent
 @endsection
 
-@section('main.content')
-    <header style="margin-left: 300px;">
-        <nav class="amber">
-            <div class="nav-wrapper row">
-                <div class="col s12">
-                    <a href="{{ route('welcome') }}" class="brand-logo">{{ config('app.name') }}</a>
-                    <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li>
-                            <a class="dropdown-trigger no-autoinit" href="#"
-                               data-target='dropdown1'>{{ auth()->user()->name }}</a>
-                        </li>
-                    </ul>
-                    <ul id="dropdown1" class='dropdown-content'>
-                        <li>
-                            <a class="black-text" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                <i class="material-icons">exit_to_app</i>{{ __('Logout') }}
-                            </a>
+@section('javascript')
+    <script defer>
+        (function (window, document) {
+            window.addEventListener('load', () => {
+                $(".button-collapse").sideNav();
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </li>
-                    </ul>
+                var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+                var ps = new PerfectScrollbar(sideNavScrollbar);
+            })
+        })(window, document);
+    </script>
+@endsection
+
+@section('main.content')
+    <nav class="navbar navbar-expand light-blue navbar-dark">
+        <div class="container d-flex justify-content-start">
+            <!-- SideNav slide-out button -->
+            <a href="#" data-activates="slide-out" class="text-white button-collapse mr-3"><i
+                    class="fas fa-bars"></i></a>
+            <a class="navbar-brand" href="{{ route('welcome') }}">Sanium</a>
+        </div>
+    </nav>
+    <!-- Sidebar navigation -->
+    <div id="slide-out" class="side-nav light-blue">
+        <ul class="custom-scrollbar">
+            <!-- Logo -->
+            <li>
+                <div class="logo-wrapper d-flex justify-content-center align-items-center">
+                    <h2 class="display-4">Sanium</h2>
                 </div>
-            </div>
-        </nav>
-        <ul class="sidenav sidenav-fixed">
-            <li class="admin_logo">Admin panel</li>
-            <li><a href="{{ route('admin.dashboard') }}"><i class="material-icons">developer_board</i>Dashboard</a></li>
-            <li><a href="{{ route('admin.properties') }}"><i class="material-icons">developer_mode</i>Offers properties</a></li>
+            </li>
+            <!--/. Logo -->
+
+
+            <!-- Side navigation links -->
+            <li>
+                <ul class="collapsible collapsible-accordion">
+                    <li>
+                        <a href="{{ route('admin.dashboard') }}" class="collapsible-header waves-effect">
+                            <i class="fas fa-tachometer-alt"></i>Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.properties') }}" class="collapsible-header waves-effect">
+                            <i class="fas fa-tachometer-alt"></i>
+                            Offer properties
+                        </a>
+                    </li>
+
+                </ul>
+            </li>
+            <!--/. Side navigation links -->
         </ul>
-    </header>
-    <main style="margin-left: 300px;">
+        <div class="sidenav-bg rgba-blue-strong"></div>
+    </div>
+    <!--/. Sidebar navigation -->
+
+    <main>
         @yield('content')
     </main>
 @endsection
