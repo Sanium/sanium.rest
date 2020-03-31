@@ -23,10 +23,10 @@ mix.babelConfig({
 });
 
 mix
-
     .setPublicPath("public_html/")
     .sourceMaps(false, "source-map")
     .js('resources/js/app.js', 'js')
     .sass('resources/sass/app.scss', 'css')
+    .copy('resources/mdbootstrap/js/modules/material-select/material-select.min.js', 'public_html/js/material-select.min.js')
     .disableSuccessNotifications();
 
