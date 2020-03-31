@@ -2,75 +2,64 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col s12 m8 offset-m2 l6 offset-l3 xl4 offset-xl4">
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title center-align">{{ __('Register') }}</span>
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 col-xl-4">
+                <div class="card card-cascade narrower">
+                    <div class="view view-cascade gradient-card-header blue-gradient">
+                        <h2 class="card-header-title mb-3">{{ __('Register') }}</h2>
+                    </div>
+                    <div class="card-body card-body-cascade">
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
-                            <div class="row">
-                                <div class="col s12 input-field">
-                                    <i class="material-icons prefix">person</i>
-                                    <input id="name" type="text" class="validate @error('name') invalid @enderror"
-                                           name="name" required>
-                                    <label for="name">{{ __('Name') }}</label>
-
-                                    @error('name')
-                                    <span class="helper-text red-text" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-
+                            <div class="md-form">
+                                <i class="fa fa-user prefix grey-text"></i>
+                                <input name="name" type="text" id="name"
+                                       class="form-control mb-4 validate @error('name') invalid @enderror"
+                                       required autocomplete="name" autofocus>
+                                <label for="name" class="font-weight-light">{{ __('Name') }}</label>
+                                @error('name')
+                                <div class="valid-feedback red-text">
+                                    {{ $message }}
                                 </div>
+                                @enderror
                             </div>
-                            <div class="row">
-                                <div class="col s12 input-field">
-                                    <i class="material-icons prefix">mail</i>
-                                    <input id="email" type="email" class="validate @error('email') invalid @enderror"
-                                           name="email" required autocomplete="email" autofocus>
-                                    <label for="email">{{ __('E-Mail Address') }}</label>
-
-                                    @error('email')
-                                    <span class="helper-text red-text" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                    @enderror
-
+                            <div class="md-form">
+                                <i class="fa fa-envelope prefix grey-text"></i>
+                                <input name="email" type="email" id="email"
+                                       class="form-control mb-4 validate @error('email') invalid @enderror"
+                                       required autocomplete="email" autofocus>
+                                <label for="email" class="font-weight-light">{{ __('E-Mail') }}</label>
+                                @error('email')
+                                <div class="valid-feedback red-text">
+                                    {{ $message }}
                                 </div>
+                                @enderror
                             </div>
-                            <div class="row">
-                                <div class="col s12 input-field">
-                                    <i class="material-icons prefix">lock</i>
-                                    <input id="password" type="password"
-                                           class="validate @error('password') invalid @enderror" name="password"
-                                           required>
-                                    <label for="password">{{ __('Password') }}</label>
-
-                                    @error('password')
-                                    <span class="helper-text red-text" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                    @enderror
-
+                            <div class="md-form">
+                                <i class="fa fa-lock prefix grey-text"></i>
+                                <input name="password" type="password" id="password"
+                                       class="form-control mb-4 validate @error('password') invalid @enderror"
+                                       required autocomplete="current-password">
+                                <label for="password" class="font-weight-light">{{ __('Password') }}</label>
+                                @error('password')
+                                <div class="valid-feedback red-text">
+                                    {{ $message }}
                                 </div>
+                                @enderror
                             </div>
-                            <div class="row">
-                                <div class="col s12 input-field">
-                                    <i class="material-icons prefix">lock</i>
-                                    <input id="confirm-password" type="password" class="validate"
-                                           name="password_confirmation" required>
-                                    <label for="confirm-password">{{ __('Confirm Password') }}</label>
+                            <div class="md-form">
+                                <i class="fa fa-lock prefix grey-text"></i>
+                                <input name="password" type="password" id="password"
+                                       class="form-control mb-4 validate @error('password') invalid @enderror"
+                                       required autocomplete="current-password">
+                                <label for="password" class="font-weight-light">{{ __('Confirm Password') }}</label>
+                                @error('password')
+                                <div class="valid-feedback red-text">
+                                    {{ $message }}
                                 </div>
+                                @enderror
                             </div>
-                            <div class="row">
-                                <div class="col s12 center-align row">
-                                    <button class="col s12 btn waves-effect waves-light" type="submit"
-                                            name="action">{{ __('Register') }}
-                                        <i class="material-icons right">send</i>
-                                    </button>
-                                </div>
-                            </div>
+                            <button class="btn btn-primary btn-block my-4" type="submit">{{ __('Submit') }}</button>
                         </form>
                     </div>
                 </div>
