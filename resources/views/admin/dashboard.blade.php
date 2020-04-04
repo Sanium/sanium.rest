@@ -51,11 +51,14 @@
                         <div class="card-title d-flex justify-content-between align-items-center">
                             <h4>{{ __('Last new users') }}</h4>
                         </div>
-                        <table class="table">
+                        <table class="table table-sm">
                             <thead>
                                 <tr>
                                     <th></th>
                                     <th>{{ __('Name') }}</th>
+                                    <th>{{ __('Size') }}</th>
+                                    <th>{{ __('Website') }}</th>
+                                    <th>{{ __('Created') }}</th>
                                     <th>{{ __('No. offers') }}</th>
                                     <th></th>
                                 </tr>
@@ -63,13 +66,16 @@
                             <tbody class="table-hover">
                             @foreach( $latest_employers as $employer )
                                 <tr>
-                                    <td class="align-middle"><img class="img-fluid z-depth-1 rounded-circle" style="max-height: 48px"
+                                    <td class="align-middle"><img class="img-fluid z-depth-1 rounded-circle" style="max-height: 30px"
                                              src="{{ $employer->getLogo() }}" alt=""></td>
                                     <td class="align-middle">{{ $employer->name }}</td>
+                                    <td class="align-middle">{{ $employer->size }}</td>
+                                    <td class="align-middle"><a class="light-blue-text text-darken-2" href="{{ $employer->website }}">{{ $employer->website }}</a></td>
+                                    <td class="align-middle">{{ $employer->created_at->diffForHumans() }}</td>
                                     <td class="align-middle">{{ $employer->user()->first()->offers()->count() }}</td>
                                     <td class="align-middle">
                                         <div class="d-flex justify-content-end">
-                                        <a class="btn-floating btn-danger"
+                                        <a class="btn btn-danger btn-sm m-0"
                                            title="Remove this employer"
                                            href="#!"
                                            onclick="event.preventDefault();document.getElementById('delete-employer-{{$employer->id}}').submit();">
@@ -96,7 +102,7 @@
                         <div class="card-title d-flex justify-content-between align-items-center">
                             <h4>{{ __('Last new offers') }}</h4>
                         </div>
-                        <table class="table">
+                        <table class="table table-sm">
                             <thead>
                             <tr>
                                 <th>{{ __('Name') }}</th>
@@ -113,11 +119,11 @@
                                     <td class="align-middle">{{ $offer->created_at->diffForHumans() }}</td>
                                     <td class="align-middle">
                                         <div class="d-flex justify-content-end">
-                                            <a class="btn-floating btn-default mr-2" title="Edit this offer"
+                                            <a class="btn btn-default btn-sm mr-2" title="Edit this offer"
                                                href="{{ route('offers.edit', $offer) }}">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
-                                            <a class="btn-floating btn-danger" title="Remove this offer"
+                                            <a class="btn btn-danger btn-sm m-0" title="Remove this offer"
                                                href="#!"
                                                onclick="event.preventDefault();document.getElementById('delete-offer-{{$offer->id}}').submit();">
                                                 <i class="fas fa-trash"></i>
