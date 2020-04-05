@@ -67,6 +67,12 @@
                             Offer properties
                         </a>
                     </li>
+                    <lwi>
+                        <a href="{{ route('admin.users') }}" class="collapsible-header waves-effect">
+                            <i class="fas fa-users"></i>
+                            All users
+                        </a>
+                    </lwi>
                 </ul>
             </li>
             <!--/. Side navigation links -->

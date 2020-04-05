@@ -63,7 +63,7 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody class="table-hover">
+                            <tbody>
                             @foreach( $latest_employers as $employer )
                                 <tr>
                                     <td class="align-middle"><img class="img-fluid z-depth-1 rounded-circle" style="max-height: 30px"

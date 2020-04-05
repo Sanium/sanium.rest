@@ -75,6 +75,10 @@
                     @endforeach
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-center">
+                    {{ $offers->links('components.pagination') }}
+                </div>
+
             </div>
         </div>
     </div>

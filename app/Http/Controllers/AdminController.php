@@ -15,14 +15,11 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'admin']);
     }
 
     public function dashboard(Request $request)
     {
-        /** TODO
-         *  Map with offers
-         */
         $user_count = Employer::count();
         $offer_count = Offer::count();
         $latest_employers = Employer::latest()->take(6)->get();
@@ -46,6 +43,14 @@ class AdminController extends Controller
             'employments' => $emp,
             'currencies' => $cur,
             'technologies' => $tech,
+        ]);
+    }
+
+    public function users()
+    {
+        $employers = Employer::paginate(15);
+        return view('admin.users', [
+            'employers' => $employers
         ]);
     }
 

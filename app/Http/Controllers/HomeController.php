@@ -40,7 +40,7 @@ class HomeController extends Controller
         /** @var ProfileInterface $profile */
         $profile = auth()->user()->profile()->first();
         if (auth()->user()->isEmployer()) {
-            $offers = auth()->user()->offers()->paginate(10);
+            $offers = auth()->user()->offers()->paginate(4);
             return view('dashboard', [
                 'offers' => $offers,
                 'employer' => $profile,
