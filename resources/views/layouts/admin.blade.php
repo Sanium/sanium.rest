@@ -63,12 +63,12 @@
                     </li>
                     <li>
                         <a href="{{ route('admin.properties') }}" class="collapsible-header waves-effect">
-                            <i class="fas fa-tachometer-alt"></i>
+                            <i class="fas fa-database"></i>
                             Offer properties
                         </a>
                     </li>
                     <lwi>
-                        <a href="{{ route('admin.users') }}" class="collapsible-header waves-effect">
+                        <a href="{{ route('admin.employers.index') }}" class="collapsible-header waves-effect">
                             <i class="fas fa-users"></i>
                             All users
                         </a>

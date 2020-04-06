@@ -16,20 +16,16 @@
                                     <td class="align-middle">{{ $el->name }}</td>
                                     <td class="align-middle">
                                         <div class="d-flex justify-content-end">
-                                        <a class="btn btn-default btn-sm mr-2" title="Edit this offer"
-                                           href="#!">
-                                            <i class="fas fa-pencil-alt"></i>
-                                        </a>
-                                        <a class="btn btn-danger btn-sm m-0" title="Remove this offer"
-                                           href="#!"
-                                           onclick="event.preventDefault();document.getElementById('delete-offer-{{ $el->id }}').submit();">
-                                            <i class="fas fa-trash"></i>
+                                            <button class="btn btn-danger btn-sm m-0 btn-form-delete"
+                                               title="Remove this offer"
+                                               onclick="event.preventDefault();document.getElementById('delete-tech-{{ $el->id }}').submit();">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                             <form id="delete-tech-{{ $el->id }}"
-                                                  action="#!" method="POST">
+                                                  action="" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                             </form>
-                                        </a>
                                         </div>
                                     </td>
                                 </tr>
@@ -53,20 +49,16 @@
                                         <td class="align-middle">{{ $el->name }}</td>
                                         <td class="align-middle">
                                             <div class="d-flex justify-content-end">
-                                                <a class="btn btn-default btn-sm mr-2" title="Edit this offer"
-                                                   href="#!">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                                <a class="btn btn-danger btn-sm m-0" title="Remove this offer"
-                                                   href="#!"
-                                                   onclick="event.preventDefault();document.getElementById('delete-offer-{{ $el->id }}').submit();">
+                                                <button class="btn btn-danger btn-sm m-0 btn-form-delete"
+                                                        title="Remove this offer"
+                                                        onclick="event.preventDefault();document.getElementById('delete-exp-{{ $el->id }}').submit();">
                                                     <i class="fas fa-trash"></i>
-                                                    <form id="delete-tech-{{ $el->id }}"
-                                                          action="#!" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                    </form>
-                                                </a>
+                                                </button>
+                                                <form id="delete-exp-{{ $el->id }}"
+                                                      action="{{ route($experiences_url, $el) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
@@ -89,20 +81,15 @@
                                         <td class="align-middle">{{ $el->name }}</td>
                                         <td class="align-middle">
                                             <div class="d-flex justify-content-end">
-                                                <a class="btn btn-default btn-sm mr-2" title="Edit this offer"
-                                                   href="#!">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                                <a class="btn btn-danger btn-sm m-0" title="Remove this offer"
-                                                   href="#!"
-                                                   onclick="event.preventDefault();document.getElementById('delete-offer-{{ $el->id }}').submit();">
+                                                <button class="btn btn-danger btn-sm m-0" title="Remove this offer"
+                                                   onclick="event.preventDefault();document.getElementById('delete-emp-{{ $el->id }}').submit();">
                                                     <i class="fas fa-trash"></i>
-                                                    <form id="delete-tech-{{ $el->id }}"
-                                                          action="#!" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                    </form>
-                                                </a>
+                                                </button>
+                                                <form id="delete-emp-{{ $el->id }}"
+                                                      action="{{ route($employments_url, $el) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
@@ -122,23 +109,20 @@
                                 <tbody>
                                 @foreach( $currencies as $el )
                                     <tr>
-                                        <td class="align-middle">{{ $el->name }}</td>
+                                        <td class="align-middle"><span id="edit-cur-{{ $el->id }}"
+                                                                       contenteditable="true">{{ $el->name }}</span>
+                                        </td>
                                         <td class="align-middle">
                                             <div class="d-flex justify-content-end">
-                                                <a class="btn btn-default btn-sm mr-2" title="Edit this offer"
-                                                   href="#!">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </a>
-                                                <a class="btn btn-danger btn-sm m-0" title="Remove this offer"
-                                                   href="#!"
-                                                   onclick="event.preventDefault();document.getElementById('delete-offer-{{ $el->id }}').submit();">
+                                                <button class="btn btn-danger btn-sm m-0" title="Remove this offer"
+                                                   onclick="event.preventDefault();document.getElementById('delete-cur-{{ $el->id }}').submit();">
                                                     <i class="fas fa-trash"></i>
-                                                    <form id="delete-tech-{{ $el->id }}"
-                                                          action="#!" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                    </form>
-                                                </a>
+                                                </button>
+                                                <form id="delete-cur-{{ $el->id }}"
+                                                      action="{{ route($currencies_url, $el) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
