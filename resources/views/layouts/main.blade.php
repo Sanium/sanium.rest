@@ -13,6 +13,10 @@
         @show
     </title>
 
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('styles')
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script defer>
@@ -26,13 +30,6 @@
     </script>
     @yield('javascript')
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @yield('styles')
 </head>
 <body class="grey lighten-4">
     @yield('main.content')

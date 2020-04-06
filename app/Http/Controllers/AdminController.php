@@ -9,20 +9,18 @@ use App\Employment;
 use App\Experience;
 use App\Offer;
 use App\Technology;
+use App\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'admin']);
     }
 
     public function dashboard(Request $request)
     {
-        /** TODO
-         *  Map with offers
-         */
         $user_count = Employer::count();
         $offer_count = Offer::count();
         $latest_employers = Employer::latest()->take(6)->get();
@@ -46,6 +44,37 @@ class AdminController extends Controller
             'employments' => $emp,
             'currencies' => $cur,
             'technologies' => $tech,
+            'experiences_url' => 'admin.destroy.exp',
+            'employments_url' => 'admin.destroy.emp',
+            'currencies_url' => 'admin.destroy.cur',
+            'technologies_url' => 'admin.destroy.tech',
+        ]);
+    }
+
+    public function employers()
+    {
+        $employers = Employer::paginate(10);
+        return view('admin.users', [
+            'employers' => $employers
+        ]);
+    }
+
+    public function employer(Employer $employer)
+    {
+        $employers = [$employer];
+        return view('admin.users', [
+            'employers' => $employers
+        ]);
+    }
+
+    public function offers(Employer $employer)
+    {
+        /** @var User $user */
+        $user = $employer->user()->first();
+        $offers = $user->offers()->paginate(10);
+        return view('admin.offers', [
+            'employer' => $employer,
+            'offers' => $offers,
         ]);
     }
 
@@ -58,7 +87,7 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             $request->session()->flash('status', $e->getMessage());
         } finally {
-            return redirect(route('admin.dashboard'));
+            return back();
         }
     }
 
@@ -71,8 +100,70 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             $request->session()->flash('status', $e->getMessage());
         } finally {
-            return redirect(route('admin.dashboard'));
+            return back();
         }
     }
 
+    public function destroyTechnology(Request $request, Technology $technology)
+    {
+        try {
+            $name = $technology->name;
+            $technology->delete();
+            $request->session()->flash('status', "Technology $name has been removed.");
+        } catch (\Exception $e) {
+            $request->session()->flash('status', $e->getMessage());
+        } finally {
+            return back();
+        }
+    }
+
+    public function destroyExperience(Request $request, Experience $experience)
+    {
+        try {
+            $name = $experience->name;
+            $experience->delete();
+            $request->session()->flash('status', "Experience $name has been removed.");
+        } catch (\Exception $e) {
+            $request->session()->flash('status', $e->getMessage());
+        } finally {
+            return back();
+        }
+    }
+
+    public function destroyEmployment(Request $request, Employment $employment)
+    {
+        try {
+            $name = $employment->name;
+            $employment->delete();
+            $request->session()->flash('status', "Employment $name has been removed.");
+        } catch (\Exception $e) {
+            $request->session()->flash('status', $e->getMessage());
+        } finally {
+            return back();
+        }
+    }
+
+    public function destroyCurrency(Request $request, Currency $currency)
+    {
+        try {
+            $name = $currency->name;
+            $currency->delete();
+            $request->session()->flash('status', "Currency $name has been removed.");
+        } catch (\Exception $e) {
+            $request->session()->flash('status', $e->getMessage());
+        } finally {
+            return back();
+        }
+    }
+
+    public function confirmEmail(Request $request, Employer $employer)
+    {
+        /** @var User $user */
+        $user = $employer->user()->first();
+        if (!$user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+            $request->session()->flash('status', "Email has marked as verified.");
+        }
+        return back();
+    }
 }

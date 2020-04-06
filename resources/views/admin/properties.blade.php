@@ -1,172 +1,139 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="row">
-    <div class="col s12 m6 l3">
-        <div class="card">
-            <div class="card-content">
-                <div class="row">
-                    <div class="col s6">
-                        <div class="card-title">Technologies</div>
-                    </div>
-                    <div class="col s6 right-align">
-                        <a class="waves-effect waves-light btn btn-small"
-                           href="#!">
-                            <i class="material-icons">add</i>
-                        </a>
+    <div class="container-fluid px-0">
+        <section class="row mx-0 mx-xl-5 mt-5">
+            <div class="col-12 col-md-6 col-lg-5">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title d-flex justify-content-between align-items-center">
+                            <h4>{{ __('Technologies') }}</h4>
+                        </div>
+                        <table class="table table-sm">
+                            <tbody>
+                            @foreach( $technologies as $el )
+                                <tr>
+                                    <td class="align-middle">{{ $el->name }}</td>
+                                    <td class="align-middle">
+                                        <div class="d-flex justify-content-end">
+                                            <button class="btn btn-danger btn-sm m-0 btn-form-delete"
+                                               title="Remove this offer"
+                                               onclick="event.preventDefault();document.getElementById('delete-tech-{{ $el->id }}').submit();">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                            <form id="delete-tech-{{ $el->id }}"
+                                                  action="" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <table>
-                    @foreach( $technologies as $el )
-                        <tr>
-                            <td>{{ $el->name }}</td>
-                            <td class="right-align">
-                                <a class="waves-effect waves-light btn btn-small" title="Edit this offer"
-                                   href="{{ route('offers.edit', $el) }}">
-                                    <i class="material-icons">edit</i>
-                                </a>
-                                <a class="waves-effect waves-light btn btn-small red" title="Remove this offer"
-                                   href="#!"
-                                   onclick="event.preventDefault();document.getElementById('delete-offer-{{ $el->id }}').submit();">
-                                    <i class="material-icons">delete</i>
-                                    <form id="delete-offer-{{ $el->id }}"
-                                          action="{{ route('admin.destroy.offer', $el) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
             </div>
-        </div>
+            <div class="col-12 col-md-6 col-lg-7 row">
+                <div class="col-12 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title d-flex justify-content-between align-items-center">
+                                <h4>{{ __('Experiences') }}</h4>
+                            </div>
+                            <table class="table table-sm">
+                                <tbody>
+                                @foreach( $experiences as $el )
+                                    <tr>
+                                        <td class="align-middle">{{ $el->name }}</td>
+                                        <td class="align-middle">
+                                            <div class="d-flex justify-content-end">
+                                                <button class="btn btn-danger btn-sm m-0 btn-form-delete"
+                                                        title="Remove this offer"
+                                                        onclick="event.preventDefault();document.getElementById('delete-exp-{{ $el->id }}').submit();">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                                <form id="delete-exp-{{ $el->id }}"
+                                                      action="{{ route($experiences_url, $el) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title d-flex justify-content-between align-items-center">
+                                <h4>{{ __('Employments') }}</h4>
+                            </div>
+                            <table class="table table-sm">
+                                <tbody>
+                                @foreach( $employments as $el )
+                                    <tr>
+                                        <td class="align-middle">{{ $el->name }}</td>
+                                        <td class="align-middle">
+                                            <div class="d-flex justify-content-end">
+                                                <button class="btn btn-danger btn-sm m-0" title="Remove this offer"
+                                                   onclick="event.preventDefault();document.getElementById('delete-emp-{{ $el->id }}').submit();">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                                <form id="delete-emp-{{ $el->id }}"
+                                                      action="{{ route($employments_url, $el) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title d-flex justify-content-between align-items-center">
+                                <h4>{{ __('Currencies') }}</h4>
+                            </div>
+                            <table class="table table-sm">
+                                <tbody>
+                                @foreach( $currencies as $el )
+                                    <tr>
+                                        <td class="align-middle"><span id="edit-cur-{{ $el->id }}"
+                                                                       contenteditable="true">{{ $el->name }}</span>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="d-flex justify-content-end">
+                                                <button class="btn btn-danger btn-sm m-0" title="Remove this offer"
+                                                   onclick="event.preventDefault();document.getElementById('delete-cur-{{ $el->id }}').submit();">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                                <form id="delete-cur-{{ $el->id }}"
+                                                      action="{{ route($currencies_url, $el) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-    <div class="col s12 m6 l9">
-        <div class="row">
-            <div class="col s12 m6">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="row">
-                            <div class="col s6">
-                                <div class="card-title">Experiences</div>
-                            </div>
-                            <div class="col s6 right-align">
-                                <a class="waves-effect waves-light btn btn-small"
-                                   href="#!">
-                                    <i class="material-icons">add</i>
-                                </a>
-                            </div>
-                        </div>
-                        <table>
-                            @foreach( $experiences as $el )
-                                <tr>
-                                    <td>{{ $el->name }}</td>
-                                    <td class="right-align">
-                                        <a class="waves-effect waves-light btn btn-small" title="Edit this offer"
-                                           href="{{ route('offers.edit', $el) }}">
-                                            <i class="material-icons">edit</i>
-                                        </a>
-                                        <a class="waves-effect waves-light btn btn-small red" title="Remove this offer"
-                                           href="#!"
-                                           onclick="event.preventDefault();document.getElementById('delete-offer-{{ $el->id }}').submit();">
-                                            <i class="material-icons">delete</i>
-                                            <form id="delete-offer-{{ $el->id }}"
-                                                  action="{{ route('admin.destroy.offer', $el) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 m6">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="row">
-                            <div class="col s6">
-                                <div class="card-title">Employments</div>
-                            </div>
-                            <div class="col s6 right-align">
-                                <a class="waves-effect waves-light btn btn-small"
-                                   href="#!">
-                                    <i class="material-icons">add</i>
-                                </a>
-                            </div>
-                        </div>
-                        <table>
-                            @foreach( $employments as $el )
-                                <tr>
-                                    <td>{{ $el->name }}</td>
-                                    <td class="right-align">
-                                        <a class="waves-effect waves-light btn btn-small" title="Edit this offer"
-                                           href="{{ route('offers.edit', $el) }}">
-                                            <i class="material-icons">edit</i>
-                                        </a>
-                                        <a class="waves-effect waves-light btn btn-small red" title="Remove this offer"
-                                           href="#!"
-                                           onclick="event.preventDefault();document.getElementById('delete-offer-{{ $el->id }}').submit();">
-                                            <i class="material-icons">delete</i>
-                                            <form id="delete-offer-{{ $el->id }}"
-                                                  action="{{ route('admin.destroy.offer', $el) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="col s12 m6">
-                <div class="card">
-                    <div class="card-content">
-                        <div class="row">
-                            <div class="col s6">
-                                <div class="card-title">Currencies</div>
-                            </div>
-                            <div class="col s6 right-align">
-                                <a class="waves-effect waves-light btn btn-small"
-                                   href="#!">
-                                    <i class="material-icons">add</i>
-                                </a>
-                            </div>
-                        </div>
-                        <table>
-                            @foreach( $currencies as $el )
-                                <tr>
-                                    <td>{{ $el->name }}</td>
-                                    <td class="right-align">
-                                        <a class="waves-effect waves-light btn btn-small" title="Edit this offer"
-                                           href="{{ route('offers.edit', $el) }}">
-                                            <i class="material-icons">edit</i>
-                                        </a>
-                                        <a class="waves-effect waves-light btn btn-small red" title="Remove this offer"
-                                           href="#!"
-                                           onclick="event.preventDefault();document.getElementById('delete-offer-{{ $el->id }}').submit();">
-                                            <i class="material-icons">delete</i>
-                                            <form id="delete-offer-{{ $el->id }}"
-                                                  action="{{ route('admin.destroy.offer', $el) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 @endsection
 
