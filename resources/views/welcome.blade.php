@@ -1,14 +1,6 @@
 @extends('layouts.app')
 
-@section('javascript')
-    {{--    @include('imports.js')--}}
-@endsection
-
-@section('styles')
-    {{--    @include('imports.css')--}}
-@endsection
-
-@section('content')
+@section('main.content')
     <app-root></app-root>
     <script>
         window.links = [
