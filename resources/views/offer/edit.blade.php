@@ -180,5 +180,66 @@
                 </form>
             </div>
         </div>
+        <div class="card card-cascade narrower z-depth-5 w-100 my-5">
+            <div class="view view-cascade gradient-card-header blue-gradient">
+                <h2 class="card-header-title">{{ 'Apply for this job' }}</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <div class="md-form">
+                            <input name="name" id="name" type="text" class="form-control">
+                            <label for="name">{{ __('First & Last Name') }}</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="md-form">
+                            <input name="email" id="email" type="email" class="form-control">
+                            <label for="email">{{ __('Email') }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="md-form">
+                            <input name="links" id="links" type="text" class="form-control">
+                            <label for="links">{{ __('Introduce yourself (linkedin/github links) ') }}</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="md-form">
+                            <div class="file-field">
+                                <a class="btn-floating light-blue darken-2 mt-0 float-left">
+                                    <i class="fas fa-paperclip" aria-hidden="true"></i>
+                                    <input type="file">
+                                </a>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" placeholder="{{ 'Upload CV' }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="md-form">
+                            <input type="checkbox" class="form-check-input" id="materialUnchecked">
+                            <label class="form-check-label" for="materialUnchecked">Processing data in future
+                                recruitment <a href="#!">more</a>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="d-flex justify-content-end">
+                            <div class="md-form mb-0">
+                                <button class="btn light-blue darken-2 text-white btn-block" type="submit">
+                                    {{ 'Apply' }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
