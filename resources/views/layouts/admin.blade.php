@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('title')
     Admin Dashboard - @parent
@@ -17,7 +17,7 @@
     </script>
 @endsection
 
-@section('main.content')
+@section('content')
     <nav class="navbar navbar-expand light-blue navbar-dark">
         <div class="container-fluid d-flex justify-content-start px-xl-5">
             <!-- SideNav slide-out button -->
@@ -82,7 +82,7 @@
     <!--/. Sidebar navigation -->
 
     <main>
-        @yield('content')
+        @yield('admin.content')
     </main>
 @endsection
 
