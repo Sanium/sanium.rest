@@ -14,14 +14,26 @@
     </title>
 
     <!-- Styles -->
-    @include('imports.css')
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('styles')
 
     <!-- Scripts -->
-    @include('imports.js')
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script defer>
+        (function (window, document) {
+            window.addEventListener('load', function () {
+                @if ( session('status') )
+                    toastr["info"]("{{ session('status') }}");
+                @endif
+            });
+        })(window, document);
+    </script>
+    @yield('javascript')
 
 </head>
-<body>
-@yield('main.content')
+<body class="grey lighten-4">
+    @yield('content')
 </body>
 </html>
+
 

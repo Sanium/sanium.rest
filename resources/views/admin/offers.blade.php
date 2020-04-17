@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('content')
+@section('admin.content')
     <div class="container-fluid px-0">
         <section class="mx-0 mx-xl-5 mt-5">
                 <div class="card">
