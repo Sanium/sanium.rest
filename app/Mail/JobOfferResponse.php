@@ -40,7 +40,9 @@ class JobOfferResponse extends Mailable implements ShouldQueue
     {
         return $this->markdown('emails.offers.response', [
             'name' => $this->name,
-            'text' => $this->email,
+            'email' => $this->email,
+            'text' => $this->text,
+            'pathToCV' => $this->pathToCV
         ]);
     }
 }

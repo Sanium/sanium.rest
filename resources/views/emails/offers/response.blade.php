@@ -1,10 +1,12 @@
 @component('mail::message')
-# Introduction
+# You have new application from: {{ $name }}
 
-The body of your message.
+{{ $text }}
 
-@component('mail::button', ['url' => ''])
-Button Text
+You cant contact this applicant via email: [{{ $email }}](mailto:{{ $email }})
+
+@component('mail::button', ['url' => $pathToCV])
+Download resume
 @endcomponent
 
 Thanks,<br>

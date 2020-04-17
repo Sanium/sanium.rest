@@ -31,3 +31,8 @@ Route::delete('/admin/c/{currency}', 'AdminController@destroyCurrency')->name('a
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@welcome')->name('welcome');
+
+Route::get('/mailtest', function () {
+    $user = App\User::find(1)->first();
+    return new App\Mail\JobOfferResponse($user->name, $user->email, 'long text', 'path/to/cv');
+});
