@@ -32,6 +32,7 @@
 
 </head>
 <body class="grey lighten-4">
+    @include('components.navbar')
     @yield('content')
 </body>
 </html>

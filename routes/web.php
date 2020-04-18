@@ -29,10 +29,6 @@ Route::delete('/admin/exp/{experience}', 'AdminController@destroyExperience')->n
 Route::delete('/admin/emp/{employment}', 'AdminController@destroyEmployment')->name('admin.destroy.emp');
 Route::delete('/admin/c/{currency}', 'AdminController@destroyCurrency')->name('admin.destroy.cur');
 
+Route::post('/offers/{offer}/contact', 'OffersApplicationController@store')->name('offers.contact');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@welcome')->name('welcome');
-
-Route::get('/mailtest', function () {
-    $user = App\User::find(1)->first();
-    return new App\Mail\JobOfferResponse($user->name, $user->email, 'long text', 'path/to/cv');
-});
