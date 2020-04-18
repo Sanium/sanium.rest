@@ -10,6 +10,15 @@
         (function () {
             window.addEventListener('load', function () {
                 $('.mdb-select').materialSelect();
+                $('.chips').materialChip({
+                    placeholder: 'Enter a tag',
+                    secondaryPlaceholder: '+Tag',
+                });
+                $('#offer-form').on('submit', function (e) {
+                    e.preventDefault();
+                    document.getElementById("tech-stack").value = JSON.stringify($('.chips').materialChip('data'));
+                    $(this).unbind('submit').submit()
+                });
             });
         })(window, document);
     </script>
@@ -23,7 +32,7 @@
             </div>
             <div class="card-body card-body-cascade">
                 <p class="small text-black-50">The fields marked with an asterisk (*) are required.</p>
-                <form action="{{ $edit ? route('offers.update', $offer) : route('offers.store') }}"
+                <form id="offer-form" action="{{ $edit ? route('offers.update', $offer) : route('offers.store') }}"
                       method="POST" enctype="multipart/form-data">
                     @csrf
                     @if ( $edit ) @method('PATCH') @endif
@@ -136,6 +145,12 @@
                                        class="form-control @error('contact') is-invalid @enderror">
                                 <label for="contact">{{ __('Contact') }}*</label>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input id="tech-stack" name="tech-stack" type="hidden">
+                            <div class="chips chips-placeholder"></div>
                         </div>
                     </div>
                     <div class="row">
