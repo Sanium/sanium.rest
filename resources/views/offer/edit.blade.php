@@ -11,12 +11,13 @@
             window.addEventListener('load', function () {
                 $('.mdb-select').materialSelect();
                 $('.chips').materialChip({
-                    placeholder: 'Enter a tag',
-                    secondaryPlaceholder: '+Tag',
+                    placeholder: 'Enter a skill',
+                    secondaryPlaceholder: '+Skill',
+                    data: JSON.parse('{!! $offer->tech_stack  !!}')
                 });
                 $('#offer-form').on('submit', function (e) {
                     e.preventDefault();
-                    document.getElementById("tech-stack").value = JSON.stringify($('.chips').materialChip('data'));
+                    document.getElementById("tech_stack").value = JSON.stringify($('.chips').materialChip('data'));
                     $(this).unbind('submit').submit()
                 });
             });
@@ -149,7 +150,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input id="tech-stack" name="tech-stack" type="hidden">
+                            <input id="tech_stack" name="tech_stack" type="hidden">
                             <div class="chips chips-placeholder"></div>
                         </div>
                     </div>
