@@ -3,7 +3,7 @@
 
 {{ $text }}
 
-You cant contact this applicant via email: [{{ $email }}](mailto:{{ $email }})
+You can contact this applicant via email: [{{ $email }}](mailto:{{ $email }})
 
 @component('mail::button', ['url' => $pathToCV])
 Download resume
