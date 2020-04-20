@@ -13,7 +13,7 @@
                 $('.chips').materialChip({
                     placeholder: 'Enter a skill',
                     secondaryPlaceholder: '+Skill',
-                    data: JSON.parse('{!! $offer->tech_stack  !!}')
+                    data: JSON.parse('{!! $offer ? $offer->tech_stack : '{}'  !!}')
                 });
                 $('#offer-form').on('submit', function (e) {
                     e.preventDefault();
@@ -195,63 +195,6 @@
                     </div>
                 </form>
             </div>
-        </div>
-
-{{-- CONTACT FORM --}}
-
-        <div class="card card-cascade narrower z-depth-5 w-100 my-5">
-            <div class="view view-cascade gradient-card-header blue-gradient">
-                <h2 class="card-header-title">{{ 'Apply for this job' }}</h2>
-            </div>
-            <form enctype="multipart/form-data" method="POST" action="{{ $edit ? route('offers.contact', $offer) : '' }}" class="card-body">
-                @csrf
-                <div class="row">
-                    <div class="col">
-                        <div class="md-form">
-                            <input name="name" id="name" type="text" class="form-control">
-                            <label for="name">{{ __('First & Last Name') }}</label>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="md-form">
-                            <input name="email" id="email" type="email" class="form-control">
-                            <label for="email">{{ __('Email') }}</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="md-form">
-                            <input name="links" id="links" type="text" class="form-control">
-                            <label for="links">{{ __('Introduce yourself (LinkedIn/GitHub links) ') }}</label>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="md-form">
-                            <div class="file-field">
-                                <a class="btn-floating light-blue darken-2 mt-0 float-left">
-                                    <i class="fas fa-paperclip" aria-hidden="true"></i>
-                                    <input type="file" name="file" accept=".pdf,application/pdf">
-                                </a>
-                                <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text" placeholder="{{ 'Upload CV' }}">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="d-flex justify-content-end">
-                            <div class="md-form mb-0">
-                                <button class="btn light-blue darken-2 text-white btn-block" type="submit">
-                                    {{ 'Apply' }}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
 @endsection

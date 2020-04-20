@@ -17,7 +17,9 @@
     @include('imports.css')
 
     <!-- Scripts -->
+    @yield('javascript.top')
     @include('imports.js')
+    @yield('javascript')
 
 </head>
 <body>
