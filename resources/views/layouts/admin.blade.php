@@ -1,23 +1,43 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('title')
-    Admin Dashboard - @parent
-@endsection
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-@section('javascript')
+    <title>
+        @section('title')
+            Admin panel - {{ config('app.name', 'Sanium') }}
+        @show
+    </title>
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('styles')
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
     <script defer>
         (function (window, document) {
-            window.addEventListener('load', () => {
+            window.addEventListener('load', function () {
+                @if ( session('status') )
+                    toastr["info"]("{{ session('status') }}");
+                @endif
+
                 $(".button-collapse").sideNav();
 
-                var sideNavScrollbar = document.querySelector('.custom-scrollbar');
-                var ps = new PerfectScrollbar(sideNavScrollbar);
-            })
+                const sideNavScrollbar = document.querySelector('.custom-scrollbar');
+                const ps = new PerfectScrollbar(sideNavScrollbar);
+            });
         })(window, document);
     </script>
-@endsection
+    @yield('javascript')
 
-@section('content')
+</head>
+
+<body class="grey lighten-4">
     <nav class="navbar navbar-expand light-blue navbar-dark">
         <div class="container-fluid d-flex justify-content-start px-xl-5">
             <!-- SideNav slide-out button -->
@@ -84,6 +104,7 @@
     <main>
         @yield('admin.content')
     </main>
-@endsection
+</body>
+</html>
 
 

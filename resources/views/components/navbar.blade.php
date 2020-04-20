@@ -14,7 +14,7 @@
     }
 @endphp
 <!--Navbar-->
-<nav class="navbar navbar-expand-lg navbar-dark light-blue" role="navigation">
+<nav class="navbar navbar-expand-sm navbar-dark light-blue" role="navigation">
     <div class="container">
         <!-- Navbar brand -->
         <a id="logo-container" href="/" class="navbar-brand">{{ config('app.name') }}</a>
@@ -30,40 +30,34 @@
             @guest
                 <ul class="navbar-nav ml-auto">
                     @foreach( $guest_links as $link )
-                        <li class="nav-item"><a class="nav-link" href="{{ $link['route'] }}">{{ $link['name'] }}</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ $link['route'] }}">{{ $link['name'] }}</a>
                         </li>
                     @endforeach
                 </ul>
             @else
-                <ul class="navbar-nav ml-auto nav-flex-icons">
-                    <li class="nav-item avatar dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            @if( auth()->user()->isEmployer() )
-                            <img src="{{ auth()->user()->profile()->first()->getLogo() }}" class="rounded-circle z-depth-0"
-                                 alt="avatar image">
-                            @endif
-                            @if( auth()->user()->isAdmin() )
-                                <i class="fa fas-profile"></i>Admin
-                            @endif
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                            @if( auth()->user()->isEmployer() )
-                                @foreach( $employer_links as $link)
-                                    <a class="dropdown-item" href="{{ $link['route'] }}">{{ $link['name'] }}</a>
-                                @endforeach
-                            @endif
-                            @if( auth()->user()->isAdmin() )
-                                @foreach( $admin_links as $link)
-                                    <a class="dropdown-item" href="{{ $link['route'] }}">{{ $link['name'] }}</a>
-                                @endforeach
-                            @endif
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                <span class="navbar-text ml-auto">Welcome {{ auth()->user()->profile()->first()->name }}</span>
+                <ul class="navbar-nav">
+                    @if( auth()->user()->isEmployer() )
+                        @foreach( $employer_links as $link)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ $link['route'] }}">{{ $link['name'] }}</a>
+                            </li>
+                        @endforeach
+                    @endif
+                    @if( auth()->user()->isAdmin() )
+                        @foreach( $admin_links as $link)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ $link['route'] }}">{{ $link['name'] }}</a>
+                            </li>
+                        @endforeach
+                    @endif
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </div>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </li>
                 </ul>
             @endguest
