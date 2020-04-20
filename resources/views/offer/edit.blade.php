@@ -13,7 +13,7 @@
                 $('.chips').materialChip({
                     placeholder: 'Enter a skill',
                     secondaryPlaceholder: '+Skill',
-                    data: JSON.parse('{!! $offer ? $offer->tech_stack : '{}'  !!}')
+                    data: JSON.parse('{!! $offer && $offer->tech_stack ? $offer->tech_stack : '{}'  !!}')
                 });
                 $('#offer-form').on('submit', function (e) {
                     e.preventDefault();
