@@ -5,8 +5,8 @@
 @endsection
 
 @section('javascript')
-    <script src="{{ asset('js/material-select.min.js') }}" defer></script>
-    <script defer>
+    <script src="{{ asset('js/material-select.min.js') }}"></script>
+    <script>
         (function () {
             window.addEventListener('load', function () {
                 $('.mdb-select').materialSelect();

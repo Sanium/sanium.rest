@@ -17,9 +17,15 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('styles')
 
+
+
+</head>
+<body class="grey lighten-4">
+    @include('components.navbar')
+    @yield('content')
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script defer>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script>
         (function (window, document) {
             window.addEventListener('load', function () {
                 @if ( session('status') )
@@ -29,11 +35,6 @@
         })(window, document);
     </script>
     @yield('javascript')
-
-</head>
-<body class="grey lighten-4">
-    @include('components.navbar')
-    @yield('content')
 </body>
 </html>
 
