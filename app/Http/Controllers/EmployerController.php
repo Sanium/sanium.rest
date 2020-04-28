@@ -65,6 +65,7 @@ class EmployerController extends Controller
         $attr = $request->validate($this->rules());
         $employer->update($attr);
         $employer->setLogo($request);
+        $request->session()->flash('status', __('Profile updated.'));
 
         return redirect(route('home'));
     }
@@ -82,7 +83,7 @@ class EmployerController extends Controller
             $this->authorize('delete', $employer);
             $name = $employer->name;
             $employer->delete();
-            $request->session()->flash('status', "Employer $name has been removed.");
+            $request->session()->flash('status', __('Employer :name has been removed.', ['name' => $name]));
         } catch (\Exception $e) {
             $request->session()->flash('status', $e->getMessage());
         } finally {

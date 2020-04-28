@@ -14,7 +14,7 @@ class OffersApplicationController extends Controller
         $filename = $attr['file']->getClientOriginalName();
         $path = $attr['file']->storeAs('cv/'.$attr['email'], $filename, 'public');
         Mail::to($offer->user()->first())->send(new JobOfferResponse($attr['name'], $attr['email'], $attr['links'], asset('storage/'.$path)));
-        return back()->with('status', 'Mail has been send');
+        return back()->with('status', __('Mail has been send.'));
     }
 
     private function rules(): array

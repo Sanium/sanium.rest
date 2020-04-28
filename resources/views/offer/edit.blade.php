@@ -11,8 +11,8 @@
             window.addEventListener('load', function () {
                 $('.mdb-select').materialSelect();
                 $('.chips').materialChip({
-                    placeholder: 'Enter a skill',
-                    secondaryPlaceholder: '+Skill',
+                    placeholder: '@lang('Enter a skill')',
+                    secondaryPlaceholder: '@lang('+Skill')',
                     data: JSON.parse('{!! $offer && $offer->tech_stack ? $offer->tech_stack : '{}'  !!}')
                 });
                 $('#offer-form').on('submit', function (e) {
@@ -29,10 +29,10 @@
     <div class="container">
         <div class="card card-cascade narrower z-depth-5 w-100 my-5">
             <div class="view view-cascade gradient-card-header blue-gradient">
-                <h2 class="card-header-title">{{ $edit ? __('Update offer for') : __('Create new offer') }}</h2>
+                <h2 class="card-header-title">{{ $edit ? __('Update offer for :name', ['name' => $offer->name ?? '']) : __('Create new offer') }}</h2>
             </div>
             <div class="card-body card-body-cascade">
-                <p class="small text-black-50">The fields marked with an asterisk (*) are required.</p>
+                <p class="small text-black-50">@lang('The fields marked with an asterisk (*) are required.')</p>
                 <form id="offer-form" action="{{ $edit ? route('offers.update', $offer) : route('offers.store') }}"
                       method="POST" enctype="multipart/form-data">
                     @csrf
@@ -83,7 +83,7 @@
                                     @foreach($employments as $employment)
                                         <option value="{{ $employment->id }}"
                                                 @if ( ($edit && $employment->id === $offer->emp_id) || $employment->id === old('emp_id') ) selected @endif
-                                        >{{ $employment->name }}</option>
+                                        >{{ __($employment->name) }}</option>
                                     @endforeach
                                 </select>
                                 <label for="employment">{{ __('Employment') }}</label>
@@ -158,7 +158,7 @@
                         <div class="col">
                             <label for="description" class="sr-only">Description*</label>
                             <textarea id="description" name="description" class="summernote"
-                                      placeholder="Description*">{!! old('description') ?? ($offer->description ?? '') !!}</textarea>
+                                      placeholder="@lang('Description')*">{!! old('description') ?? ($offer->description ?? '') !!}</textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -182,15 +182,14 @@
                             <div class="md-form form-check">
                                 <input type="checkbox" class="form-check-input" id="remote" name="remote"
                                     {{ (!old('remote') && $edit && $offer->remote) ? 'checked' : (bool) old('remote') }}>
-                                <label class="form-check-label" for="remote">Remote</label>
+                                <label class="form-check-label" for="remote">@lang('Remote')</label>
                             </div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
                         <div class="md-form mb-0">
-                            <button class="btn light-blue darken-2 text-white btn-block" type="submit">
-                                {{ $edit ? __('Update') : __('Create') }}
-                            </button>
+                            <button class="btn light-blue darken-2 text-white btn-block"
+                                    type="submit">@lang('Save')</button>
                         </div>
                     </div>
                 </form>

@@ -4,10 +4,10 @@
     <div class="container-fluid d-flex justify-content-center align-items-center full-height">
         <div class="card card-cascade narrower w-100" style="max-width: 650px;">
             <div class="view view-cascade gradient-card-header blue-gradient">
-                <h2 class="card-header-title">{{ __('Sign up') }}</h2>
+                <h2 class="card-header-title mb-0">{{ __('Sign up') }}</h2>
             </div>
             <div class="card-body card-body-cascade">
-                <p class="small text-black-50">The fields marked with an asterisk (*) are required.</p>
+                <p class="small text-black-50">{{ __('The fields marked with an asterisk (*) are required.') }}</p>
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
                     <div class="md-form">
@@ -43,14 +43,14 @@
                         </div>
                         @enderror
                         <div class="font-small text-black-50 d-flex justify-content-center">
-                            {{ __('At least 8 characters') }}
+                            {{ __('At least 8 characters.') }}
                         </div>
                     </div>
                     <div class="md-form">
                         <input name="password_confirmation" type="password" id="password_confirmation"
                                class="form-control @error('password_confirmation') is-invalid @enderror"
                                required>
-                        <label for="password_confirmation" class="font-weight-light">{{ __('Confirm password') }}*</label>
+                        <label for="password_confirmation" class="font-weight-light">{{ __('Confirm Password') }}*</label>
                         @error('password_confirmation')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -85,7 +85,7 @@
                         <button class="btn light-blue darken-2 text-white btn-block" type="submit">
                             {{ __('Sign up') }}
                         </button>
-                        <p class="text-center">Already member? <a href="{{ route('login') }}">{{ __('Sign in') }}</a></p>
+                        <p class="text-center">{{ __('Already member?') }} <a href="{{ route('login') }}">{{ __('Sign in') }}</a></p>
                     </div>
                 </form>
             </div>
