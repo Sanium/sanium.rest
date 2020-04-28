@@ -36,7 +36,7 @@
                     @endforeach
                 </ul>
             @else
-                <span class="navbar-text ml-auto">Welcome {{ auth()->user()->profile()->first()->name }}</span>
+                <span class="navbar-text ml-auto">{{ __('Welcome, :name', ['name'=> auth()->user()->profile()->first()->name]) }}</span>
                 <ul class="navbar-nav">
                     @if( auth()->user()->isEmployer() )
                         @foreach( $employer_links as $link)

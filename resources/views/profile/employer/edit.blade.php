@@ -22,10 +22,10 @@
     <div class="container-fluid d-flex justify-content-center align-items-start pt-5 full-height">
         <div class="card card-cascade narrower w-100" style="max-width: 650px;">
             <div class="view view-cascade gradient-card-header blue-gradient">
-                <h2 class="card-header-title">{{ __('Update profile') }}</h2>
+                <h2 class="card-header-title mb-0">{{ __('Update profile') }}</h2>
             </div>
             <div class="card-body card-body-cascade">
-                <p class="small text-black-50">The fields marked with an asterisk (*) are required.</p>
+                <p class="small text-black-50">@lang('The fields marked with an asterisk (*) are required.')</p>
                 <form action="{{ route('employer.update', $employer) }}" method="POST"
                       enctype="multipart/form-data" id="editProfile">
                     @csrf
@@ -73,7 +73,7 @@
                     </div>
                     <div class="md-form">
                         <button class="btn light-blue darken-2 text-white btn-block" type="submit">
-                            {{ __('Update') }}
+                            {{ __('Save') }}
                         </button>
                     </div>
                 </form>

@@ -13,18 +13,18 @@
                          alt="Responsive image" style="max-height: 95px">
                 </div>
                 <div class="col-12 col-sm-10 col-lg-4 d-flex flex-column">
-                    <p class="text-muted mb-1 font-weight-light">Hello</p>
+                    <p class="text-muted mb-1 font-weight-light">@lang('Hello!')</p>
                     <p class="h4 font-weight-normal">{{ $employer->name }}</p>
                 </div>
                 <div class="col-12 col-sm-3 offset-sm-2 col-lg-2 offset-lg-0 d-flex flex-column">
                     @isset($employer->size)
-                        <p class="text-muted mb-1 font-weight-light" style="word-wrap:normal">Company size</p>
+                        <p class="text-muted mb-1 font-weight-light" style="word-wrap:normal">@lang('Company size')</p>
                         <p class="h4 font-weight-normal">{{ $employer->size }}</p>
                     @endisset
                 </div>
                 <div class="col-12 col-sm-7 col-lg-4 d-flex flex-column">
                     @isset($employer->website)
-                        <p class="text-muted mb-1 font-weight-light">Website</p>
+                        <p class="text-muted mb-1 font-weight-light">@lang('Company website')</p>
                         <p class="h4 font-weight-normal">
                             <a target="_blank" href="{{ $employer->website }}">{{ $employer->website }}</a>
                         </p>
@@ -35,15 +35,15 @@
         <div class="card mt-5">
             <div class="card-body">
                 <div class="card-title d-flex justify-content-between align-items-center">
-                    <h4>Your offers</h4>
+                    <h4>@lang('Your offers')</h4>
                     <a class="btn light-blue darken-2 white-text px-3"
-                       href="{{route('offers.create')}}">{{'Add New Offer'}}
+                       href="{{route('offers.create')}}">@lang('Add new offer')
                     </a>
                 </div>
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Title</th>
+                        <th scope="col">@lang('Title')</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -56,11 +56,11 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-end">
-                                    <a class="btn btn-default px-3 mr-3" title="Edit this offer"
+                                    <a class="btn btn-default px-3 mr-3" title="@lang('Edit this offer')"
                                        href="{{ route('offers.edit', $offer) }}">
                                         <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                                     </a>
-                                    <a class="btn btn-danger px-3" title="Remove this offer" href="#!"
+                                    <a class="btn btn-danger px-3" title="@lang('Remove this offer')" href="#!"
                                        onclick="event.preventDefault();document.getElementById('delete-offer-{{$offer->id}}').submit();">
                                         <i class="fas fa-trash-alt" aria-hidden="true"></i>
                                         <form id="delete-offer-{{$offer->id}}"

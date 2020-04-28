@@ -4,7 +4,7 @@
     <div class="container-fluid d-flex justify-content-center align-items-center full-height" >
         <div class="card card-cascade narrower w-100" style="max-width: 450px;">
             <div class="view view-cascade gradient-card-header blue-gradient">
-                <h2 class="card-header-title mb-3">{{ __('Sign in') }}</h2>
+                <h2 class="card-header-title mb-0">{{ __('Sign in') }}</h2>
             </div>
             <div class="card-body card-body-cascade">
                 <form method="POST" action="{{ route('login') }}">
@@ -47,7 +47,7 @@
                     <div class="md-form">
                         <button class="btn light-blue darken-2 text-white btn-block my-4"
                                 type="submit">{{ __('Sign in') }}</button>
-                        <p class="text-center">Not a member? <a href="{{ route('register') }}">{{ __('Sign up') }}</a></p>
+                        <p class="text-center">{{ __('Not a member?') }} <a href="{{ route('register') }}">{{ __('Sign up') }}</a></p>
                     </div>
                 </form>
             </div>
