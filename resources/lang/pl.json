@@ -73,6 +73,9 @@
     "Edit this offer": "Edytuj",
     "Remove this offer": "Usuń",
     "Update offer for :name": "Edytuj ogłoszenie na :name",
+    "Offer :name created.": "Ogłoszenie :name zostało dodane.",
+    "Offer :name updated.": "Ogłoszenie :name zostało zaktualizowane.",
+    "Offer :name has been removed.": "Ogłoszenie :name zostało usunięte.",
     "Title": "Tytuł",
     "Technologies": "Głowna technologia",
     "Experience": "Doświadczenie",
@@ -89,5 +92,8 @@
     "Enter a skill": "Wybierz technologie",
     "+Skill": "+tech",
     "Permanent": "Umowa o pracę",
-    "Mandate contract": "Umowa zlecenie/o dzieło"
+    "Mandate contract": "Umowa zlecenie/o dzieło",
+    "Profile updated.": "Profil zaktualizowany.",
+    "Employer :name has been removed.": "Profil :name został usunięty.",
+    "Mail has been send.": "E-mail został wysłany."
 }

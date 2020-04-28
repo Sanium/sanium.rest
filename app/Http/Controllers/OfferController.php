@@ -110,9 +110,9 @@ class OfferController extends Controller
         $attr = $request->validate($this->rules());
 
         $offer = auth()->user()->offers()->create($attr);
-        $attr['remote'] = $request->has('remote') && $request->input('remote') ? true : false;
+        $attr['remote'] = $request->has('remote') && $request->input('remote');
 
-        $request->session()->flash('status', "Offer $offer->name created");
+        $request->session()->flash('status', __('Offer :name created.', ['name' => $offer->name]));
 
         return redirect(route('home', $offer));
     }
@@ -174,11 +174,11 @@ class OfferController extends Controller
             return redirect(route('home'));
         }
         $attr = $request->validate($this->rules());
-        $attr['remote'] = $request->has('remote') && $request->input('remote') ? true : false;
+        $attr['remote'] = $request->has('remote') && $request->input('remote');
 
         $offer->update($attr);
 
-        $request->session()->flash('status', "Offer $offer->name updated");
+        $request->session()->flash('status', __('Offer :name updated.', ['name' => $offer->name]));
 
         return redirect(route('home'));
     }
@@ -197,7 +197,7 @@ class OfferController extends Controller
             $this->authorize('delete', $offer);
             $name = $offer->name;
             $offer->delete();
-            $request->session()->flash('status', "Offer $name has been removed.");
+            $request->session()->flash('status', __('Offer :name has been removed.', ['name' => $name]));
         } catch (\Exception $e) {
             $request->session()->flash('status', $e->getMessage());
         } finally {

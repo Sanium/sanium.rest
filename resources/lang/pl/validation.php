@@ -146,6 +146,11 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'nazwa',
+        'password' => 'hasło',
+        'company-size' => 'liczby pracowników',
+        'company-website' => 'strony'
+    ],
 
 ];
