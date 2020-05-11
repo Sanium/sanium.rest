@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 /**
@@ -72,6 +73,8 @@ class Offer extends Model
 
         static::creating(function (Offer $offer) {
             $offer->city_slug = Str::slug($offer->city);
+            $created_at = new Carbon($offer->created_at);
+            $offer->expires_at = $created_at->addDays(30);
         });
 
         static::updating(function (Offer $offer) {

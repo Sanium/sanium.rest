@@ -10,6 +10,7 @@ use App\Role;
 use App\Technology;
 use App\User;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -111,7 +112,6 @@ class OfferTest extends TestCase
             'tech_id' => $this->js->id,
             'tech_stack' => '{js: 5, php: 4}',
             'contact' => $this->faker->email,
-            'expires_at' => $this->faker->dateTime,
         ];
 
         $this->offer = $this->user->offers()->create($this->attr);
@@ -134,8 +134,9 @@ class OfferTest extends TestCase
         $this->assertEquals(false, $this->offer->remote);
         $this->assertEquals($this->attr['tech_stack'], $this->offer->tech_stack);
         $this->assertEquals($this->attr['contact'], $this->offer->contact);
-        $this->assertEquals($this->attr['expires_at'], $this->offer->expires_at);
         $this->assertEquals($this->attr['tech_id'], $this->offer->tech_id);
+        $created_at = new Carbon($this->offer->created_at);
+        $this->assertEquals($created_at->addDays(30)->timestamp, $this->offer->expires_at->timestamp);
 
     }
 
