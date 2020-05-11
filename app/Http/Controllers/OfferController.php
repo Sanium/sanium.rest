@@ -11,6 +11,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Http\Resources\OfferResource;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Carbon;
 
 class OfferController extends Controller
 {
@@ -66,7 +67,7 @@ class OfferController extends Controller
         $max_salary = Offer::selectRaw('MAX(salary_to) as max_salary')->pluck('max_salary')->first();
         $min_salary = Offer::selectRaw('MIN(salary_from) as min_salary')->pluck('min_salary')->first();
 
-        return OfferResource::collection($offers->paginate(10))->additional([
+        return OfferResource::collection($offers->whereDate('expires_at', '>', Carbon::now())->paginate(10))->additional([
             'filters' => [
                 'cities' => $cities,
                 'exp' => $exps,
