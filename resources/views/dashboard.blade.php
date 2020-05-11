@@ -56,6 +56,11 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-end">
+                                    @if( $offer->isExpired() )
+                                    <div class="d-flex justify-content-center align-items-center mr-3">
+                                        <span class="badge badge-danger">@lang('Expired')</span>
+                                    </div>
+                                    @endif
                                     <a class="btn btn-default px-3 mr-3" title="@lang('Edit this offer')"
                                        href="{{ route('offers.edit', $offer) }}">
                                         <i class="fas fa-pencil-alt" aria-hidden="true"></i>
