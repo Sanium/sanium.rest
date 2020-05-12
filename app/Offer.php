@@ -67,6 +67,8 @@ class Offer extends Model
 {
     protected $guarded = [];
 
+    protected $dates = ['expires_at'];
+
     protected static function boot()
     {
         parent::boot();

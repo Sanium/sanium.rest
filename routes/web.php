@@ -30,5 +30,6 @@ Route::delete('/admin/emp/{employment}', 'AdminController@destroyEmployment')->n
 Route::delete('/admin/c/{currency}', 'AdminController@destroyCurrency')->name('admin.destroy.cur');
 
 Route::post('/offers/{offer}/contact', 'OffersApplicationController@store')->name('offers.contact');
+Route::post('/offers/{offer}/refresh', 'OfferController@refresh')->name('offers.refresh');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@welcome')->name('welcome');
