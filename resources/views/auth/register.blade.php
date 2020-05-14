@@ -25,11 +25,11 @@
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="md-form">
-                                <input name="user-name" type="text" id="user-name" value="{{ null }}"
-                                       class="form-control @error('user-name') is-invalid @enderror"
-                                       required autocomplete="user-name">
-                                <label for="user-name" class="font-weight-light">{{ __('Full name') }}*</label>
-                                @error('user-name')
+                                <input name="name" type="text" id="name" value="{{ old('name') }}"
+                                       class="form-control @error('name') is-invalid @enderror"
+                                       required autocomplete="name">
+                                <label for="name" class="font-weight-light">{{ __('Full name') }}*</label>
+                                @error('name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -88,11 +88,16 @@
                                 <div class="file-field">
                                     <div class="btn light-blue darken-2 text-white btn-sm float-left">
                                         <span><i class="fas fa-upload mr-2" aria-hidden="true"></i>{{ __('Choose file') }}</span>
-                                        <input type="file">
+                                        <input name="cv" id="cv" type="file" accept=".pdf">
+                                        @error('cv')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                     </div>
                                     <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text"
-                                               placeholder={{ __('Upload your CV') }}>
+                                               placeholder="{{ __('Upload your CV') }}">
                                     </div>
                                 </div>
                             </div>
