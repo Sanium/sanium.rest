@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\CanResetPassword;
@@ -88,6 +89,11 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return $this->roles()->get()->contains(Role::where('name', 'employer')->first());
     }
 
+    public function isClient()
+    {
+        return $this->roles()->get()->contains(Role::where('name', 'client')->first());
+    }
+
     public function isAdmin()
     {
         return $this->roles()->get()->contains(Role::where('name', 'admin')->first());
@@ -97,10 +103,14 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     {
         if ($this->isAdmin()) {
             return $this->hasOne(Admin::class);
-        } elseif ($this->isEmployer()) {
+        }
+        if ($this->isEmployer()) {
             return $this->hasOne(Employer::class);
         }
-        else return null;
+        if ($this->isClient()) {
+            return $this->hasOne(Client::class);
+        }
+        return null;
     }
 
     /**
@@ -111,23 +121,29 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return $this->hasMany('App\Offer', 'user_id', 'id');
     }
 
-    static public function createWithRole($attr) {
+    /**
+     * @param $attr
+     * @return User|bool|Model
+     */
+    public static function createWithRole($attr)
+    {
         if (array_key_exists('role', $attr)) {
             if (null === $attr['role']) {
                 return false;
-            } elseif (is_numeric($attr['role'])) {
+            }
+            if (is_numeric($attr['role'])) {
                 $role_id = $attr['role'];
                 unset($attr['role']);
-                $user = User::create($attr);
+                $user = self::create($attr);
                 $user->roles()->attach(Role::findOrFail($role_id)->first());
             } else {
                 $role_name = $attr['role'];
                 unset($attr['role']);
-                $user = User::create($attr);
+                $user = self::create($attr);
                 $user->roles()->attach(Role::where('name', $role_name)->firstOrFail());
             }
         } else {
-            return User::create($attr);
+            return self::create($attr);
         }
         return $user;
     }
