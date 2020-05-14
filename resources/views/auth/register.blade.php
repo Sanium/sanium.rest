@@ -22,7 +22,7 @@
             <div class="card-body card-body-cascade">
                 <div class="tab-content" style="padding-top: 0rem">
                     <div class="tab-pane fade active show" id="user" role="tabpanel">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('register.client') }}">
                             @csrf
                             <div class="md-form">
                                 <input name="name" type="text" id="name" value="{{ old('name') }}"
@@ -73,12 +73,11 @@
                                 @enderror
                             </div>
                             <div class="md-form">
-                                <input name="github-link" type="url" id="company-size"
-                                       value="{{ null }}"
-                                       class="form-control @error('github-link') is-invalid @enderror"
-                                       required autocomplete="github-link">
-                                <label for="github-link" class="font-weight-light">{{ __('Github') }}*</label>
-                                @error('github-link')
+                                <input name="links" type="text" id="links" value="{{ old('links') }}"
+                                       class="form-control @error('links') is-invalid @enderror"
+                                       required autocomplete="links">
+                                <label for="links" class="font-weight-light">{{ __('Github, LinkedIn etc.') }}*</label>
+                                @error('links')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -88,8 +87,8 @@
                                 <div class="file-field">
                                     <div class="btn light-blue darken-2 text-white btn-sm float-left">
                                         <span><i class="fas fa-upload mr-2" aria-hidden="true"></i>{{ __('Choose file') }}</span>
-                                        <input name="cv" id="cv" type="file" accept=".pdf">
-                                        @error('cv')
+                                        <input name="file" id="file" type="file" accept=".pdf">
+                                        @error('file')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -111,7 +110,7 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="company" role="tabpanel">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('register.employer') }}">
                             @csrf
                             <div class="md-form">
                                 <input name="company-name" type="text" id="name" value="{{ old('company-name') }}"
