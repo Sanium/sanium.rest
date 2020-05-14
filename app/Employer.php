@@ -42,11 +42,11 @@ class Employer extends Model implements ProfileInterface
 
     protected $guarded = [];
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::deleting(function (Employer $employer) {
+        static::deleting(static function (Employer $employer) {
             $all_offers = $employer->user()->first()->offers()->get();
             foreach ($all_offers as $offer) {
                 $offer->delete();

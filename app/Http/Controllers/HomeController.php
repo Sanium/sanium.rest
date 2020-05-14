@@ -2,8 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\ProfileInterface;
+use App\Admin;
+use App\Client;
+use App\Employer;
+use App\User;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 
 class HomeController extends Controller
 {
@@ -21,9 +28,9 @@ class HomeController extends Controller
     /**
      * Show the home page.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
-    public function welcome()
+    public function welcome(): Renderable
     {
         return view('welcome');
     }
@@ -31,20 +38,41 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return Renderable|RedirectResponse|Redirector
      */
     public function index()
     {
-        /** @var ProfileInterface $profile */
-        $profile = auth()->user()->profile()->first();
-        if (auth()->user()->isEmployer()) {
-            $offers = auth()->user()->offers()->paginate(4);
-            return view('dashboard', [
+        /** @var User $user */
+        $user = auth()->user();
+        if (null === $user) {
+            return redirect(route('welcome'));
+        }
+
+        /** @var HasOne $profile */
+        $profile_handle = $user->profile();
+        if (null === $profile_handle) {
+            return redirect(route('welcome'));
+        }
+        
+        /** @var Employer|Client|Admin $profile */
+        $profile = $profile_handle->first();
+
+
+        if ($user->isEmployer()) {
+            $offers = $user->offers()->paginate(4);
+            return view('profile.employer.dashboard', [
                 'offers' => $offers,
                 'employer' => $profile,
             ]);
-        } else {
+        }
+        if ($user->isClient()) {
+            return view('profile.client.dashboard', [
+                'employer' => $profile,
+            ]);
+        }
+        if ($user->isAdmin()) {
             return redirect(route('admin.dashboard'));
         }
+        return redirect(route('welcome'));
     }
 }

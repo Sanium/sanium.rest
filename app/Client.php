@@ -39,7 +39,7 @@ class Client extends Model implements ProfileInterface
 
     protected $guarded = [];
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
