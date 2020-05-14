@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\CanResetPassword;
@@ -99,7 +100,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return $this->roles()->get()->contains(Role::where('name', 'admin')->first());
     }
 
-    public function profile()
+    public function profile(): ?HasOne
     {
         if ($this->isAdmin()) {
             return $this->hasOne(Admin::class);
