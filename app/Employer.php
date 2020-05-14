@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
@@ -54,7 +55,7 @@ class Employer extends Model implements ProfileInterface
         });
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -64,7 +65,7 @@ class Employer extends Model implements ProfileInterface
      *
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -74,7 +75,7 @@ class Employer extends Model implements ProfileInterface
         ];
     }
 
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
@@ -84,7 +85,8 @@ class Employer extends Model implements ProfileInterface
         if(is_null($this->logo)) {
             return asset('storage/defaults/user.jpg');
         }
-        else return asset($this->logo);
+
+        return asset($this->logo);
     }
 
     public function setLogo(Request $request)

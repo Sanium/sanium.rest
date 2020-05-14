@@ -23,6 +23,8 @@ use Cviebrock\EloquentSluggable\Sluggable;
  * @property string $slug
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology findSimilarSlugs($attribute, $config, $slug)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology whereSlug($value)
+ * @property string|null $image
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology whereImage($value)
  */
 class Technology extends Model
 {
