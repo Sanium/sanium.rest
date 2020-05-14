@@ -91,7 +91,8 @@
                                         <input type="file">
                                     </div>
                                     <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text" placeholder={{ __('Upload your CV') }}>
+                                        <input class="file-path validate" type="text"
+                                               placeholder={{ __('Upload your CV') }}>
                                     </div>
                                 </div>
                             </div>
@@ -155,33 +156,32 @@
                                 </div>
                                 @enderror
                             </div>
-                            <div class="md-form form-row m0">
-                                <div class="col-sm-12 col-md-6 p0 ">
-                                    <input name="company-size" type="text" id="company-size"
-                                           value="{{ old('company-size') }}"
-                                           class="form-control @error('company-size') is-invalid @enderror"
-                                           required autocomplete="company-size">
-                                    <label for="company-size" class="font-weight-light">{{ __('Company size') }}
-                                        *</label>
-                                    @error('company-size')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
+                            <div class="md-form">
+
+                                <input name="company-size" type="text" id="company-size"
+                                       value="{{ old('company-size') }}"
+                                       class="form-control @error('company-size') is-invalid @enderror"
+                                       required autocomplete="company-size">
+                                <label for="company-size" class="font-weight-light">{{ __('Company size') }}
+                                    *</label>
+                                @error('company-size')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
                                 </div>
-                                <div class="col-sm-12 col-md-6 p0">
-                                    <input name="company-website" type="text" id="company-website"
-                                           value="{{ old('company-website') }}"
-                                           class="form-control @error('company-website') is-invalid @enderror"
-                                           required autocomplete="company-website">
-                                    <label for="company-website" class="font-weight-light">{{ __('Company website') }}
-                                        *</label>
-                                    @error('company-website')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
+                                @enderror
+                            </div>
+                            <div class="md-form">
+                                <input name="company-website" type="text" id="company-website"
+                                       value="{{ old('company-website') }}"
+                                       class="form-control @error('company-website') is-invalid @enderror"
+                                       required autocomplete="company-website">
+                                <label for="company-website" class="font-weight-light">{{ __('Company website') }}
+                                    *</label>
+                                @error('company-website')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
                                 </div>
+                                @enderror
                             </div>
                             <div class="md-form">
                                 <button class="btn light-blue darken-2 text-white btn-block" type="submit">
