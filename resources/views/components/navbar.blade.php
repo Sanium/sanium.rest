@@ -1,18 +1,30 @@
 @php
-    $guest_links = [
-        ['route' => route('login'), 'name' => __('Login')],
-        ['route' => route('register'), 'name' => __('Register')],
-    ];
-    $admin_links = [
-        ['route' => route('admin.dashboard'), 'name' => __('Admin panel'), 'icon' => 'developer_board'],
-    ];
-    if (!auth()->guest()) {
-        $employer_links = [
-            ['route' => route('home'), 'name' => __('Dashboard'), 'icon' => 'home'],
-            ['route' => route('employer.edit', auth()->user()->profile()->first()), 'name' => __('Update profile'), 'icon' => 'settings'],
+    $links = [];
+    if (auth()->guest()) {
+        $links = [
+            ['route' => route('login'), 'name' => __('Login')],
+            ['route' => route('register'), 'name' => __('Register')],
         ];
+    } else {
+        if (auth()->user()->isEmployer()) {
+            $links = [
+                ['route' => route('home'), 'name' => __('Dashboard')],
+                ['route' => route('employer.edit', auth()->user()->profile()->first() ?? 0), 'name' => __('Update profile')],
+            ];
+        }
+        if (auth()->user()->isClient()) {
+            $links = [
+                ['route' => route('welcome'), 'name' => __('Dashboard')],
+            ];
+        }
+        if (auth()->user()->isAdmin()) {
+            $links = [
+                ['route' => route('admin.dashboard'), 'name' => __('Admin panel')],
+            ];
+        }
     }
 @endphp
+
 <!--Navbar-->
 <nav class="navbar navbar-expand-sm navbar-dark light-blue" role="navigation">
     <div class="container">
@@ -29,7 +41,7 @@
         <div class="collapse navbar-collapse" id="mainNavigation">
             @guest
                 <ul class="navbar-nav ml-auto">
-                    @foreach( $guest_links as $link )
+                    @foreach( $links as $link )
                         <li class="nav-item">
                             <a class="nav-link" href="{{ $link['route'] }}">{{ $link['name'] }}</a>
                         </li>
@@ -38,20 +50,11 @@
             @else
                 <span class="navbar-text ml-auto">{{ __('Welcome, :name', ['name'=> auth()->user()->profile()->first()->name]) }}</span>
                 <ul class="navbar-nav">
-                    @if( auth()->user()->isEmployer() )
-                        @foreach( $employer_links as $link)
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ $link['route'] }}">{{ $link['name'] }}</a>
-                            </li>
-                        @endforeach
-                    @endif
-                    @if( auth()->user()->isAdmin() )
-                        @foreach( $admin_links as $link)
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ $link['route'] }}">{{ $link['name'] }}</a>
-                            </li>
-                        @endforeach
-                    @endif
+                    @foreach( $links as $link)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ $link['route'] }}">{{ $link['name'] }}</a>
+                        </li>
+                    @endforeach
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                            document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>

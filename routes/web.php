@@ -13,7 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true, 'register' => false]);
+
+Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('/register/employer', 'Auth\RegisterController@register_employer')->name('register.employer');
+Route::post('/register/client', 'Auth\RegisterController@register_client')->name('register.client');
+
 Route::resource('/employer', 'EmployerController')->except('index', 'show');
 Route::resource('/offers', 'OfferController')->except('index', 'show');
 
@@ -31,5 +36,6 @@ Route::delete('/admin/c/{currency}', 'AdminController@destroyCurrency')->name('a
 
 Route::post('/offers/{offer}/contact', 'OffersApplicationController@store')->name('offers.contact');
 Route::post('/offers/{offer}/refresh', 'OfferController@refresh')->name('offers.refresh');
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'HomeController@welcome')->name('welcome');
