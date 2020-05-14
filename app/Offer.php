@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 /**
@@ -66,12 +67,16 @@ class Offer extends Model
 {
     protected $guarded = [];
 
+    protected $dates = ['expires_at'];
+
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function (Offer $offer) {
             $offer->city_slug = Str::slug($offer->city);
+            $created_at = new Carbon($offer->created_at);
+            $offer->expires_at = $created_at->addDays(30);
         });
 
         static::updating(function (Offer $offer) {
@@ -102,5 +107,10 @@ class Offer extends Model
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id', 'id');
+    }
+
+    public function isExpired(): bool
+    {
+        return $this->expires_at < Carbon::now();
     }
 }

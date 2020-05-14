@@ -44,6 +44,7 @@
                     <thead>
                     <tr>
                         <th scope="col">@lang('Title')</th>
+                        <th scope="col">@lang('Will expire on')</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
@@ -52,23 +53,42 @@
                         <tr>
                             <td>
                                 <a class="btn btn-link blue-text btn-lg"
-                                   href="/#/details/{{$offer->id}}">{{ $offer->name }}</a>
+                                   href="/#/details/{{$offer->id}}">
+                                    {{ $offer->name }}
+                                </a>
+                            </td>
+                            <td class="" style="vertical-align: middle">
+                                {{ $offer->expires_at }}
+                                @if( $offer->isExpired() )
+                                    <span class="badge badge-danger ml-2">@lang('Expired')</span>
+                                @endif
                             </td>
                             <td>
                                 <div class="d-flex justify-content-end">
+                                    @if( $offer->isExpired() )
+                                        <button class="btn btn-warning px-3 m-0 mr-3" title="@lang('Refresh offer')"
+                                            onclick="event.preventDefault();document.getElementById('refresh-offer-{{$offer->id}}').submit();">
+                                            <i class="fas fa-redo-alt" aria-hidden="true"></i>
+                                        </button>
+                                        <form id="refresh-offer-{{$offer->id}}"
+                                              action="{{ route('offers.refresh', $offer) }}" method="POST">
+                                            @csrf
+                                        </form>
+                                    @endif
                                     <a class="btn btn-default px-3 mr-3" title="@lang('Edit this offer')"
                                        href="{{ route('offers.edit', $offer) }}">
                                         <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                                     </a>
-                                    <a class="btn btn-danger px-3" title="@lang('Remove this offer')" href="#!"
+                                    <button class="btn btn-danger px-3 m-0" title="@lang('Remove this offer')"
                                        onclick="event.preventDefault();document.getElementById('delete-offer-{{$offer->id}}').submit();">
                                         <i class="fas fa-trash-alt" aria-hidden="true"></i>
-                                        <form id="delete-offer-{{$offer->id}}"
-                                              action="{{ route('offers.destroy', $offer) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form>
-                                    </a>
+
+                                    </button>
+                                    <form id="delete-offer-{{$offer->id}}"
+                                          action="{{ route('offers.destroy', $offer) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
                                 </div>
                             </td>
                         </tr>

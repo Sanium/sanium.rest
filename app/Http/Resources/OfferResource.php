@@ -68,7 +68,7 @@ class OfferResource extends JsonResource
             'city' => $this->city,
             'street' => $this->street,
             'remote' => $this->remote,
-            'tech_stack' => json_decode($this->tech_stack),
+            'tech_stack' => json_decode($this->tech_stack, true),
             'technology' => $technology,
             'contact' => $this->contact,
             'website' => $this->website,
