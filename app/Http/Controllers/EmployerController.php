@@ -4,37 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Employer;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View;
 
 class EmployerController extends Controller
 {
     public function __construct()
     {
         $this->middleware(['auth']);
-        $this->middleware(['verified'])->except(['create', 'store']);
-    }
-
-    public function create()
-    {
-        return view('profile.employer.create');
-    }
-
-    public function store(Request $request)
-    {
-        $attr = $request->validate($this->rules());
-        /** @var Employer $employer */
-        $employer = auth()->user()->profile()->create($attr);
-        $employer->setLogo($request);
-
-        return redirect(route('home'));
+        $this->middleware(['verified']);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param Request $request
-     * @param \App\Employer $employer
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     * @param Employer $employer
+     * @return Factory|RedirectResponse|Response|Redirector|View
      */
     public function edit(Request $request, Employer $employer)
     {
@@ -50,9 +40,9 @@ class EmployerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Employer $employer
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
+     * @param Request $request
+     * @param Employer $employer
+     * @return RedirectResponse|Response|Redirector
      */
     public function update(Request $request, Employer $employer)
     {
@@ -74,8 +64,8 @@ class EmployerController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Request $request
-     * @param \App\Employer $employer
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param Employer $employer
+     * @return RedirectResponse|Redirector
      */
     public function destroy(Request $request, Employer $employer)
     {

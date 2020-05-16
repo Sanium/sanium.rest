@@ -8,11 +8,7 @@
     <script>
         (function () {
             document.addEventListener('DOMContentLoaded', function () {
-                $('.dropify').dropify({
-                    tpl: {
-                        filename: '',
-                    }
-                });
+                $('.dropify').dropify();
             });
         })(window, document);
     </script>
@@ -26,20 +22,20 @@
             </div>
             <div class="card-body card-body-cascade">
                 <p class="small text-black-50">@lang('The fields marked with an asterisk (*) are required.')</p>
-                <form action="{{ route('employer.update', $employer) }}" method="POST"
+                <form action="{{ route('client.update', $client) }}" method="POST"
                       enctype="multipart/form-data" id="editProfile">
                     @csrf
                     @method('PATCH')
                     <div class="md-form">
-                        <input type="file" name="logo" class="dropify" data-height="120"
-                               data-default-file="{{ $employer->getLogo() }}"
+                        <input type="file" name="file" class="dropify" data-height="120"
+                               data-default-file="{{ $client->getFile() }}"
                                data-show-remove="false" data-show-errors="true"
                                data-errors-position="outside"/>
                     </div>
                     <div class="md-form">
                         <input class="form-control @error('name') is-invalid @enderror" type="text" name="name"
-                               id="name" value="{{ old('name') ?? $employer->name  }}" required>
-                        <label for="name">{{ __('Company name') }}</label>
+                               id="name" value="{{ old('name') ?? $client->name  }}" required>
+                        <label for="name">{{ __('Name') }}*</label>
 
                         @error('name')
                         <div class="invalid-feedback">
@@ -47,29 +43,16 @@
                         </div>
                         @enderror
                     </div>
-                    <div class="md-form form-row">
-                            <div class="col-sm-12 col-md-6 mb-sm-3">
-                                <input class="form-control @error('website') is-invalid @enderror"
-                                       type="text" name="website" id="website" required
-                                       value="{{ old('website') ?? $employer->website  }}">
-                                <label for="website" style="padding-left: .3rem">{{ __('Company website') }}</label>
-                                @error('website')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <input class="form-control @error('size') is-invalid @enderror"
-                                       type="text" name="size" id="size" required
-                                       value="{{ old('size') ?? $employer->size  }}">
-                                <label for="company-size" style="padding-left: .3rem">{{ __('Company size') }}</label>
-                                @error('size')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
+                    <div class="md-form">
+                        <input class="form-control @error('website') is-invalid @enderror"
+                               type="text" name="links" id="links" required
+                               value="{{ old('links') ?? $client->links  }}">
+                        <label for="links">{{ __('Github, LinkedIn etc.') }}*</label>
+                        @error('links')
+                        <div class="invalid-feedback">
+                            {{ $message }}
                         </div>
+                        @enderror
                     </div>
                     <div class="md-form">
                         <button class="btn light-blue darken-2 text-white btn-block" type="submit">

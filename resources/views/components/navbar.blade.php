@@ -14,7 +14,8 @@
         }
         if (auth()->user()->isClient()) {
             $links = [
-                ['route' => route('welcome'), 'name' => __('Dashboard')],
+                ['route' => route('home'), 'name' => __('Dashboard')],
+                ['route' => route('client.edit', auth()->user()->profile()->first() ?? 0), 'name' => __('Update profile')],
             ];
         }
         if (auth()->user()->isAdmin()) {
