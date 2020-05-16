@@ -1,3 +1,10 @@
 .full-height {
     height: calc(100vh - #{$navbar-height});
 }
+
+.no-bottom-radius {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+
