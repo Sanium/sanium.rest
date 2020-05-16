@@ -107,5 +107,8 @@
     "Refresh offer": "Odśwież ofertę",
     "Offer :name will expire on :date.": "Oferta :name wygaśnie :date.",
     "You has been successfully verified.": "Zostałeś pomyślnie zweryfikowany.",
-    "Hello :name, you has been successfully registered.": "Witaj :name, zostałeś pomyślnie zarejestrowany."
+    "Hello :name, you has been successfully registered.": "Witaj :name, zostałeś pomyślnie zarejestrowany.",
+    "Applications": "Zgłoszenia",
+    "Date": "Data",
+    "Download": "Pobierz"
 }
