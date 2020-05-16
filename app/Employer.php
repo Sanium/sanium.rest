@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
@@ -89,7 +90,7 @@ class Employer extends Model implements ProfileInterface
         return asset($this->logo);
     }
 
-    public function setLogo(Request $request)
+    public function setLogo(Request $request): void
     {
         if ($request->has('logo')) {
             $filename = $request->file('logo')->getClientOriginalName();

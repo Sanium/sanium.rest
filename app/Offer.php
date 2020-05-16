@@ -4,8 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use App\User;
 
 /**
  * App\Offer
@@ -106,7 +108,12 @@ class Offer extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function jobOfferResponses(): HasMany
+    {
+        return $this->hasMany(JobOfferResponse::class, 'offer_id', 'id');
     }
 
     public function isExpired(): bool
