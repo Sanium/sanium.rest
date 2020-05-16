@@ -3,11 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Offer;
 
 /**
  * App\User
@@ -22,7 +25,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read \App\Employer $profile
+ * @property-read \App\Employer|\App\Client $profile
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Role[] $roles
  * @property-read int|null $roles_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User newModelQuery()
@@ -39,8 +42,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Offer[] $offers
  * @property-read int|null $offers_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\JobOfferResponse[] $jobOfferResponses
+ * @property-read int|null $job_offer_responses_count
  */
-class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -114,23 +119,30 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
         return null;
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function offers()
+    public function offers(): HasMany
     {
-        return $this->hasMany('App\Offer', 'user_id', 'id');
+        return $this->hasMany(Offer::class, 'user_id', 'id');
     }
 
     /**
-     * @param $attr
-     * @return User|bool|Model
+     * @return HasMany|HasManyThrough|null
      */
-    public static function createWithRole($attr)
+    public function jobOfferResponses()
+    {
+        if ($this->isClient()) {
+            return $this->hasMany(JobOfferResponse::class, 'user_id', 'id');
+        }
+        if ($this->isEmployer()) {
+            return $this->hasManyThrough(JobOfferResponse::class, Offer::class);
+        }
+        return null;
+    }
+
+    public static function createWithRole(array $attr): ?User
     {
         if (array_key_exists('role', $attr)) {
             if (null === $attr['role']) {
-                return false;
+                return null;
             }
             if (is_numeric($attr['role'])) {
                 $role_id = $attr['role'];
