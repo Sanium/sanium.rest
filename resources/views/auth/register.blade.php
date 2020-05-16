@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@section('javascript')
+    <script>
+        (function () {
+            document.addEventListener('DOMContentLoaded', function () {
+                $('.dropify').dropify();
+            });
+        })(window, document);
+    </script>
+@endsection
+
 @section('content')
     <div class="container-fluid d-flex justify-content-center align-items-center full-height">
         <div class="card card-cascade narrower w-100" style="max-width: 650px;">
@@ -22,7 +32,7 @@
             <div class="card-body card-body-cascade">
                 <div class="tab-content" style="padding-top: 0rem">
                     <div class="tab-pane fade active show" id="user" role="tabpanel">
-                        <form method="POST" action="{{ route('register.client') }}">
+                        <form method="POST" action="{{ route('register.client') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="md-form">
                                 <input name="name" type="text" id="name" value="{{ old('name') }}"
@@ -84,21 +94,14 @@
                                 @enderror
                             </div>
                             <div class="md-form">
-                                <div class="file-field">
-                                    <div class="btn light-blue darken-2 text-white btn-sm float-left">
-                                        <span><i class="fas fa-upload mr-2" aria-hidden="true"></i>{{ __('Choose file') }}</span>
-                                        <input name="file" id="file" type="file" accept=".pdf">
-                                        @error('file')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                    <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text"
-                                               placeholder="{{ __('Upload your CV') }}">
-                                    </div>
+                                <input type="file" name="file" class="dropify" data-height="120"
+                                       data-show-remove="false" data-show-errors="true"
+                                       data-errors-position="outside"/>
+                                @error('file')
+                                <div class="red-text text-center">
+                                    {{ $message }}
                                 </div>
+                                @enderror
                             </div>
                             <div class="md-form">
                                 <button class="btn light-blue darken-2 text-white btn-block" type="submit">

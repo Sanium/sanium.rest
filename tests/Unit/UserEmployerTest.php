@@ -145,6 +145,7 @@ class UserEmployerTest extends TestCase
     public function it_can_delete_profile_with_user(): void
     {
         $user = $this->create_user();
+        /** @var Employer $profile */
         $profile = $user->profile()->first();
 
         $profile->delete();

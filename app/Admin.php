@@ -3,30 +3,33 @@
 namespace App;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Admin
  *
- * @property-read \App\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Admin findSimilarSlugs($attribute, $config, $slug)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Admin newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Admin newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Admin query()
- * @mixin \Eloquent
  * @property int $id
  * @property int $user_id
  * @property string $name
  * @property string $slug
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Admin whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Admin whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Admin whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Admin whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Admin whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Admin whereUserId($value)
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read User $user
+ * @method static Builder|Admin findSimilarSlugs($attribute, $config, $slug)
+ * @method static Builder|Admin newModelQuery()
+ * @method static Builder|Admin newQuery()
+ * @method static Builder|Admin query()
+ * @method static Builder|Admin whereCreatedAt($value)
+ * @method static Builder|Admin whereId($value)
+ * @method static Builder|Admin whereName($value)
+ * @method static Builder|Admin whereSlug($value)
+ * @method static Builder|Admin whereUpdatedAt($value)
+ * @method static Builder|Admin whereUserId($value)
+ * @mixin Eloquent
  */
 class Admin extends Model implements ProfileInterface
 {

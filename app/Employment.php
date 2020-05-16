@@ -2,27 +2,30 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Employment
  *
  * @property int $id
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employment newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employment newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employment query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employment whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employment whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employment whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employment whereUpdatedAt($value)
- * @mixin \Eloquent
  * @property string $slug
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employment findSimilarSlugs($attribute, $config, $slug)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employment whereSlug($value)
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|Employment findSimilarSlugs($attribute, $config, $slug)
+ * @method static Builder|Employment newModelQuery()
+ * @method static Builder|Employment newQuery()
+ * @method static Builder|Employment query()
+ * @method static Builder|Employment whereCreatedAt($value)
+ * @method static Builder|Employment whereId($value)
+ * @method static Builder|Employment whereName($value)
+ * @method static Builder|Employment whereSlug($value)
+ * @method static Builder|Employment whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Employment extends Model
 {
@@ -35,7 +38,7 @@ class Employment extends Model
      *
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
