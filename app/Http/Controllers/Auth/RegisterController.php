@@ -74,8 +74,8 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:191', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed', 'max:191'],
             'name' => ['required', 'string', 'max:191'],
-            'links' => ['nullable', 'string'],
-            'file' => ['nullable', 'file', 'mimetypes:application/pdf'],
+            'links' => ['required', 'string'],
+            'file' => ['required', 'file', 'mimetypes:application/pdf'],
         ]);
     }
 

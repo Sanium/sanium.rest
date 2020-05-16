@@ -88,8 +88,8 @@ class ClientController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:191'],
-            'links' => ['nullable', 'string'],
-            'file' => ['nullable', 'file', 'mimetypes:application/pdf'],
+            'links' => ['required', 'string'],
+            'file' => ['required', 'file', 'mimetypes:application/pdf'],
         ]);
     }
 }
