@@ -70,7 +70,12 @@ class Client extends Model implements ProfileInterface
 
     public function setFile(Request $request)
     {
-
+        if ($request->has('file')) {
+            $filename = $request->file('file')->getClientOriginalName();
+            $clientUID = $this->user_id . '-' . $this->slug;
+            $this->file = '/storage/' . $request->file('file')->storeAs('clients-files', "$clientUID-$filename", 'public');
+            $this->save();
+        }
     }
 
     public function getFile()

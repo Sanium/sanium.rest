@@ -19,7 +19,8 @@ Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('r
 Route::post('/register/employer', 'Auth\RegisterController@register_employer')->name('register.employer');
 Route::post('/register/client', 'Auth\RegisterController@register_client')->name('register.client');
 
-Route::resource('/employer', 'EmployerController')->except('index', 'show');
+Route::resource('/employer', 'EmployerController')->except('index', 'show', 'create', 'store');
+Route::resource('/client', 'ClientController')->except('index', 'show', 'create', 'store');
 Route::resource('/offers', 'OfferController')->except('index', 'show');
 
 Route::get('/admin', 'AdminController@dashboard')->name('admin.dashboard');

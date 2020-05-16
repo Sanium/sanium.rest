@@ -53,7 +53,7 @@ class HomeController extends Controller
         if (null === $profile_handle) {
             return redirect(route('welcome'));
         }
-        
+
         /** @var Employer|Client|Admin $profile */
         $profile = $profile_handle->first();
 
@@ -67,7 +67,7 @@ class HomeController extends Controller
         }
         if ($user->isClient()) {
             return view('profile.client.dashboard', [
-                'employer' => $profile,
+                'client' => $profile,
             ]);
         }
         if ($user->isAdmin()) {
