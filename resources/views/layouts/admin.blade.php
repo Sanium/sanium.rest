@@ -88,7 +88,7 @@
                         </a>
                     </li>
                     <lwi>
-                        <a href="{{ route('admin.employers.index') }}" class="collapsible-header waves-effect">
+                        <a href="{{ route('admin.users.index') }}" class="collapsible-header waves-effect">
                             <i class="fas fa-users"></i>
                             All users
                         </a>
