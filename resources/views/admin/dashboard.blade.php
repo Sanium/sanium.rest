@@ -1,5 +1,8 @@
 @extends('layouts.admin')
-
+<?php
+/** @var App\Employer $employer */
+ /** @var App\Offer $offer */
+?>
 @section('admin.content')
     <div class="container-fluid px-0">
         <section class="row mx-0 mx-xl-5 mt-5">
@@ -76,7 +79,7 @@
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                             <form id="delete-employer-{{$employer->id}}"
-                                                  action="{{ route('admin.destroy.employer', $employer) }}"
+                                                  action="{{ route('admin.users.destroy', $employer->user) }}"
                                                   method="POST">
                                                 @csrf
                                                 @method('DELETE')
@@ -116,7 +119,7 @@
                                     </td>
                                     <td class="align-middle">
                                         <a href="{{ route('admin.employers.show', $offer->user()->first()->profile()->first()) }}" class="light-blue-text text-darken-2">
-                                            {{ $offer->user()->first()->profile()->first()->name }}
+                                            {{ $offer->user->profile->name }}
                                         </a>
                                     </td>
                                     <td class="align-middle">{{ $offer->created_at->diffForHumans() }}</td>

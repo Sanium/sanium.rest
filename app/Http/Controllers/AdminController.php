@@ -51,11 +51,11 @@ class AdminController extends Controller
         ]);
     }
 
-    public function employers()
+    public function users()
     {
-        $employers = Employer::paginate(10);
+        $users = User::paginate(10);
         return view('admin.users', [
-            'employers' => $employers
+            'users' => $users
         ]);
     }
 
@@ -78,12 +78,15 @@ class AdminController extends Controller
         ]);
     }
 
-    public function destroyEmployer(Request $request, Employer $employer)
+    public function destroyUser(Request $request, User $user)
     {
+        if ($user->isAdmin()) {
+            return back();
+        }
         try {
-            $name = $employer->name;
-            $employer->delete();
-            $request->session()->flash('status', "Employer $name has been removed.");
+            $name = $user->profile->name;
+            $user->delete();
+            $request->session()->flash('status', __("User $name has been removed."));
         } catch (\Exception $e) {
             $request->session()->flash('status', $e->getMessage());
         } finally {
@@ -96,7 +99,7 @@ class AdminController extends Controller
         try {
             $name = $offer->name;
             $offer->delete();
-            $request->session()->flash('status', "Offer $name has been removed.");
+            $request->session()->flash('status', __("Offer $name has been removed."));
         } catch (\Exception $e) {
             $request->session()->flash('status', $e->getMessage());
         } finally {
