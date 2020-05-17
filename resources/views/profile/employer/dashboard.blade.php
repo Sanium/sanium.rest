@@ -153,8 +153,7 @@
                                                         <td>{{ $job->email }}</td>
                                                         <td>
                                                             <a class="btn btn-primary btn-sm m-0"
-                                                               href="{{ $job->file }}"
-                                                               download>
+                                                               href="{{ $job->getFile() }}">
                                                                 <i class="fas fa-download mr-1"></i>
                                                                 {{ __('Download') }}
                                                             </a>
