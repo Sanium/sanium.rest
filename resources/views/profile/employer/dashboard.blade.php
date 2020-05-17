@@ -129,7 +129,7 @@
                                            aria-controls="collapseUnfiled{{$offer->id}}">
                                             <h5 class="mb-0">
                                                 <span>{{$offer->name}}</span>
-                                                <span class="badge badge-pill badge-info z-depth-0 align-items-center">{{$offer->jobOfferResponses->count()}}</span>
+                                                <span class="badge badge-warning jor-badge z-depth-0" title="{{ __('Number of application') }}">{{$offer->jobOfferResponses->count()}}</span>
                                                 <i class="fas fa-angle-down rotate-icon"></i>
                                             </h5>
                                         </a>
