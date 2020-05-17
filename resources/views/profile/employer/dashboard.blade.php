@@ -150,8 +150,17 @@
                                                 <tbody>
                                                 @foreach($offer->jobOfferResponses as $job)
                                                     <tr>
-                                                        <td>{{ $job->name }}</td>
-                                                        <td>{{ $job->email }}</td>
+                                                        <td>
+                                                            {{ $job->name }}
+                                                            @if( null !== $job->user_id )
+                                                                <i title="{{ __('User verified') }}" class="fas fa-check-circle ml-1 text-muted"></i>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            <a class="blue-text" href="mailto:{{ $job->email }}">
+                                                                {{ $job->email }}
+                                                            </a>
+                                                        </td>
                                                         <td>
                                                             <a class="btn btn-primary btn-sm m-0"
                                                                href="{{ $job->getFile() }}">
