@@ -2,31 +2,36 @@
 
 namespace App;
 
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Role
  *
  * @property int $id
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection|User[] $users
  * @property-read int|null $users_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Role newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Role newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Role query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Role whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Role whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Role whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Role whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @method static Builder|Role newModelQuery()
+ * @method static Builder|Role newQuery()
+ * @method static Builder|Role query()
+ * @method static Builder|Role whereCreatedAt($value)
+ * @method static Builder|Role whereId($value)
+ * @method static Builder|Role whereName($value)
+ * @method static Builder|Role whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Role extends Model
 {
     protected $guarded = [];
 
-    public function users()
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }

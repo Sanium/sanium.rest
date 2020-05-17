@@ -2,11 +2,13 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Intervention\Image\Facades\Image;
 
 /**
@@ -16,26 +18,26 @@ use Intervention\Image\Facades\Image;
  * @property int $user_id
  * @property string $name
  * @property string $slug
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer findSimilarSlugs($attribute, $config, $slug)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereUserId($value)
- * @mixin \Eloquent
- * @property int $size
- * @property string $website
- * @property string $logo
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereLogo($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereSize($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereWebsite($value)
+ * @property string|null $size
+ * @property string|null $website
+ * @property string|null $logo
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read User $user
+ * @method static Builder|Employer findSimilarSlugs($attribute, $config, $slug)
+ * @method static Builder|Employer newModelQuery()
+ * @method static Builder|Employer newQuery()
+ * @method static Builder|Employer query()
+ * @method static Builder|Employer whereCreatedAt($value)
+ * @method static Builder|Employer whereId($value)
+ * @method static Builder|Employer whereLogo($value)
+ * @method static Builder|Employer whereName($value)
+ * @method static Builder|Employer whereSize($value)
+ * @method static Builder|Employer whereSlug($value)
+ * @method static Builder|Employer whereUpdatedAt($value)
+ * @method static Builder|Employer whereUserId($value)
+ * @method static Builder|Employer whereWebsite($value)
+ * @mixin Eloquent
  */
 class Employer extends Model implements ProfileInterface
 {
@@ -48,8 +50,7 @@ class Employer extends Model implements ProfileInterface
         parent::boot();
 
         static::deleting(static function (Employer $employer) {
-            $all_offers = $employer->user()->first()->offers()->get();
-            foreach ($all_offers as $offer) {
+            foreach ($employer->user->offers as $offer) {
                 $offer->delete();
             }
             $employer->user()->delete();
@@ -81,9 +82,10 @@ class Employer extends Model implements ProfileInterface
         return 'slug';
     }
 
+    /** @noinspection PhpUnused */
     public function getLogo()
     {
-        if(is_null($this->logo)) {
+        if (is_null($this->logo)) {
             return asset('storage/defaults/user.jpg');
         }
 
@@ -92,7 +94,7 @@ class Employer extends Model implements ProfileInterface
 
     public function setLogo(Request $request): void
     {
-        if ($request->has('logo')) {
+        if ($request->has('logo') && null !== $request->file('logo')) {
             $filename = $request->file('logo')->getClientOriginalName();
             $employerUID = $this->user_id . '-' . $this->slug;
             $imagePath = '/storage/' . $request->file('logo')->storeAs('profile', "$employerUID-$filename", 'public');
@@ -102,7 +104,7 @@ class Employer extends Model implements ProfileInterface
             $jpg->insert($image);
             $imagePath = 'storage/profile/' . $image->filename . '.jpg';
             $jpg->save($imagePath);
-            $this->logo = '/'.$imagePath;
+            $this->logo = '/' . $imagePath;
             $this->save();
         }
     }

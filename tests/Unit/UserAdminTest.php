@@ -5,29 +5,41 @@ namespace Tests\Unit;
 use App\Admin;
 use App\Role;
 use App\User;
-use Tests\TestCase;
-use Illuminate\Support\Str;
-use Illuminate\Foundation\Testing\WithFaker;
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
+use PHPUnit\Framework\AssertionFailedError;
+use Tests\TestCase;
 
 class UserAdminTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
+    /**
+     * @var Role
+     */
     private $emRole;
+    /**
+     * @var Role
+     */
     private $adminRole;
+    /**
+     * @var Role
+     */
+    private $cRole;
 
     public function setUp(): void
     {
         parent::setUp();
 
         $this->emRole = Role::create(['name' => 'employer']);
+        $this->cRole = Role::create(['name' => 'client']);
         $this->adminRole = Role::create(['name' => 'admin']);
     }
 
-    public function create_user()
+    public function create_user(): User
     {
-        /** @var User $user */
         $user = User::createWithRole([
             'name' => 'baloo',
             'email' => 'baloo@baloo.baloo',
@@ -43,7 +55,7 @@ class UserAdminTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_user()
+    public function it_can_create_user(): void
     {
         /** @var User $user */
         $user = User::createWithRole([
@@ -71,9 +83,8 @@ class UserAdminTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_profile()
+    public function it_can_update_profile(): void
     {
-        /** @var User $user */
         $user = $this->create_user();
 
         $new_profile_attr = [
@@ -81,7 +92,7 @@ class UserAdminTest extends TestCase
         ];
 
         /** @var Admin $profile */
-        $profile = $user->profile()->first();
+        $profile = $user->profile;
         $profile->update($new_profile_attr);
 
         $this->assertEquals($new_profile_attr['name'], $profile->name);
@@ -89,30 +100,36 @@ class UserAdminTest extends TestCase
     }
 
     /** @test */
-    public function it_can_delete_user_with_profile()
+    public function it_can_delete_user_with_profile(): void
     {
-        /** @var User $user */
         $user = $this->create_user();
-        $profile = $user->profile()->first();
+        /** @var Admin $profile */
+        $profile = $user->profile;
 
-        $user->delete();
+        try {
+            $user->delete();
+        } catch (Exception $e) {
+            throw new AssertionFailedError("Deletion of user failed");
+        }
 
         $this->assertDeleted($user);
         $this->assertDeleted($profile);
-
     }
 
     /** @test */
-    public function it_can_delete_profile_with_user()
+    public function it_can_delete_profile_with_user(): void
     {
-        /** @var User $user */
         $user = $this->create_user();
-        $profile = $user->profile()->first();
+        /** @var Admin $profile */
+        $profile = $user->profile;
 
-        $profile->delete();
+        try {
+            $profile->delete();
+        } catch (Exception $e) {
+            throw new AssertionFailedError("Deletion of profile failed");
+        }
 
         $this->assertDeleted($user);
         $this->assertDeleted($profile);
-
     }
 }

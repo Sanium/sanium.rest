@@ -2,27 +2,30 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Currency
  *
  * @property int $id
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Currency newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Currency newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Currency query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Currency whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Currency whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Currency whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Currency whereUpdatedAt($value)
- * @mixin \Eloquent
  * @property string $slug
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Currency findSimilarSlugs($attribute, $config, $slug)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Currency whereSlug($value)
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @method static Builder|Currency findSimilarSlugs($attribute, $config, $slug)
+ * @method static Builder|Currency newModelQuery()
+ * @method static Builder|Currency newQuery()
+ * @method static Builder|Currency query()
+ * @method static Builder|Currency whereCreatedAt($value)
+ * @method static Builder|Currency whereId($value)
+ * @method static Builder|Currency whereName($value)
+ * @method static Builder|Currency whereSlug($value)
+ * @method static Builder|Currency whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Currency extends Model
 {
@@ -35,7 +38,7 @@ class Currency extends Model
      *
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [

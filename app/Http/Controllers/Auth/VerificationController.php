@@ -49,6 +49,6 @@ class VerificationController extends Controller
      */
     protected function verified(Request $request)
     {
-        $request->session()->flash('status', __('You has been successfully registered.'));
+        $request->session()->flash('status', __('You have been successfully verified.'));
     }
 }

@@ -2,12 +2,15 @@
 
 namespace App;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
-use App\User;
 
 /**
  * App\Offer
@@ -16,54 +19,55 @@ use App\User;
  * @property int $user_id
  * @property string $name
  * @property string $description
- * @property string $disclaimer
+ * @property string|null $disclaimer
  * @property int|null $exp_id
  * @property int|null $emp_id
  * @property int|null $salary_from
  * @property int|null $salary_to
  * @property int|null $currency_id
  * @property string $city
+ * @property string $city_slug
  * @property string $street
- * @property int|null $remote
+ * @property int $remote
  * @property string|null $tech_stack Stored as JSON
  * @property int $tech_id
  * @property string $contact
- * @property string $website
- * @property string $expires_at
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static Builder|\App\Offer newModelQuery()
- * @method static Builder|\App\Offer newQuery()
- * @method static Builder|\App\Offer query()
- * @method static Builder|\App\Offer whereCity($value)
- * @method static Builder|\App\Offer whereContact($value)
- * @method static Builder|\App\Offer whereCreatedAt($value)
- * @method static Builder|\App\Offer whereCurrencyId($value)
- * @method static Builder|\App\Offer whereDescription($value)
- * @method static Builder|\App\Offer whereDisclaimer($value)
- * @method static Builder|\App\Offer whereEmpId($value)
- * @method static Builder|\App\Offer whereExpId($value)
- * @method static Builder|\App\Offer whereExpiresAt($value)
- * @method static Builder|\App\Offer whereId($value)
- * @method static Builder|\App\Offer whereName($value)
- * @method static Builder|\App\Offer whereRemote($value)
- * @method static Builder|\App\Offer whereSalaryFrom($value)
- * @method static Builder|\App\Offer whereSalaryTo($value)
- * @method static Builder|\App\Offer whereStreet($value)
- * @method static Builder|\App\Offer whereTechId($value)
- * @method static Builder|\App\Offer whereTechStack($value)
- * @method static Builder|\App\Offer whereUpdatedAt($value)
- * @method static Builder|\App\Offer whereUserId($value)
- * @method static Builder|\App\Offer whereWebsite($value)
- * @mixin \Eloquent
- * @property-read \App\Currency $currency
- * @property-read \App\Employment $employment
- * @property-read \App\Experience $experience
- * @property-read \App\Technology $technology
- * @property-read \App\User $user
- * @property-read \App\Technology $technologies
- * @property string $city_slug
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereCitySlug($value)
+ * @property string|null $website
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $expires_at
+ * @property-read Currency $currency
+ * @property-read Employment $employment
+ * @property-read Experience $experience
+ * @property-read Collection|JobOfferResponse[] $jobOfferResponses
+ * @property-read int|null $job_offer_responses_count
+ * @property-read Technology $technology
+ * @property-read User $user
+ * @method static Builder|Offer newModelQuery()
+ * @method static Builder|Offer newQuery()
+ * @method static Builder|Offer query()
+ * @method static Builder|Offer whereCity($value)
+ * @method static Builder|Offer whereCitySlug($value)
+ * @method static Builder|Offer whereContact($value)
+ * @method static Builder|Offer whereCreatedAt($value)
+ * @method static Builder|Offer whereCurrencyId($value)
+ * @method static Builder|Offer whereDescription($value)
+ * @method static Builder|Offer whereDisclaimer($value)
+ * @method static Builder|Offer whereEmpId($value)
+ * @method static Builder|Offer whereExpId($value)
+ * @method static Builder|Offer whereExpiresAt($value)
+ * @method static Builder|Offer whereId($value)
+ * @method static Builder|Offer whereName($value)
+ * @method static Builder|Offer whereRemote($value)
+ * @method static Builder|Offer whereSalaryFrom($value)
+ * @method static Builder|Offer whereSalaryTo($value)
+ * @method static Builder|Offer whereStreet($value)
+ * @method static Builder|Offer whereTechId($value)
+ * @method static Builder|Offer whereTechStack($value)
+ * @method static Builder|Offer whereUpdatedAt($value)
+ * @method static Builder|Offer whereUserId($value)
+ * @method static Builder|Offer whereWebsite($value)
+ * @mixin Eloquent
  */
 class Offer extends Model
 {
@@ -71,42 +75,42 @@ class Offer extends Model
 
     protected $dates = ['expires_at'];
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::creating(function (Offer $offer) {
+        static::creating(static function (Offer $offer) {
             $offer->city_slug = Str::slug($offer->city);
             $created_at = new Carbon($offer->created_at);
             $offer->expires_at = $created_at->addDays(30);
         });
 
-        static::updating(function (Offer $offer) {
+        static::updating(static function (Offer $offer) {
             $offer->city_slug = Str::slug($offer->city);
         });
     }
 
-    public function technology()
+    public function technology(): HasOne
     {
-        return $this->hasOne('App\Technology', 'id', 'tech_id');
+        return $this->hasOne(Technology::class, 'id', 'tech_id');
     }
 
-    public function experience()
+    public function experience(): HasOne
     {
-        return $this->hasOne('App\Experience', 'id', 'exp_id');
+        return $this->hasOne(Experience::class, 'id', 'exp_id');
     }
 
-    public function employment()
+    public function employment(): HasOne
     {
-        return $this->hasOne('App\Employment', 'id', 'emp_id');
+        return $this->hasOne(Employment::class, 'id', 'emp_id');
     }
 
-    public function currency()
+    public function currency(): HasOne
     {
-        return $this->hasOne('App\Currency', 'id', 'currency_id');
+        return $this->hasOne(Currency::class, 'id', 'currency_id');
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }

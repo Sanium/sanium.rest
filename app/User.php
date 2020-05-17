@@ -2,15 +2,19 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Eloquent;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Offer;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 /**
  * App\User
@@ -18,32 +22,32 @@ use App\Offer;
  * @property int $id
  * @property string $name
  * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read int|null $notifications_count
- * @property-read \App\Employer|\App\Client $profile
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Role[] $roles
- * @property-read int|null $roles_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Offer[] $offers
- * @property-read int|null $offers_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\JobOfferResponse[] $jobOfferResponses
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection|JobOfferResponse[] $jobOfferResponses
  * @property-read int|null $job_offer_responses_count
+ * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
+ * @property-read int|null $notifications_count
+ * @property-read Collection|Offer[] $offers
+ * @property-read int|null $offers_count
+ * @property-read Admin|Employer|Client|null $profile
+ * @property-read Collection|Role[] $roles
+ * @property-read int|null $roles_count
+ * @method static Builder|User newModelQuery()
+ * @method static Builder|User newQuery()
+ * @method static Builder|User query()
+ * @method static Builder|User whereCreatedAt($value)
+ * @method static Builder|User whereEmail($value)
+ * @method static Builder|User whereEmailVerifiedAt($value)
+ * @method static Builder|User whereId($value)
+ * @method static Builder|User whereName($value)
+ * @method static Builder|User wherePassword($value)
+ * @method static Builder|User whereRememberToken($value)
+ * @method static Builder|User whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -76,68 +80,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::deleting(function (User $user) {
-            $user->profile()->first()->delete();
-        });
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
-
-    public function isEmployer()
-    {
-        return $this->roles()->get()->contains(Role::where('name', 'employer')->first());
-    }
-
-    public function isClient()
-    {
-        return $this->roles()->get()->contains(Role::where('name', 'client')->first());
-    }
-
-    public function isAdmin()
-    {
-        return $this->roles()->get()->contains(Role::where('name', 'admin')->first());
-    }
-
-    public function profile(): ?HasOne
-    {
-        if ($this->isAdmin()) {
-            return $this->hasOne(Admin::class);
-        }
-        if ($this->isEmployer()) {
-            return $this->hasOne(Employer::class);
-        }
-        if ($this->isClient()) {
-            return $this->hasOne(Client::class);
-        }
-        return null;
-    }
-
-    public function offers(): HasMany
-    {
-        return $this->hasMany(Offer::class, 'user_id', 'id');
-    }
-
-    /**
-     * @return HasMany|HasManyThrough|null
-     */
-    public function jobOfferResponses()
-    {
-        if ($this->isClient()) {
-            return $this->hasMany(JobOfferResponse::class, 'user_id', 'id');
-        }
-        if ($this->isEmployer()) {
-            return $this->hasManyThrough(JobOfferResponse::class, Offer::class);
-        }
-        return null;
-    }
-
     public static function createWithRole(array $attr): ?User
     {
         if (array_key_exists('role', $attr)) {
@@ -159,5 +101,69 @@ class User extends Authenticatable implements MustVerifyEmail
             return self::create($attr);
         }
         return $user;
+    }
+
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::deleting(static function (User $user) {
+            if (null !== $user->profile()) {
+                $user->profile()->delete();
+            }
+        });
+    }
+
+    public function profile(): ?HasOne
+    {
+        if ($this->isAdmin()) {
+            return $this->hasOne(Admin::class);
+        }
+        if ($this->isEmployer()) {
+            return $this->hasOne(Employer::class);
+        }
+        if ($this->isClient()) {
+            return $this->hasOne(Client::class);
+        }
+        return null;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->roles()->get()->contains(Role::where('name', 'admin')->first());
+    }
+
+    public function isEmployer(): bool
+    {
+        return $this->roles()->get()->contains(Role::where('name', 'employer')->first());
+    }
+
+    public function isClient(): bool
+    {
+        return $this->roles()->get()->contains(Role::where('name', 'client')->first());
+    }
+
+    public function offers(): HasMany
+    {
+        return $this->hasMany(Offer::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return HasMany|HasManyThrough|null
+     */
+    public function jobOfferResponses()
+    {
+        if ($this->isClient()) {
+            return $this->hasMany(JobOfferResponse::class, 'user_id', 'id');
+        }
+        if ($this->isEmployer()) {
+            return $this->hasManyThrough(JobOfferResponse::class, Offer::class);
+        }
+        return null;
     }
 }
