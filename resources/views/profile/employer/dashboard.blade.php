@@ -120,110 +120,54 @@
                     <div class="tab-pane fade" id="applications-tab" role="tabpanel">
                         <div class="accordion md-accordion accordion-blocks" id="accordion" role="tablist"
                              aria-multiselectable="true">
-                            <div class="card border-light z-depth-0">
-                                <div class="card-header" role="tab">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseUnfiled"
-                                       aria-expanded="true"
-                                       aria-controls="collapseUnfiled">
-                                        <h5 class="mt-1 mb-0">
-                                            <span>Offer's tittle</span>
-                                            <i class="fas fa-angle-down rotate-icon"></i>
-                                        </h5>
-                                    </a>
-                                </div>
-                                <div id="collapseUnfiled" class="collapse" role="tabpanel"
-                                     aria-labelledby="headingUnfiled"
-                                     data-parent="#accordion">
-                                    <div class="card-body">
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th>{{ __('Full name') }}</th>
-                                                <th>{{ __('Email') }}</th>
-                                                <th>{{ __('CV') }}</th>
-                                                <th>{{ __('Date') }}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>Anki stary</td>
-                                                <td>darullef@gmail.com</td>
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm m-0">
-                                                        <i class="fas fa-download mr-1"></i>
-                                                        {{ __('Download') }}
-                                                    </button>
-                                                </td>
-                                                <td>21:37:2020</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Anki stary</td>
-                                                <td>darullef@gmail.com</td>
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm m-0">
-                                                        <i class="fas fa-download mr-1"></i>
-                                                        {{ __('Download') }}
-                                                    </button>
-                                                </td>
-                                                <td>21:37:2020</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                            @foreach($offers as $offer)
+                                <div class="card border-light z-depth-0">
+                                    <div class="card-header" role="tab">
+                                        <a data-toggle="collapse" data-parent="#accordion"
+                                           href="#collapseUnfiled{{$offer->id}}"
+                                           aria-expanded="true"
+                                           aria-controls="collapseUnfiled{{$offer->id}}">
+                                            <h5 class="mt-1 mb-0">
+                                                <span>{{$offer->name}}</span>
+                                                <i class="fas fa-angle-down rotate-icon"></i>
+                                            </h5>
+                                        </a>
+                                    </div>
+                                    <div id="collapseUnfiled{{$offer->id}}" class="collapse" role="tabpanel"
+                                         aria-labelledby="headingUnfiled"
+                                         data-parent="#accordion">
+                                        <div class="card-body">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>{{ __('Full name') }}</th>
+                                                    <th>{{ __('Email') }}</th>
+                                                    <th>{{ __('CV') }}</th>
+                                                    <th>{{ __('Date') }}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($offer->jobOfferResponses as $job)
+                                                    <tr>
+                                                        <td>{{ $job->name }}</td>
+                                                        <td>{{ $job->email }}</td>
+                                                        <td>
+                                                            <a class="btn btn-primary btn-sm m-0"
+                                                               href="{{ $job->file }}"
+                                                               download>
+                                                                <i class="fas fa-download mr-1"></i>
+                                                                {{ __('Download') }}
+                                                            </a>
+                                                        </td>
+                                                        <td>{{ $job->created_at }}</td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card border-light z-depth-0">
-                                <div class="card-header" role="tab">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseUnfiled"
-                                       aria-expanded="true"
-                                       aria-controls="collapseUnfiled">
-                                        <h5 class="mt-1 mb-0">
-                                            <span>Offer's tittle</span>
-                                            <i class="fas fa-angle-down rotate-icon"></i>
-                                        </h5>
-                                    </a>
-                                </div>
-                                <div id="collapseUnfiled" class="collapse" role="tabpanel"
-                                     aria-labelledby="headingUnfiled"
-                                     data-parent="#accordion">
-                                    <div class="card-body">
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th>{{ __('Full name') }}</th>
-                                                <th>{{ __('Email') }}</th>
-                                                <th>{{ __('CV') }}</th>
-                                                <th>{{ __('Date') }}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>Anki stary</td>
-                                                <td>darullef@gmail.com</td>
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm m-0">
-                                                        <i class="fas fa-download mr-1"></i>
-                                                        {{ __('Download') }}
-                                                    </button>
-                                                </td>
-                                                <td>21:37:2020</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Anki stary</td>
-                                                <td>darullef@gmail.com</td>
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm m-0">
-                                                        <i class="fas fa-download mr-1"></i>
-                                                        {{ __('Download') }}
-                                                    </button>
-                                                </td>
-                                                <td>21:37:2020</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
