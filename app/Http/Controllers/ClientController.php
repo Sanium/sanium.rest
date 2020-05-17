@@ -56,6 +56,7 @@ class ClientController extends Controller
             return redirect(route('home'));
         }
         $attr = $this->validator($request->all())->validate();
+        $client->deleteFile();
         $client->update($attr);
         $client->setFile($request);
         $request->session()->flash('status', __('Profile updated.'));

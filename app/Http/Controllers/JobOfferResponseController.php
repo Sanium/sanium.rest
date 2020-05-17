@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\JobOfferResponse;
+use App\Offer;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class JobOfferResponseController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function index()
     {
@@ -18,68 +24,75 @@ class JobOfferResponseController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Offer $offer
+     * @return RedirectResponse|Response
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request, Offer $offer)
     {
-        //
+        $user = Auth::user();
+        if (null !== $user && $user->isClient())  {
+            $user_id = $user->id;
+            $offer_id = $offer->id;
+            $jor = JobOfferResponse::where(static function ($query) use ($user_id, $offer_id) {
+                /** @var Builder $query */
+                $query->where('user_id', $user_id)->where('offer_id', $offer_id);
+            })->limit(1)->get();
+            if (null !== $jor) {
+                $request->session()->flash('status', __('You already respond to this offer..'));
+                return back();
+            }
+            $jor = $offer->jobOfferResponses()->create([
+                'user_id' => $user->id,
+                'name' => $user->profile->name,
+                'email' => $user->email,
+                'links' => $user->profile->links,
+                'file' => $user->profile->file,
+            ]);
+        } else {
+            $attr = $this->validator($request->all())->validate();
+            /** @var JobOfferResponse $jor */
+            $jor = $offer->jobOfferResponses()->create($attr);
+            $jor->setFile($request);
+        }
+        $jor->notifyEmployer();
+        $request->session()->flash('status', __('Mail has been send.'));
+        return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\JobOfferResponse  $jobOfferResponse
-     * @return \Illuminate\Http\Response
+     * @param JobOfferResponse $jobOfferResponse
+     * @return Response
      */
     public function show(JobOfferResponse $jobOfferResponse)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\JobOfferResponse  $jobOfferResponse
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(JobOfferResponse $jobOfferResponse)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\JobOfferResponse  $jobOfferResponse
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, JobOfferResponse $jobOfferResponse)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\JobOfferResponse  $jobOfferResponse
-     * @return \Illuminate\Http\Response
+     * @param JobOfferResponse $jobOfferResponse
+     * @return Response
      */
     public function destroy(JobOfferResponse $jobOfferResponse)
     {
         //
+    }
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:191'],
+            'email' => ['required', 'email', 'max:191'],
+            'links' => ['required', 'string'],
+            'file' => ['required', 'file', 'mimetypes:application/pdf'],
+        ]);
     }
 }
