@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\JobOfferResponse as JobOfferResponseMail;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * App\JobOfferResponse
@@ -55,14 +58,19 @@ class JobOfferResponse extends Model
     {
         if ($request->has('file') && null !== $request->file('file')) {
             $filename = $request->file('file')->getClientOriginalName();
-            $clientUID = $this->user->id . '-' . $this->user->profile->slug;
-            $this->file = '/storage/' . $request->file('file')->storeAs('clients-files', "$clientUID-$filename", 'public');
+            $this->file = $request->file('file')->storeAs("jor-files/$this->id", $filename, 'public');
             $this->save();
         }
     }
 
-    public function getFile()
+    public function getFile(): string
     {
-        return asset($this->file);
+        return Storage::disk('public')->url($this->file);
+    }
+
+    public function notifyEmployer(): void
+    {
+        $employer = $this->offer->user;
+        Mail::to($employer)->send(new JobOfferResponseMail($this->name, $this->email, $this->links, $this->getFile()));
     }
 }

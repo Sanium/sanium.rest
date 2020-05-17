@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * App\Client
@@ -75,14 +76,19 @@ class Client extends Model implements ProfileInterface
     {
         if ($request->has('file') && null !== $request->file('file')) {
             $filename = $request->file('file')->getClientOriginalName();
-            $clientUID = $this->user_id . '-' . $this->slug;
-            $this->file = '/storage/' . $request->file('file')->storeAs('clients-files', "$clientUID-$filename", 'public');
+            $email = $this->user->email;
+            $this->file = $request->file('file')->storeAs("clients-files/$email", $filename, 'public');
             $this->save();
         }
     }
 
-    public function getFile()
+    public function getFile(): string
     {
-        return asset($this->file);
+        return Storage::disk('public')->url($this->file);
+    }
+
+    public function deleteFile(): void
+    {
+        Storage::disk('public')->delete($this->file);
     }
 }
