@@ -129,7 +129,8 @@
                                            aria-controls="collapseUnfiled{{$offer->id}}">
                                             <h5 class="mb-0">
                                                 <span>{{$offer->name}}</span>
-                                                <span class="badge badge-warning jor-badge z-depth-0" title="{{ __('Number of application') }}">{{$offer->jobOfferResponses->count()}}</span>
+                                                <span class="badge badge-warning jor-badge z-depth-0"
+                                                      title="{{ __('Number of application') }}">{{$offer->jobOfferResponses->count()}}</span>
                                                 <i class="fas fa-angle-down rotate-icon"></i>
                                             </h5>
                                         </a>
@@ -153,7 +154,8 @@
                                                         <td>
                                                             {{ $job->name }}
                                                             @if( null !== $job->user_id )
-                                                                <i title="{{ __('User verified') }}" class="fas fa-check-circle ml-1 text-muted"></i>
+                                                                <i title="{{ __('User verified') }}"
+                                                                   class="fas fa-check-circle ml-1 text-muted"></i>
                                                             @endif
                                                         </td>
                                                         <td>
@@ -168,7 +170,7 @@
                                                                 {{ __('Download') }}
                                                             </a>
                                                         </td>
-                                                        <td>{{ $job->created_at }}</td>
+                                                        <td>{{ $job->created_at->diffForHumans() }}</td>
                                                     </tr>
                                                 @endforeach
                                                 </tbody>

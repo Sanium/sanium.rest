@@ -66,8 +66,10 @@ class HomeController extends Controller
             ]);
         }
         if ($user->isClient()) {
+            $jors = $user->jobOfferResponses()->paginate(4);
             return view('profile.client.dashboard', [
                 'client' => $profile,
+                'jors' => $jors
             ]);
         }
         if ($user->isAdmin()) {
