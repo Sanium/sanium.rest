@@ -63,9 +63,9 @@ class JobOfferResponseController extends Controller
             $jor->setFile($request);
         }
         Mail::to($jor->offer->user)->queue(new JobOfferResponseMail($jor->name, $jor->email, $jor->links, $jor->getFile()));
-        $request->session()->flash('status', __('Mail has been send.'));
+        $request->session()->flash('status', __('Applied successfully.'));
         return $request->wantsJson()
-            ? new Response(['ok' => __('Mail has been send.')], 200)
+            ? new Response(['ok' => __('Applied successfully.')], 200)
             : back();
     }
 
