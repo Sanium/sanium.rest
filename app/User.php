@@ -6,6 +6,7 @@ use Eloquent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -80,6 +81,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @param array $attr
+     * @return User|null
+     * @throws ModelNotFoundException
+     */
     public static function createWithRole(array $attr): ?User
     {
         if (array_key_exists('role', $attr)) {
@@ -88,15 +94,14 @@ class User extends Authenticatable implements MustVerifyEmail
             }
             if (is_numeric($attr['role'])) {
                 $role_id = $attr['role'];
-                unset($attr['role']);
-                $user = self::create($attr);
-                $user->roles()->attach(Role::findOrFail($role_id)->first());
+                $role = Role::findOrFail($role_id)->first();
             } else {
                 $role_name = $attr['role'];
-                unset($attr['role']);
-                $user = self::create($attr);
-                $user->roles()->attach(Role::where('name', $role_name)->firstOrFail());
+                $role = Role::where('name', $role_name)->firstOrFail();
             }
+            unset($attr['role']);
+            $user = self::create($attr);
+            $user->roles()->attach($role);
         } else {
             return self::create($attr);
         }

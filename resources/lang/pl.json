@@ -115,5 +115,6 @@
     "User verified": "Użytkownik zweryfikowany",
     "Number of application": "Liczba zgłoszeń",
     "Your applications": "Twoje zgłoszenia",
-    "You have canceled your application for position :name.": "Anulowałeś swoją aplikację na stanowisko :name."
+    "You have canceled your application for position :name.": "Anulowałeś swoją aplikację na stanowisko :name.",
+    "Registration failed. Contact the administrator.": "Rejestracja nie udała się. Skontaktuj się z administratorem."
 }
