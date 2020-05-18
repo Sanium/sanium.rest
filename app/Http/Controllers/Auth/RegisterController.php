@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -59,7 +61,13 @@ class RegisterController extends Controller
     {
         $this->employer_validator($request->all())->validate();
 
-        event(new Registered($user = $this->create_employer($request)));
+        try {
+            event(new Registered($user = $this->create_employer($request)));
+        } catch (ModelNotFoundException $e) {
+            $request->session()->flash('status', __('Registration failed. Contact the administrator.'));
+            Log::error($e->getMessage() . ' Do you seeded database?');
+            return redirect(route('register'));
+        }
 
         $this->guard()->login($user);
 
@@ -94,6 +102,7 @@ class RegisterController extends Controller
      *
      * @param Request $request
      * @return User
+     * @throws ModelNotFoundException
      */
     protected function create_employer(Request $request): User
     {
@@ -104,13 +113,15 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'role' => 'employer'
         ]);
-        $user->profile()->create([
-            'name' => $data['company-name'],
-            'size' => $data['company-size'],
-            'website' => $data['company-website']
-        ]);
-
-        return $user;
+        if (null !== $user && null !== $user->profile()) {
+            $user->profile()->create([
+                'name' => $data['company-name'],
+                'size' => $data['company-size'],
+                'website' => $data['company-website']
+            ]);
+            return $user;
+        }
+        throw new ModelNotFoundException('Profile wasn\'t attached to user or user doesn\'t exists.', 2137);
     }
 
     /**
@@ -144,7 +155,13 @@ class RegisterController extends Controller
     {
         $this->client_validator($request->all())->validate();
 
-        event(new Registered($user = $this->create_client($request)));
+        try {
+            event(new Registered($user = $this->create_client($request)));
+        } catch (ModelNotFoundException $e) {
+            $request->session()->flash('status', __('Registration failed. Contact the administrator.'));
+            Log::error($e->getMessage() . ' Do you seeded database?');
+            return redirect(route('register'));
+        }
 
         $this->guard()->login($user);
 
@@ -170,7 +187,7 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed', 'max:191'],
             'name' => ['required', 'string', 'max:191'],
             'links' => ['required', 'string'],
-            //'file' => ['required', 'file', 'mimetypes:application/pdf'],
+            'file' => ['required', 'file', 'mimetypes:application/pdf'],
         ]);
     }
 
@@ -179,6 +196,7 @@ class RegisterController extends Controller
      *
      * @param Request $request
      * @return User
+     * @throws ModelNotFoundException
      */
     protected function create_client(Request $request): User
     {
@@ -189,13 +207,16 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'role' => 'client'
         ]);
-        $user->profile()->create([
-            'name' => $data['name'],
-            'links' => $data['links'],
-            'file' => $data['file']
-        ]);
-        $user->profile->setFile($request);
-        return $user;
+        if (null !== $user && null !== $user->profile()) {
+            $user->profile()->create([
+                'name' => $data['name'],
+                'links' => $data['links'],
+                'file' => $data['file']
+            ]);
+            $user->profile->setFile($request);
+            return $user;
+        }
+        throw new ModelNotFoundException('Profile wasn\'t attached to user or user doesn\'t exists.', 2137);
     }
 
     /**
