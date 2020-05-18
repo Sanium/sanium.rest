@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\JobOfferResponse as JobOfferResponseMail;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -66,11 +64,5 @@ class JobOfferResponse extends Model
     public function getFile(): string
     {
         return Storage::disk('public')->url($this->file);
-    }
-
-    public function notifyEmployer(): void
-    {
-        $employer = $this->offer->user;
-        Mail::to($employer)->send(new JobOfferResponseMail($this->name, $this->email, $this->links, $this->getFile()));
     }
 }

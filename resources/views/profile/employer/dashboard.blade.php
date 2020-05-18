@@ -51,8 +51,7 @@
             <div class="card-body">
                 <div class="tab-content p-0">
                     <div class="tab-pane fade show active" id="offers-tab" role="tabpanel">
-                        <div class="card-title d-flex justify-content-between align-items-center">
-                            <h4>@lang('Your offers')</h4>
+                        <div class="card-title d-flex justify-content-end align-items-center">
                             <a class="btn light-blue darken-2 white-text px-3"
                                href="{{route('offers.create')}}">@lang('Add new offer')
                             </a>
@@ -121,61 +120,67 @@
                         <div class="accordion md-accordion accordion-blocks" id="accordion" role="tablist"
                              aria-multiselectable="true">
                             @foreach($offers as $offer)
-                                <div class="card border-light z-depth-0">
-                                    <div class="card-header" role="tab">
-                                        <a data-toggle="collapse" data-parent="#accordion"
-                                           href="#collapseUnfiled{{$offer->id}}"
-                                           aria-expanded="true"
-                                           aria-controls="collapseUnfiled{{$offer->id}}">
-                                            <h5 class="mb-0">
-                                                <span>{{$offer->name}}</span>
-                                                <span class="badge badge-warning jor-badge z-depth-0" title="{{ __('Number of application') }}">{{$offer->jobOfferResponses->count()}}</span>
-                                                <i class="fas fa-angle-down rotate-icon"></i>
-                                            </h5>
-                                        </a>
-                                    </div>
-                                    <div id="collapseUnfiled{{$offer->id}}" class="collapse" role="tabpanel"
-                                         aria-labelledby="headingUnfiled"
-                                         data-parent="#accordion">
-                                        <div class="card-body">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>{{ __('Full name') }}</th>
-                                                    <th>{{ __('Email') }}</th>
-                                                    <th>{{ __('CV') }}</th>
-                                                    <th>{{ __('Date') }}</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                @foreach($offer->jobOfferResponses as $job)
+                                @if ( $offer->jobOfferResponses->count() > 0 )
+                                    <div class="card border-light z-depth-0">
+                                        <div class="card-header" role="tab">
+                                            <a data-toggle="collapse" data-parent="#accordion"
+                                               href="#collapseUnfiled{{$offer->id}}"
+                                               aria-expanded="true"
+                                               aria-controls="collapseUnfiled{{$offer->id}}">
+                                                <h5 class="mb-0">
+                                                    <span>{{$offer->name}}</span>
+                                                    <span class="badge badge-warning jor-badge z-depth-0"
+                                                          title="{{ __('Number of application') }}">
+                                                        {{ $offer->jobOfferResponses->count() }}
+                                                    </span>
+                                                    <i class="fas fa-angle-down rotate-icon"></i>
+                                                </h5>
+                                            </a>
+                                        </div>
+                                        <div id="collapseUnfiled{{$offer->id}}" class="collapse" role="tabpanel"
+                                             aria-labelledby="headingUnfiled"
+                                             data-parent="#accordion">
+                                            <div class="card-body">
+                                                <table class="table">
+                                                    <thead>
                                                     <tr>
-                                                        <td>
-                                                            {{ $job->name }}
-                                                            @if( null !== $job->user_id )
-                                                                <i title="{{ __('User verified') }}" class="fas fa-check-circle ml-1 text-muted"></i>
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            <a class="blue-text" href="mailto:{{ $job->email }}">
-                                                                {{ $job->email }}
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            <a class="btn btn-primary btn-sm m-0"
-                                                               href="{{ $job->getFile() }}">
-                                                                <i class="fas fa-download mr-1"></i>
-                                                                {{ __('Download') }}
-                                                            </a>
-                                                        </td>
-                                                        <td>{{ $job->created_at }}</td>
+                                                        <th>{{ __('Full name') }}</th>
+                                                        <th>{{ __('Email') }}</th>
+                                                        <th>{{ __('CV') }}</th>
+                                                        <th>{{ __('Date') }}</th>
                                                     </tr>
-                                                @endforeach
-                                                </tbody>
-                                            </table>
+                                                    </thead>
+                                                    <tbody>
+                                                    @foreach($offer->jobOfferResponses as $job)
+                                                        <tr>
+                                                            <td>
+                                                                {{ $job->name }}
+                                                                @if( null !== $job->user_id )
+                                                                    <i title="{{ __('User verified') }}"
+                                                                       class="fas fa-check-circle ml-1 text-muted"></i>
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <a class="blue-text" href="mailto:{{ $job->email }}">
+                                                                    {{ $job->email }}
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <a class="btn btn-primary btn-sm m-0"
+                                                                   href="{{ $job->getFile() }}">
+                                                                    <i class="fas fa-download mr-1"></i>
+                                                                    {{ __('Download') }}
+                                                                </a>
+                                                            </td>
+                                                            <td>{{ $job->created_at->diffForHumans() }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>
