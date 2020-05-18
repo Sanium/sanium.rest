@@ -109,6 +109,7 @@
     "Offer :name will expire on :date.": "Oferta :name wygaśnie :date.",
     "You have been successfully verified.": "Zostałeś pomyślnie zweryfikowany.",
     "Hello :name, you has been successfully registered.": "Witaj :name, zostałeś pomyślnie zarejestrowany.",
+    "You already respond to this offer.": "Juz odpowiedziałeś na tę ofertę.",
     "Applications": "Zgłoszenia",
     "Date": "Data",
     "Download": "Pobierz",
@@ -116,5 +117,6 @@
     "Number of application": "Liczba zgłoszeń",
     "Your applications": "Twoje zgłoszenia",
     "You have canceled your application for position :name.": "Anulowałeś swoją aplikację na stanowisko :name.",
-    "Registration failed. Contact the administrator.": "Rejestracja nie udała się. Skontaktuj się z administratorem."
+    "Registration failed. Contact the administrator.": "Rejestracja nie udała się. Skontaktuj się z administratorem.",
+    "The given data was invalid.": "Podane dane były nieprawidłowe."
 }
