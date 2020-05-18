@@ -36,8 +36,8 @@
                         <th></th>
                     </tr>
                     </thead>
-                    @foreach($jors as $job)
-                        <tbody>
+                    <tbody>
+                    @forelse($jors as $job)
                         <tr>
                             <td>
                                 <a class="blue-text" href="/#/details/{{ $job->offer->id }}">
@@ -60,8 +60,18 @@
                                 </div>
                             </td>
                         </tr>
-                        </tbody>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="4">
+                                <div class="text-center m-4">
+                                    <p><i class="fas fa-box-open fa-6x"></i></p>
+                                    <h4 class="mb-3">@lang('A bit empty here...') </h4>
+                                    <a class="btn btn-amber" href="{{ route('welcome') }}">@lang('Find new job')</a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+                    </tbody>
                 </table>
                 <div class="d-flex justify-content-center">
                     {{ $jors->links('components.pagination') }}

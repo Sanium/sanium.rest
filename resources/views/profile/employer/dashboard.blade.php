@@ -53,7 +53,7 @@
                     <div class="tab-pane fade show active" id="offers-tab" role="tabpanel">
                         <div class="card-title d-flex justify-content-end align-items-center">
                             <a class="btn light-blue darken-2 white-text px-3"
-                               href="{{route('offers.create')}}">@lang('Add new offer')
+                               href="{{ route('offers.create') }}">@lang('Add new offer')
                             </a>
                         </div>
                         <table class="table">
@@ -65,7 +65,7 @@
                             </tr>
                             </thead>
                             <tbody class="table-hover">
-                            @foreach( $offers as $offer )
+                            @forelse( $offers as $offer )
                                 <tr>
                                     <td>
                                         <a class="btn btn-link blue-text btn-lg"
@@ -109,7 +109,17 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="3">
+                                        <div class="text-center m-4">
+                                            <p><i class="fas fa-box-open fa-6x"></i></p>
+                                            <h4 class="mb-3">@lang('A bit empty here...') </h4>
+                                            <a class="btn btn-amber" href="{{ route('offers.create') }}">@lang('Add new offer')</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-center">
@@ -119,7 +129,7 @@
                     <div class="tab-pane fade" id="applications-tab" role="tabpanel">
                         <div class="accordion md-accordion accordion-blocks" id="accordion" role="tablist"
                              aria-multiselectable="true">
-                            @foreach($offers as $offer)
+                            @forelse($offers as $offer)
                                 @if ( $offer->jobOfferResponses->count() > 0 )
                                     <div class="card border-light z-depth-0">
                                         <div class="card-header" role="tab">
@@ -181,7 +191,11 @@
                                         </div>
                                     </div>
                                 @endif
-                            @endforeach
+                            @empty
+                                <div class="text-center my-3">
+                                    <h4>@lang('Nobody has applied to your offers yet.')</h4>
+                                </div>
+                            @endforelse
                         </div>
                     </div>
                 </div>

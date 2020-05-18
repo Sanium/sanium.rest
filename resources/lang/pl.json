@@ -117,6 +117,9 @@
     "Number of application": "Liczba zgłoszeń",
     "Your applications": "Twoje zgłoszenia",
     "You have canceled your application for position :name.": "Anulowałeś swoją aplikację na stanowisko :name.",
+    "The given data was invalid.": "Podane dane były nieprawidłowe.",
     "Registration failed. Contact the administrator.": "Rejestracja nie udała się. Skontaktuj się z administratorem.",
-    "The given data was invalid.": "Podane dane były nieprawidłowe."
+    "A bit empty here...": "Trochę tu pusto...",
+    "Find new job": "Znajdź nową pracę",
+    "Nobody has applied to your offers yet.": "Jeszcze nikt nie zaaplikował na twoje ogłoszenia."
 }
