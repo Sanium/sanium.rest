@@ -43,7 +43,9 @@ class JobOfferResponseController extends Controller
             })->limit(1)->get();
             if (null !== $jor) {
                 $request->session()->flash('status', __('You already respond to this offer..'));
-                return back();
+                return $request->wantsJson()
+                    ? new Response(['error' => __('You already respond to this offer..')], 200)
+                    : back();
             }
             $jor = $offer->jobOfferResponses()->create([
                 'user_id' => $user->id,
@@ -60,7 +62,9 @@ class JobOfferResponseController extends Controller
         }
         $jor->notifyEmployer();
         $request->session()->flash('status', __('Mail has been send.'));
-        return back();
+        return $request->wantsJson()
+            ? new Response(['ok' =>  __('Mail has been send.')], 200)
+            : back();
     }
 
     /**

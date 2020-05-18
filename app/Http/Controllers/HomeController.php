@@ -10,6 +10,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 
 class HomeController extends Controller
@@ -28,14 +29,24 @@ class HomeController extends Controller
     /**
      * Show the home page.
      *
-     * @return Renderable
+     * @return Renderable|RedirectResponse|Redirector|Response
      */
-    public function welcome(): Renderable
+    public function welcome()
     {
-        return view('welcome');
+        /** @var User $user */
+        $user = auth()->user();
+        if (null === $user) {
+            return view('welcome', [
+                'showForm' => true,
+            ]);
+        }
+
+        return view('welcome', [
+            'showForm' => !$user->isClient(),
+        ]);
     }
 
-    /**
+        /**
      * Show the application dashboard.
      *
      * @return Renderable|RedirectResponse|Redirector
