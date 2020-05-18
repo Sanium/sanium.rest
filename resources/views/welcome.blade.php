@@ -18,6 +18,9 @@
 
     <!-- Scripts -->
     @yield('javascript')
+    <script>
+        window.showForm = {{ $showForm ? 'true' : 'false' }};
+    </script>
 
 </head>
 <body>

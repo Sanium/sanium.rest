@@ -134,6 +134,7 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
+    'The given data was invalid.' => 'Podane dane były nieprawidłowe.',
 
     /*
     |--------------------------------------------------------------------------
