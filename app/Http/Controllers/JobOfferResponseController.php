@@ -42,9 +42,9 @@ class JobOfferResponseController extends Controller
                 $query->where('user_id', $user_id)->where('offer_id', $offer_id);
             })->limit(1)->get();
             if (null !== $jor) {
-                $request->session()->flash('status', __('You already respond to this offer..'));
+                $request->session()->flash('status', __('You already respond to this offer.'));
                 return $request->wantsJson()
-                    ? new Response(['error' => __('You already respond to this offer..')], 200)
+                    ? new Response(['error' => __('You already respond to this offer.')], 200)
                     : back();
             }
             $jor = $offer->jobOfferResponses()->create([
