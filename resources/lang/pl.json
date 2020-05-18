@@ -116,5 +116,8 @@
     "Number of application": "Liczba zgłoszeń",
     "Your applications": "Twoje zgłoszenia",
     "You have canceled your application for position :name.": "Anulowałeś swoją aplikację na stanowisko :name.",
-    "Registration failed. Contact the administrator.": "Rejestracja nie udała się. Skontaktuj się z administratorem."
+    "Registration failed. Contact the administrator.": "Rejestracja nie udała się. Skontaktuj się z administratorem.",
+    "A bit empty here...": "Trochę tu pusto...",
+    "Find new job": "Znajdź nową pracę",
+    "Nobody has applied to your offers yet.": "Jeszcze nikt nie zaaplikował na twoje ogłoszenia."
 }
