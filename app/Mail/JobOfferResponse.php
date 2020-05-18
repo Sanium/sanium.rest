@@ -10,9 +10,23 @@ use Illuminate\Queue\SerializesModels;
 class JobOfferResponse extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
+
+    public $subject = 'Someone has applied to your offer.';
+    /**
+     * @var string
+     */
     private $name;
+    /**
+     * @var string
+     */
     private $email;
+    /**
+     * @var string
+     */
     private $text;
+    /**
+     * @var string
+     */
     private $pathToCV;
 
     /**
@@ -36,9 +50,9 @@ class JobOfferResponse extends Mailable implements ShouldQueue
      *
      * @return $this
      */
-    public function build()
+    public function build(): self
     {
-        return $this->markdown('emails.offers.response', [
+        return $this->markdown('emails.jor.response', [
             'name' => $this->name,
             'email' => $this->email,
             'text' => $this->text,
