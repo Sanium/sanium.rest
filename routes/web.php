@@ -36,6 +36,7 @@ Route::delete('/admin/emp/{employment}', 'AdminController@destroyEmployment')->n
 Route::delete('/admin/c/{currency}', 'AdminController@destroyCurrency')->name('admin.destroy.cur');
 
 Route::post('/offers/{offer}/contact', 'JobOfferResponseController@store')->name('offers.contact');
+Route::delete('/jors/{jobOfferResponse}', 'JobOfferResponseController@destroy')->name('jors.destroy');
 Route::post('/offers/{offer}/refresh', 'OfferController@refresh')->name('offers.refresh');
 
 Route::get('/home', 'HomeController@index')->name('home');
