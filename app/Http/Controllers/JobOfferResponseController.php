@@ -43,14 +43,11 @@ class JobOfferResponseController extends Controller
                 /** @var Builder $query */
                 $query->where('user_id', $user_id)->where('offer_id', $offer_id);
             })->limit(1)->get();
-            if (null !== $jor) {
+            if ($jor->isNotEmpty()) {
                 $request->session()->flash('status', __('You already respond to this offer.'));
                 return $request->wantsJson()
                     ? new Response(['error' => __('You already respond to this offer.')], 200)
                     : back();
-            if ($jor->isNotEmpty()) {
-                $request->session()->flash('status', __('You already respond to this offer..'));
-                return back();
             }
             $jor = $offer->jobOfferResponses()->create([
                 'user_id' => $user->id,
@@ -67,7 +64,9 @@ class JobOfferResponseController extends Controller
         }
         Mail::to($jor->offer->user)->queue(new JobOfferResponseMail($jor->name, $jor->email, $jor->links, $jor->getFile()));
         $request->session()->flash('status', __('Mail has been send.'));
-        return back();
+        return $request->wantsJson()
+            ? new Response(['ok' => __('Mail has been send.')], 200)
+            : back();
     }
 
     /**
