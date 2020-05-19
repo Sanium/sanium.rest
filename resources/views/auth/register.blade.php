@@ -95,7 +95,7 @@
                             </div>
                             <div class="md-form">
                                 <input type="file" name="file" class="dropify" data-height="120"
-                                       data-show-remove="false" data-show-errors="true"
+                                       data-show-remove="false" data-show-errors="true" accept="application/pdf"
                                        data-errors-position="outside"/>
                                 @error('file')
                                 <div class="red-text text-center">

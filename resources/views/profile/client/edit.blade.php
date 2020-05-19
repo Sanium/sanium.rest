@@ -27,7 +27,7 @@
                     @csrf
                     @method('PATCH')
                     <div class="md-form">
-                        <input type="file" name="file" class="dropify" data-height="120"
+                        <input type="file" name="file" class="dropify" data-height="120" accept="application/pdf"
                                data-default-file="{{ $client->getFile() }}"
                                data-show-remove="false" data-show-errors="true"
                                data-errors-position="outside"/>
