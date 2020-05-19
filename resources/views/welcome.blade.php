@@ -21,6 +21,12 @@
     <script>
         window.showForm = {{ $showForm ? 'true' : 'false' }};
     </script>
+    <style>
+        .dark-bg,
+        .light-bg {
+            height: initial !important;
+        }
+    </style>
 
 </head>
 <body>
