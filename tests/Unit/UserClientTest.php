@@ -14,36 +14,14 @@ class UserClientTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
-    /**
-     * @var Role|\Illuminate\Database\Eloquent\Model
-     */
-    private $emRole;
-    /**
-     * @var Role|\Illuminate\Database\Eloquent\Model
-     */
-    private $admRole;
-    /**
-     * @var Role|\Illuminate\Database\Eloquent\Model
-     */
-    private $cRole;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->emRole = Role::create(['name' => 'employer']);
-        $this->admRole = Role::create(['name' => 'admin']);
-        $this->cRole = Role::create(['name' => 'client']);
-    }
-
     public function create_user(): User
     {
         /** @var User $user */
-        $user = User::createWithRole([
+        $user = User::create([
             'name' => 'Bartłomiej Olszanowski',
             'email' => 'baloo@baloo.baloo',
             'password' => 'baloo',
-            'role' => 'client'
+            'role' => Role::ROLE_CLIENT
         ]);
         $profile_attr = [
             'name' => $user->name,
@@ -60,11 +38,11 @@ class UserClientTest extends TestCase
     public function it_can_create_user(): void
     {
         /** @var User $user */
-        $user = User::createWithRole([
+        $user = User::create([
             'name' => 'Bartłomiej Olszanowski',
             'email' => 'baloo@baloo.baloo',
             'password' => 'baloo',
-            'role' => 'client'
+            'role' => Role::ROLE_CLIENT
         ]);
         $profile_attr = [
             'name' => $user->name,
@@ -74,7 +52,6 @@ class UserClientTest extends TestCase
         $user->profile()->create($profile_attr);
 
         $this->assertInstanceOf(User::class, $user);
-        $this->assertInstanceOf(Role::class, $user->roles()->first());
         $this->assertTrue($user->isClient());
         $this->assertFalse($user->isEmployer());
         $this->assertFalse($user->isAdmin());

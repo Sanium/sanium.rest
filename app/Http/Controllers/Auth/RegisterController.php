@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Role;
 use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Foundation\Application;
@@ -107,13 +108,13 @@ class RegisterController extends Controller
     protected function create_employer(Request $request): User
     {
         $data = $request->all();
-        $user = User::createWithRole([
+        $user = User::create([
             'name' => Str::slug($data['company-name']),
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => 'employer'
+            'role' => Role::ROLE_EMPLOYER
         ]);
-        if (null !== $user && null !== $user->profile()) {
+        if (null !== $user->profile()) {
             $user->profile()->create([
                 'name' => $data['company-name'],
                 'size' => $data['company-size'],
@@ -201,13 +202,13 @@ class RegisterController extends Controller
     protected function create_client(Request $request): User
     {
         $data = $request->all();
-        $user = User::createWithRole([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => 'client'
+            'role' => Role::ROLE_CLIENT
         ]);
-        if (null !== $user && null !== $user->profile()) {
+        if (null !== $user->profile()) {
             $user->profile()->create([
                 'name' => $data['name'],
                 'links' => $data['links'],

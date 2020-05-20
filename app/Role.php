@@ -6,6 +6,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 
@@ -31,8 +32,25 @@ class Role extends Model
 {
     protected $guarded = [];
 
-    public function users(): BelongsToMany
+    public const ROLE_ADMIN = 1;
+    public const ROLE_EMPLOYER = 2;
+    public const ROLE_CLIENT = 3;
+
+    /**
+     * @param $roleName
+     * @return int
+     */
+    public static function byName(string $roleName): int
     {
-        return $this->belongsToMany(User::class);
+        switch ($roleName) {
+            case 'admin':
+                return self::ROLE_ADMIN;
+            case 'employer':
+                return self::ROLE_EMPLOYER;
+            case 'client':
+                return self::ROLE_CLIENT;
+            default:
+                throw new ModelNotFoundException("Role $roleName not found.");
+        }
     }
 }

@@ -87,15 +87,11 @@ class JobOfferResponseTest extends TestCase
     {
         parent::setUp();
 
-        Role::create(['name' => 'employer']);
-        Role::create(['name' => 'client']);
-        Role::create(['name' => 'admin']);
-
-        $this->employer = User::createWithRole([
+        $this->employer = User::create([
             'name' => 'baloo',
             'email' => 'baloo@baloo.baloo',
             'password' => 'baloo',
-            'role' => 'employer'
+            'role' => Role::ROLE_EMPLOYER
         ]);
         $profile_attr = [
             'name' => $this->employer->name,
@@ -107,11 +103,11 @@ class JobOfferResponseTest extends TestCase
             $this->employer->profile()->create($profile_attr);
         }
 
-        $this->employer2 = User::createWithRole([
+        $this->employer2 = User::create([
             'name' => 'baloo2',
             'email' => 'baloo2@baloo.baloo',
             'password' => 'baloo2',
-            'role' => 'employer'
+            'role' => Role::ROLE_EMPLOYER
         ]);
         $profile_attr = [
             'name' => $this->employer2->name,
@@ -123,11 +119,11 @@ class JobOfferResponseTest extends TestCase
             $this->employer2->profile()->create($profile_attr);
         }
 
-        $this->client = User::createWithRole([
+        $this->client = User::create([
             'name' => 'Baloo Bartix',
             'email' => 'baloo@bartix.com',
             'password' => 'baloo',
-            'role' => 'client'
+            'role' => Role::ROLE_CLIENT
         ]);
         $profile_attr = [
             'name' => $this->client->name,

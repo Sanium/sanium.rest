@@ -60,7 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role',
     ];
 
     /**
@@ -93,11 +93,10 @@ class User extends Authenticatable implements MustVerifyEmail
                 return null;
             }
             if (is_numeric($attr['role'])) {
-                $role_id = $attr['role'];
-                $role = Role::findOrFail($role_id)->first();
+                $role = $attr['role'];
             } else {
                 $role_name = $attr['role'];
-                $role = Role::where('name', $role_name)->firstOrFail();
+                $role = Role::byName($role_name);
             }
             unset($attr['role']);
             $user = self::create($attr);
@@ -106,11 +105,6 @@ class User extends Authenticatable implements MustVerifyEmail
             return self::create($attr);
         }
         return $user;
-    }
-
-    public function roles(): BelongsToMany
-    {
-        return $this->belongsToMany(Role::class);
     }
 
     protected static function boot(): void
@@ -140,17 +134,17 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isAdmin(): bool
     {
-        return $this->roles()->get()->contains(Role::where('name', 'admin')->first());
+        return Role::ROLE_ADMIN === $this->role;
     }
 
     public function isEmployer(): bool
     {
-        return $this->roles()->get()->contains(Role::where('name', 'employer')->first());
+        return Role::ROLE_EMPLOYER === $this->role;
     }
 
     public function isClient(): bool
     {
-        return $this->roles()->get()->contains(Role::where('name', 'client')->first());
+        return Role::ROLE_CLIENT === $this->role;
     }
 
     public function offers(): HasMany
