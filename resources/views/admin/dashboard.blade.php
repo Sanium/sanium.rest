@@ -25,6 +25,16 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="media white z-depth-1 rounded">
+                    <i class="fas fa-reply-all fa-lg green z-depth-1 p-4 rounded-left text-white mr-3"></i>
+                    <div class="media-body p-1">
+                        <p class="text-uppercase text-muted mb-1"><small>{{ __('Total applications') }}</small></p>
+                        <h5 class="font-weight-bold mb-0">{{ $jor_count }}</h5>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section class="row mx-0 mx-xl-5 mt-5">
@@ -32,13 +42,13 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="card-title d-flex justify-content-between align-items-center">
-                            <h4>{{ __('Last new users') }}</h4>
+                            <h4>{{ __('Last new employers') }}</h4>
                         </div>
                         <table class="table table-sm">
                             <thead>
                             <tr>
                                 <th></th>
-                                <th>{{ __('Name') }}</th>
+                                <th>{{ __('Company name') }}</th>
                                 <th>{{ __('Size') }}</th>
                                 <th>{{ __('Website') }}</th>
                                 <th>{{ __('Created') }}</th>
@@ -54,9 +64,7 @@
                                              src="{{ $employer->getLogo() }}" alt="">
                                     </td>
                                     <td class="align-middle">
-                                        <a class="light-blue-text text-darken-2" href="{{ route('admin.employers.show', $employer) }}">
-                                            {{ $employer->name }}
-                                        </a>
+                                        {{ $employer->name }}
                                     </td>
                                     <td class="align-middle">{{ $employer->size }}</td>
                                     <td class="align-middle">
@@ -102,7 +110,7 @@
                         <table class="table table-sm">
                             <thead>
                             <tr>
-                                <th>{{ __('Name') }}</th>
+                                <th>{{ __('Offer name') }}</th>
                                 <th>{{ __('Employer') }}</th>
                                 <th>{{ __('Created') }}</th>
                                 <th>{{ __('Updated') }}</th>
@@ -118,7 +126,8 @@
                                         </a>
                                     </td>
                                     <td class="align-middle">
-                                        <a href="{{ route('admin.employers.show', $offer->user()->first()->profile()->first()) }}" class="light-blue-text text-darken-2">
+                                        <a href="{{ route('admin.employers.offers', $offer->user->profile) }}"
+                                           class="light-blue-text text-darken-2" title="see all offers">
                                             {{ $offer->user->profile->name }}
                                         </a>
                                     </td>

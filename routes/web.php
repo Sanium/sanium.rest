@@ -25,10 +25,12 @@ Route::resource('/offers', 'OfferController')->except('index', 'show');
 
 Route::get('/admin', 'AdminController@dashboard')->name('admin.dashboard');
 Route::get('/admin/properties', 'AdminController@properties')->name('admin.properties');
+
 Route::get('/admin/users', 'AdminController@users')->name('admin.users.index');
-Route::get('/admin/e/{employer}', 'AdminController@employers')->name('admin.employers.show');
-Route::get('/admin/e/{employer}/offers', 'AdminController@offers')->name('admin.employers.offers');
 Route::delete('/admin/u/{user}', 'AdminController@destroyUser')->name('admin.users.destroy');
+
+Route::get('/admin/e/{employer}/offers', 'AdminController@offers')->name('admin.employers.offers');
+
 Route::delete('/admin/o/{offer}', 'AdminController@destroyOffer')->name('admin.destroy.offer');
 Route::delete('/admin/t/{technology}', 'AdminController@destroyTechnology')->name('admin.destroy.tech');
 Route::delete('/admin/exp/{experience}', 'AdminController@destroyExperience')->name('admin.destroy.exp');

@@ -13,7 +13,8 @@
                         <tr>
                             <th></th>
                             <th>{{ __('Name') }}</th>
-                            <th>{{ __('slug') }}</th>
+                            <th>{{ __('Role') }}</th>
+                            <th>{{ __('Profile name') }}</th>
                             <th>{{ __('E-mail') }}</th>
                             <th>{{ __('Created') }}</th>
                             <th>{{ __('Updated') }}</th>
@@ -30,7 +31,8 @@
                                     @endif
                                 </td>
                                 <td class="align-middle">{{ $user->name }}</td>
-                                <td class="align-middle">{{ $user->profile->slug }}</td>
+                                <td class="align-middle">{{ $user->role_name }}</td>
+                                <td class="align-middle">{{ $user->profile->name }}</td>
                                 <td class="align-middle">
                                     <a class="light-blue-text text-darken-2" href="mailto:{{ $user->email }}">{{ $user->email }}</a>
                                 </td>

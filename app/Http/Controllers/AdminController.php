@@ -7,6 +7,7 @@ use App\Currency;
 use App\Employer;
 use App\Employment;
 use App\Experience;
+use App\JobOfferResponse;
 use App\Offer;
 use App\Technology;
 use App\User;
@@ -21,13 +22,15 @@ class AdminController extends Controller
 
     public function dashboard(Request $request)
     {
-        $user_count = Employer::count();
+        $user_count = User::count() - 1;
         $offer_count = Offer::count();
+        $jor_count = JobOfferResponse::count();
         $latest_employers = Employer::latest()->take(6)->get();
         $latest_offers = Offer::latest()->take(6)->get();
         return view('admin.dashboard', [
             'user_count' => $user_count,
             'offer_count' => $offer_count,
+            'jor_count' => $jor_count,
             'latest_employers' => $latest_employers,
             'latest_offers' => $latest_offers,
         ]);
@@ -59,19 +62,9 @@ class AdminController extends Controller
         ]);
     }
 
-    public function employer(Employer $employer)
-    {
-        $employers = [$employer];
-        return view('admin.users', [
-            'employers' => $employers
-        ]);
-    }
-
     public function offers(Employer $employer)
     {
-        /** @var User $user */
-        $user = $employer->user()->first();
-        $offers = $user->offers()->paginate(10);
+        $offers = $employer->user->offers()->paginate(10);
         return view('admin.offers', [
             'employer' => $employer,
             'offers' => $offers,
