@@ -42,8 +42,9 @@ class Role extends Model
      */
     public static function byName(string $roleName): int
     {
-        switch ($roleName) {
+        switch (strtolower($roleName)) {
             case 'admin':
+            case 'administrator':
                 return self::ROLE_ADMIN;
             case 'employer':
                 return self::ROLE_EMPLOYER;
@@ -51,6 +52,20 @@ class Role extends Model
                 return self::ROLE_CLIENT;
             default:
                 throw new ModelNotFoundException("Role $roleName not found.");
+        }
+    }
+
+    public static function getName(int $roleId): string
+    {
+        switch ($roleId) {
+            case self::ROLE_ADMIN:
+                return 'Administrator';
+            case self::ROLE_EMPLOYER:
+                return 'Employer';
+            case self::ROLE_CLIENT:
+                return 'Client';
+            default:
+                throw new ModelNotFoundException("Role with id $roleId not found.");
         }
     }
 }

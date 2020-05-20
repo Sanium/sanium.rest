@@ -6,8 +6,6 @@ use Eloquent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -28,15 +26,12 @@ use Illuminate\Support\Carbon;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Collection|JobOfferResponse[] $jobOfferResponses
- * @property-read int|null $job_offer_responses_count
+ * @property int $role
+ * @property mixed $role_name
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Collection|Offer[] $offers
  * @property-read int|null $offers_count
- * @property-read Admin|Employer|Client|null $profile
- * @property-read Collection|Role[] $roles
- * @property-read int|null $roles_count
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User query()
@@ -47,6 +42,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|User whereName($value)
  * @method static Builder|User wherePassword($value)
  * @method static Builder|User whereRememberToken($value)
+ * @method static Builder|User whereRole($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
  */
@@ -80,32 +76,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * @param array $attr
-     * @return User|null
-     * @throws ModelNotFoundException
-     */
-    public static function createWithRole(array $attr): ?User
-    {
-        if (array_key_exists('role', $attr)) {
-            if (null === $attr['role']) {
-                return null;
-            }
-            if (is_numeric($attr['role'])) {
-                $role = $attr['role'];
-            } else {
-                $role_name = $attr['role'];
-                $role = Role::byName($role_name);
-            }
-            unset($attr['role']);
-            $user = self::create($attr);
-            $user->roles()->attach($role);
-        } else {
-            return self::create($attr);
-        }
-        return $user;
-    }
 
     protected static function boot(): void
     {
@@ -164,5 +134,15 @@ class User extends Authenticatable implements MustVerifyEmail
             return $this->hasManyThrough(JobOfferResponse::class, Offer::class);
         }
         return null;
+    }
+
+    public function getRoleNameAttribute($value): string
+    {
+        return Role::getName($this->role);
+    }
+
+    public function setRoleNameAttribute(string $value): void
+    {
+        $this->attributes['role'] = Role::byName($value);
     }
 }
