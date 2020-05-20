@@ -16,35 +16,13 @@ class UserAdminTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
-    /**
-     * @var Role
-     */
-    private $emRole;
-    /**
-     * @var Role
-     */
-    private $adminRole;
-    /**
-     * @var Role
-     */
-    private $cRole;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->emRole = Role::create(['name' => 'employer']);
-        $this->cRole = Role::create(['name' => 'client']);
-        $this->adminRole = Role::create(['name' => 'admin']);
-    }
-
     public function create_user(): User
     {
-        $user = User::createWithRole([
+        $user = User::create([
             'name' => 'baloo',
             'email' => 'baloo@baloo.baloo',
             'password' => 'baloo',
-            'role' => 'admin'
+            'role' => Role::ROLE_ADMIN
         ]);
         $profile_attr = [
             'name' => $user->name,
@@ -58,11 +36,11 @@ class UserAdminTest extends TestCase
     public function it_can_create_user(): void
     {
         /** @var User $user */
-        $user = User::createWithRole([
+        $user = User::create([
             'name' => 'baloo',
             'email' => 'baloo@baloo.baloo',
             'password' => 'baloo',
-            'role' => 'admin'
+            'role' => Role::ROLE_ADMIN
         ]);
         $profile_attr = [
             'name' => $user->name,
@@ -71,7 +49,6 @@ class UserAdminTest extends TestCase
 
 
         $this->assertInstanceOf(User::class, $user);
-        $this->assertInstanceOf(Role::class, $user->roles()->first());
         $this->assertTrue($user->isAdmin());
         $this->assertFalse($user->isEmployer());
         /** @var Admin $profile */

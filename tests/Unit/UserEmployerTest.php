@@ -14,37 +14,14 @@ class UserEmployerTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
-
-    /**
-     * @var Role|\Illuminate\Database\Eloquent\Model
-     */
-    private $emRole;
-    /**
-     * @var Role|\Illuminate\Database\Eloquent\Model
-     */
-    private $admRole;
-    /**
-     * @var Role|\Illuminate\Database\Eloquent\Model
-     */
-    private $cRole;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->emRole = Role::create(['name' => 'employer']);
-        $this->admRole = Role::create(['name' => 'admin']);
-        $this->cRole = Role::create(['name' => 'client']);
-    }
-
     public function create_user(): User
     {
         /** @var User $user */
-        $user = User::createWithRole([
+        $user = User::create([
             'name' => 'baloo',
             'email' => 'baloo@baloo.baloo',
             'password' => 'baloo',
-            'role' => 'employer'
+            'role' => Role::ROLE_EMPLOYER
         ]);
         $profile_attr = [
             'name' => $user->name,
@@ -60,12 +37,13 @@ class UserEmployerTest extends TestCase
     /** @test */
     public function it_can_create_user(): void
     {
+        $this->withoutExceptionHandling();
         /** @var User $user */
-        $user = User::createWithRole([
+        $user = User::create([
             'name' => 'baloo',
             'email' => 'baloo@baloo.baloo',
             'password' => 'baloo',
-            'role' => 'employer'
+            'role' => Role::ROLE_EMPLOYER
         ]);
         $profile_attr = [
             'name' => $user->name,
@@ -77,7 +55,6 @@ class UserEmployerTest extends TestCase
 
 
         $this->assertInstanceOf(User::class, $user);
-        $this->assertInstanceOf(Role::class, $user->roles()->first());
         $this->assertTrue($user->isEmployer());
         $this->assertFalse($user->isClient());
         $this->assertFalse($user->isAdmin());
@@ -111,9 +88,8 @@ class UserEmployerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_profile()
+    public function it_can_update_profile(): void
     {
-        /** @var User $user */
         $user = $this->create_user();
 
         $new_profile_attr = [
