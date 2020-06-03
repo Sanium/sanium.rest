@@ -14,18 +14,18 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property string $name
  * @property string $slug
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @method static Builder|Experience findSimilarSlugs($attribute, $config, $slug)
- * @method static Builder|Experience newModelQuery()
- * @method static Builder|Experience newQuery()
- * @method static Builder|Experience query()
- * @method static Builder|Experience whereCreatedAt($value)
- * @method static Builder|Experience whereId($value)
- * @method static Builder|Experience whereName($value)
- * @method static Builder|Experience whereSlug($value)
- * @method static Builder|Experience whereUpdatedAt($value)
- * @mixin Eloquent
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Experience findSimilarSlugs($attribute, $config, $slug)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Experience newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Experience newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Experience query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Experience whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Experience whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Experience whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Experience whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Experience whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Experience extends Model
 {

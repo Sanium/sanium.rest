@@ -33,41 +33,41 @@ use Illuminate\Support\Str;
  * @property int $tech_id
  * @property string $contact
  * @property string|null $website
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $expires_at
- * @property-read Currency $currency
- * @property-read Employment $employment
- * @property-read Experience $experience
- * @property-read Collection|JobOfferResponse[] $jobOfferResponses
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $expires_at
+ * @property-read \App\Currency $currency
+ * @property-read \App\Employment $employment
+ * @property-read \App\Experience $experience
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\JobOfferResponse[] $jobOfferResponses
  * @property-read int|null $job_offer_responses_count
- * @property-read Technology $technology
- * @property-read User $user
- * @method static Builder|Offer newModelQuery()
- * @method static Builder|Offer newQuery()
- * @method static Builder|Offer query()
- * @method static Builder|Offer whereCity($value)
- * @method static Builder|Offer whereCitySlug($value)
- * @method static Builder|Offer whereContact($value)
- * @method static Builder|Offer whereCreatedAt($value)
- * @method static Builder|Offer whereCurrencyId($value)
- * @method static Builder|Offer whereDescription($value)
- * @method static Builder|Offer whereDisclaimer($value)
- * @method static Builder|Offer whereEmpId($value)
- * @method static Builder|Offer whereExpId($value)
- * @method static Builder|Offer whereExpiresAt($value)
- * @method static Builder|Offer whereId($value)
- * @method static Builder|Offer whereName($value)
- * @method static Builder|Offer whereRemote($value)
- * @method static Builder|Offer whereSalaryFrom($value)
- * @method static Builder|Offer whereSalaryTo($value)
- * @method static Builder|Offer whereStreet($value)
- * @method static Builder|Offer whereTechId($value)
- * @method static Builder|Offer whereTechStack($value)
- * @method static Builder|Offer whereUpdatedAt($value)
- * @method static Builder|Offer whereUserId($value)
- * @method static Builder|Offer whereWebsite($value)
- * @mixin Eloquent
+ * @property-read \App\Technology $technology
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereCitySlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereContact($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereCurrencyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereDisclaimer($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereEmpId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereExpId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereExpiresAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereRemote($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereSalaryFrom($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereSalaryTo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereStreet($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereTechId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereTechStack($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Offer whereWebsite($value)
+ * @mixin \Eloquent
  */
 class Offer extends Model
 {

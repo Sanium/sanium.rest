@@ -20,22 +20,22 @@ use Illuminate\Support\Facades\Storage;
  * @property string $slug
  * @property string $links
  * @property string $file
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read User $user
- * @method static Builder|Client findSimilarSlugs($attribute, $config, $slug)
- * @method static Builder|Client newModelQuery()
- * @method static Builder|Client newQuery()
- * @method static Builder|Client query()
- * @method static Builder|Client whereCreatedAt($value)
- * @method static Builder|Client whereFile($value)
- * @method static Builder|Client whereId($value)
- * @method static Builder|Client whereLinks($value)
- * @method static Builder|Client whereName($value)
- * @method static Builder|Client whereSlug($value)
- * @method static Builder|Client whereUpdatedAt($value)
- * @method static Builder|Client whereUserId($value)
- * @mixin Eloquent
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Client findSimilarSlugs($attribute, $config, $slug)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Client newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Client newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Client query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Client whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Client whereFile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Client whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Client whereLinks($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Client whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Client whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Client whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Client whereUserId($value)
+ * @mixin \Eloquent
  */
 class Client extends Model implements ProfileInterface
 {

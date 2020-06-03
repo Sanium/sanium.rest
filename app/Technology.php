@@ -15,19 +15,19 @@ use Illuminate\Support\Carbon;
  * @property string $name
  * @property string $slug
  * @property string|null $image
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @method static Builder|Technology findSimilarSlugs($attribute, $config, $slug)
- * @method static Builder|Technology newModelQuery()
- * @method static Builder|Technology newQuery()
- * @method static Builder|Technology query()
- * @method static Builder|Technology whereCreatedAt($value)
- * @method static Builder|Technology whereId($value)
- * @method static Builder|Technology whereImage($value)
- * @method static Builder|Technology whereName($value)
- * @method static Builder|Technology whereSlug($value)
- * @method static Builder|Technology whereUpdatedAt($value)
- * @mixin Eloquent
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology findSimilarSlugs($attribute, $config, $slug)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Technology whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Technology extends Model
 {

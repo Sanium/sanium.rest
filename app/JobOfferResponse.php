@@ -20,23 +20,23 @@ use Illuminate\Support\Facades\Storage;
  * @property string $email
  * @property string $links
  * @property string $file
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read Offer $offer
- * @property-read User|null $user
- * @method static Builder|JobOfferResponse newModelQuery()
- * @method static Builder|JobOfferResponse newQuery()
- * @method static Builder|JobOfferResponse query()
- * @method static Builder|JobOfferResponse whereCreatedAt($value)
- * @method static Builder|JobOfferResponse whereEmail($value)
- * @method static Builder|JobOfferResponse whereFile($value)
- * @method static Builder|JobOfferResponse whereId($value)
- * @method static Builder|JobOfferResponse whereLinks($value)
- * @method static Builder|JobOfferResponse whereName($value)
- * @method static Builder|JobOfferResponse whereOfferId($value)
- * @method static Builder|JobOfferResponse whereUpdatedAt($value)
- * @method static Builder|JobOfferResponse whereUserId($value)
- * @mixin Eloquent
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Offer $offer
+ * @property-read \App\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\JobOfferResponse newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\JobOfferResponse newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\JobOfferResponse query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\JobOfferResponse whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\JobOfferResponse whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\JobOfferResponse whereFile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\JobOfferResponse whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\JobOfferResponse whereLinks($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\JobOfferResponse whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\JobOfferResponse whereOfferId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\JobOfferResponse whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\JobOfferResponse whereUserId($value)
+ * @mixin \Eloquent
  */
 class JobOfferResponse extends Model
 {

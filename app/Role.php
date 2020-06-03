@@ -15,18 +15,16 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property string $name
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read Collection|User[] $users
- * @property-read int|null $users_count
- * @method static Builder|Role newModelQuery()
- * @method static Builder|Role newQuery()
- * @method static Builder|Role query()
- * @method static Builder|Role whereCreatedAt($value)
- * @method static Builder|Role whereId($value)
- * @method static Builder|Role whereName($value)
- * @method static Builder|Role whereUpdatedAt($value)
- * @mixin Eloquent
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Role newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Role newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Role query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Role whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Role whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Role whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Role whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Role extends Model
 {

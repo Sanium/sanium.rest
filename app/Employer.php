@@ -21,23 +21,23 @@ use Intervention\Image\Facades\Image;
  * @property string|null $size
  * @property string|null $website
  * @property string|null $logo
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read User $user
- * @method static Builder|Employer findSimilarSlugs($attribute, $config, $slug)
- * @method static Builder|Employer newModelQuery()
- * @method static Builder|Employer newQuery()
- * @method static Builder|Employer query()
- * @method static Builder|Employer whereCreatedAt($value)
- * @method static Builder|Employer whereId($value)
- * @method static Builder|Employer whereLogo($value)
- * @method static Builder|Employer whereName($value)
- * @method static Builder|Employer whereSize($value)
- * @method static Builder|Employer whereSlug($value)
- * @method static Builder|Employer whereUpdatedAt($value)
- * @method static Builder|Employer whereUserId($value)
- * @method static Builder|Employer whereWebsite($value)
- * @mixin Eloquent
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer findSimilarSlugs($attribute, $config, $slug)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereLogo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Employer whereWebsite($value)
+ * @mixin \Eloquent
  */
 class Employer extends Model implements ProfileInterface
 {
